@@ -18,10 +18,12 @@ public class AdminMainPane extends BorderPane {
     private TableView<Broodje> table;
     private TableView<BelegSoort> tablebeleg;
     private BroodjesDatabase database;
+    private BelegDatabase belegDatabase;
 
 
     public AdminMainPane() {
         this.database= new BroodjesDatabase();
+        this.belegDatabase = new BelegDatabase();
         TabPane tabPane = new TabPane();
         //Tab spelVerloopTab = new Tab("Spelverloop");
         SandwichOverviewPane sandwichOverviewPane = new SandwichOverviewPane();
@@ -62,7 +64,7 @@ public class AdminMainPane extends BorderPane {
 
 
 
-
+refreshBeleg();
         TableColumn<BelegSoort, String> colTitleBeleg = new TableColumn<BelegSoort, String>("Soort BelegSoort");
         colTitleBeleg.setMinWidth(150);
         colTitleBeleg.setCellValueFactory(new PropertyValueFactory<BelegSoort, String>("name"));
@@ -92,6 +94,12 @@ public class AdminMainPane extends BorderPane {
         table.setItems(broodjes);
         table.refresh();
     }
+    public void refreshBeleg() {
 
+        ObservableList<BelegSoort> belegSoort = FXCollections.observableArrayList(belegDatabase.getBelegSoort().values());
+
+        tablebeleg.setItems(belegSoort);
+        tablebeleg.refresh();
+    }
 
 }
