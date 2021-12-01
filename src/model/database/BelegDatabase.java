@@ -5,18 +5,12 @@ import model.Broodje;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.TreeMap;
+
+import model.BelegSoort;
+import model.database.LoadSaveStrategies.BroodjesTekstLoadSaveStrategy;
+import model.database.LoadSaveStrategies.LoadSaveStrategy;
 
 public class BelegDatabase {
-    public static Map load(){
-        File file = new File("src/bestanden/beleg.txt");
-        Map<String, Broodje> resultMap;
-        try {
-            resultMap = new BroodjesTekstReader().load(file);
-            return resultMap;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

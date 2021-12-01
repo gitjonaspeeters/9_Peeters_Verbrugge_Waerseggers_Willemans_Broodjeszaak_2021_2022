@@ -37,7 +37,7 @@ public class AdminMainPane extends BorderPane {
         GridPane grid = new GridPane();
 
 
-
+        refreshbroodjes();
         TableColumn<Broodje, String> colTitle = new TableColumn<Broodje, String>("Soort Broodje");
         colTitle.setMinWidth(150);
         colTitle.setCellValueFactory(new PropertyValueFactory<Broodje, String>("name"));

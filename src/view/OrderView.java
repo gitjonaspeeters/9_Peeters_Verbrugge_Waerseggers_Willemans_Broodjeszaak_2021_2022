@@ -36,14 +36,7 @@ public class OrderView {
 		stage.show();
 	}
 
-	public void refresh(){
 
-
-
-		ObservableList<Broodje> broodjes = FXCollections.observableArrayList(BroodjesDatabase.load().values());
-		table.setItems( broodjes);
-		table.refresh();
-	}
 
 	/*stage.setTitle("ORDER VIEW");
 	stage.initStyle(StageStyle.UTILITY);
