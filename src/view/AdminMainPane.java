@@ -12,8 +12,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.Beleg;
 import model.Broodje;
-import model.database.BroodjesTekstReaderTest;
+import model.database.BelegDatabase;
+import model.database.BroodjesDatabase;
+import model.database.BroodjesDatabase;
 import view.panels.SandwichOverviewPane;
 
 import static java.time.zone.ZoneRulesProvider.refresh;
@@ -53,14 +56,48 @@ public class AdminMainPane extends BorderPane {
 
         grid.add(table,0,1,3,1);
 
-            broodjesTab.setContent(grid);
-            tabPane.getTabs().add(broodjesTab);
-            tabPane.getTabs().add(statistiekTab);
-            tabPane.getTabs().add(instellingTab);
-	}
-        public void refresh(){
-                ObservableList<Broodje> broodjes = FXCollections.observableArrayList(BroodjesTekstReaderTest.load().values());
-                table.setItems( broodjes);
-                table.refresh();
-        }
+        broodjesTab.setContent(grid);
+        tabPane.getTabs().add(broodjesTab);
+        tabPane.getTabs().add(statistiekTab);
+        tabPane.getTabs().add(instellingTab);
+
+        tablebeleg = new TableView<>();
+        refreshbeleg();
+
+
+
+
+        TableColumn<Beleg, String> colTitleBeleg = new TableColumn<Beleg, String>("Soort Beleg");
+        colTitleBeleg.setMinWidth(150);
+        colTitleBeleg.setCellValueFactory(new PropertyValueFactory<Beleg, String>("name"));
+        TableColumn<Beleg, Double> colPriceBeleg = new TableColumn<Beleg, Double>("Prijs");
+        colPriceBeleg.setMinWidth(150);
+        colPriceBeleg.setCellValueFactory(new PropertyValueFactory<Beleg, Double>("prijs"));
+        TableColumn<Beleg, Integer> colYearBeleg = new TableColumn<Beleg, Integer>("Aantal in stock");
+        colYearBeleg.setMinWidth(150);
+        colYearBeleg.setCellValueFactory(new PropertyValueFactory<Beleg, Integer>("Aantal"));
+        tablebeleg.getColumns().addAll(colTitleBeleg, colYearBeleg, colPriceBeleg);
+
+
+        //grid layout
+        grid.add(label,0,0);
+        grid.add(table, 0,1 , 1, 2);
+        grid.add(label1,0,3);
+        grid.add(tablebeleg, 0, 4, 1, 2);
+
+
+        this.setCenter(tabPane);
+    }
+
+    public void refreshbroodjes() {
+        ObservableList<Broodje> broodjes = FXCollections.observableArrayList(BroodjesDatabase.load().values());
+        table.setItems(broodjes);
+        table.refresh();
+    }
+
+    public void refreshbeleg(){
+        ObservableList<Beleg> beleg = FXCollections.observableArrayList(BelegDatabase.load().values());
+        tablebeleg.setItems(beleg);
+        tablebeleg.refresh();
+    }
 }
