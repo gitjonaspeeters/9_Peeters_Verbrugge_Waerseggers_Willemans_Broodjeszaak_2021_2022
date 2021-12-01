@@ -22,39 +22,41 @@ import view.panels.SandwichOverviewPane;
 import static java.time.zone.ZoneRulesProvider.refresh;
 
 public class AdminMainPane extends BorderPane {
-        private TableView<Broodje> table;
-	public AdminMainPane(){
+    private TableView<Broodje> table;
+    private TableView<Beleg> tablebeleg;
 
-	    TabPane tabPane = new TabPane(); 	    
+
+    public AdminMainPane() {
+
+        TabPane tabPane = new TabPane();
         //Tab spelVerloopTab = new Tab("Spelverloop");
         SandwichOverviewPane sandwichOverviewPane = new SandwichOverviewPane();
-        Tab broodjesTab = new Tab("Broodjes/Beleg",sandwichOverviewPane);
+        Tab broodjesTab = new Tab("Broodjes/Beleg", sandwichOverviewPane);
         Tab instellingTab = new Tab("Instellingen");
         Tab statistiekTab = new Tab("Statistieken");
-        table=new TableView<>();
-        refresh();
+        table = new TableView<>();
+        refreshbroodjes();
+        Label label=new Label("Broodjes: ");
+        Label label1=new Label("Beleg: ");
+
+
+        GridPane grid = new GridPane();
 
 
 
-        GridPane grid=new GridPane();
-
-        grid.setHgap(20);
-        grid.setVgap(10);
-
-            TableColumn<Broodje, String> colTitle = new TableColumn<Broodje, String>("Soort Broodje");
-            colTitle.setMinWidth(150);
-            colTitle.setCellValueFactory(new PropertyValueFactory<Broodje, String>("name"));
-            TableColumn<Broodje, Double> colPrice = new TableColumn<Broodje, Double>("Prijs");
-            colPrice.setMinWidth(150);
-            colPrice.setCellValueFactory(new PropertyValueFactory<Broodje, Double>("prijs"));
-            TableColumn<Broodje, Integer> colYear = new TableColumn<Broodje, Integer>("Aantal in stock");
-            colYear.setMinWidth(150);
-            colYear.setCellValueFactory(new PropertyValueFactory<Broodje, Integer>("Aantal"));
-            table.getColumns().addAll(colTitle, colYear, colPrice);
-            System.out.println(table.getColumns());
+        TableColumn<Broodje, String> colTitle = new TableColumn<Broodje, String>("Soort Broodje");
+        colTitle.setMinWidth(150);
+        colTitle.setCellValueFactory(new PropertyValueFactory<Broodje, String>("name"));
+        TableColumn<Broodje, Double> colPrice = new TableColumn<Broodje, Double>("Prijs");
+        colPrice.setMinWidth(150);
+        colPrice.setCellValueFactory(new PropertyValueFactory<Broodje, Double>("prijs"));
+        TableColumn<Broodje, Integer> colYear = new TableColumn<Broodje, Integer>("Aantal in stock");
+        colYear.setMinWidth(150);
+        colYear.setCellValueFactory(new PropertyValueFactory<Broodje, Integer>("Aantal"));
+        table.getColumns().addAll(colTitle, colYear, colPrice);
         this.setCenter(tabPane);
 
-        grid.add(table,0,1,3,1);
+
 
         broodjesTab.setContent(grid);
         tabPane.getTabs().add(broodjesTab);
