@@ -54,7 +54,7 @@ public class OrderView {
 
 	public void refresh(){
 
-		System.out.println(BroodjesTekstReaderTest.load().values());
+
 
 		ObservableList<Broodje> broodjes = FXCollections.observableArrayList(BroodjesTekstReaderTest.load().values());
 		table.setItems( broodjes);
