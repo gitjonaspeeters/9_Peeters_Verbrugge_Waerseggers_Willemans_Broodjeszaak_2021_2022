@@ -2,14 +2,14 @@ package model;
 
 import java.util.Objects;
 
-public class Beleg implements  Comparable<Beleg>{
+public class BelegSoort implements  Comparable<BelegSoort>{
     private String name;
     private double prijs;
     private int aantal;
     private int verkocht;
 
 
-    public Beleg(String name, double prijs, int aantal, int verkocht) {
+    public BelegSoort(String name, double prijs, int aantal, int verkocht) {
         this.name = name;
         this.prijs = prijs;
         this.aantal = aantal;
@@ -50,7 +50,7 @@ public class Beleg implements  Comparable<Beleg>{
 
     @Override
     public String toString() {
-        return "Beleg{" +
+        return "BelegSoort{" +
                 "name='" + name + '\'' +
                 ", prijs=" + prijs +
                 ", aantal=" + aantal +
@@ -62,7 +62,7 @@ public class Beleg implements  Comparable<Beleg>{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Beleg beleg = (Beleg) o;
+        BelegSoort beleg = (BelegSoort) o;
         return Double.compare(beleg.prijs, prijs) == 0 && aantal == beleg.aantal && verkocht == beleg.verkocht && Objects.equals(name, beleg.name);
     }
 
@@ -72,7 +72,7 @@ public class Beleg implements  Comparable<Beleg>{
     }
 
     @Override
-    public int compareTo(Beleg arg0) {
+    public int compareTo(BelegSoort arg0) {
         return this.getName().compareTo(arg0.getName());
     }
 }
