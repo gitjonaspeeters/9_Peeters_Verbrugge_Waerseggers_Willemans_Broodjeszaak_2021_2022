@@ -15,13 +15,14 @@ public class BelegDatabase {
 
     private TreeMap<String, BelegSoort> belegSoort;
     private LoadSaveStrategy<String, BelegSoort> strategy;
-    public BelegDatabase() {
+
+    public BelegDatabase() throws Exception {
         strategy = new BelegTekstLoadSaveStrategy();
         this.belegSoort = new TreeMap<>();
         load();
     }
 
-    private void load() {
+    private void load() throws Exception {
         for (BelegSoort belegs :strategy.load().values()) {
             this.belegSoort.put(belegs.getName(), belegs);
         }

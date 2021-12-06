@@ -9,7 +9,7 @@ import view.OrderView;
 
 public class BroodjeszaakMain extends Application {
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
 		AdminView adminView = new AdminView();
 		OrderView orderView = new OrderView();
 		KitchenView kitchenView = new KitchenView();

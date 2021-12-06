@@ -19,7 +19,7 @@ import static java.time.zone.ZoneRulesProvider.refresh;
 public class AdminView {
 	private Stage stage = new Stage();		
 		
-	public AdminView(){			
+	public AdminView() throws Exception {
 		stage.setTitle("ADMIN VIEW");
 		stage.initStyle(StageStyle.UTILITY);
 		stage.setX(680);

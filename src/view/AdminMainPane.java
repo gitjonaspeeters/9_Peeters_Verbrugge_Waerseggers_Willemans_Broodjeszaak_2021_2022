@@ -14,6 +14,8 @@ import model.database.BroodjesDatabase;
 import utilities.TekstLoadSaveTemplate;
 import view.panels.SandwichOverviewPane;
 
+import java.io.IOException;
+
 public class AdminMainPane extends BorderPane {
     private TableView<Broodje> table;
     private TableView<BelegSoort> tablebeleg;
@@ -21,7 +23,7 @@ public class AdminMainPane extends BorderPane {
     private BelegDatabase belegDatabase;
 
 
-    public AdminMainPane() {
+    public AdminMainPane() throws Exception {
         this.database= new BroodjesDatabase();
         this.belegDatabase = new BelegDatabase();
         TabPane tabPane = new TabPane();

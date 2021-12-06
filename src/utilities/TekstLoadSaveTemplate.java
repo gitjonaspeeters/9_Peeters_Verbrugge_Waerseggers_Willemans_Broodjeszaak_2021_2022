@@ -2,10 +2,7 @@ package utilities;
 import model.BelegSoort;
 import model.Broodje;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +31,16 @@ public abstract class TekstLoadSaveTemplate<K,V>{
         }
         return returnMap;
     }
+
+    public void save (Map a, File file) throws IOException {
+        FileWriter fileWriter= new FileWriter(file);
+        for(Object object: a.values()){
+            fileWriter.write(toStringEnzo(object));
+        }
+        fileWriter.close();
+    }
+
+    protected abstract String toStringEnzo(Object object);
 
 
 }

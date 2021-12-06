@@ -21,7 +21,11 @@ public class BelegTekstLoadSaveStrategy extends TekstLoadSaveTemplate implements
 
     @Override
     public void save(Map a) {
-
+        try {
+            super.save(a, new File("src/bestanden/beleg.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -34,5 +38,12 @@ public class BelegTekstLoadSaveStrategy extends TekstLoadSaveTemplate implements
     @Override
     public String getKey(String[] tokens) {
         return tokens[0];
+    }
+
+    @Override
+    protected String toStringEnzo(Object object) {
+        BelegSoort belegSoort= (BelegSoort) object;
+        String string= ((BelegSoort) object).getName() + ","+ ((BelegSoort) object).getPrijs() + ","+ ((BelegSoort) object).getAantal() + ","+ ((BelegSoort) object).getAantal();
+        return string;
     }
 }

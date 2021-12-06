@@ -16,13 +16,14 @@ public class BroodjesDatabase {
 
     private TreeMap<String, Broodje> broodjes;
     private LoadSaveStrategy<String, Broodje> strategy;
-    public BroodjesDatabase() {
+
+    public BroodjesDatabase() throws Exception {
         strategy = new BroodjesTekstLoadSaveStrategy();
         this.broodjes = new TreeMap<>();
         load();
     }
 
-    private void load() {
+    private void load() throws Exception {
         for (Broodje broodje :strategy.load().values()) {
             this.broodjes.put(broodje.getName(), broodje);
         }

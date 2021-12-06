@@ -1,5 +1,6 @@
 package model.database.LoadSaveStrategies;
 
+import model.BelegSoort;
 import model.Broodje;
 import utilities.TekstLoadSaveTemplate;
 
@@ -23,7 +24,11 @@ public class BroodjesTekstLoadSaveStrategy extends TekstLoadSaveTemplate impleme
 
     @Override
     public void save(Map a) {
-
+        try {
+            super.save(a, new File("src/bestanden/broodjes.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -36,5 +41,11 @@ public class BroodjesTekstLoadSaveStrategy extends TekstLoadSaveTemplate impleme
     @Override
     public String getKey(String[] tokens) {
         return tokens[0];
+    }
+
+    @Override
+    protected String toStringEnzo(Object object) {
+        String string= ((Broodje) object).getName() + ","+ ((Broodje) object).getPrijs() + ","+ ((Broodje) object).getAantal() + ","+ ((Broodje) object).getAantal();
+        return string;
     }
 }
