@@ -10,14 +10,15 @@ import java.util.TreeMap;
 import model.BelegSoort;
 import model.database.LoadSaveStrategies.BelegTekstLoadSaveStrategy;
 import model.database.LoadSaveStrategies.LoadSaveStrategy;
+import model.database.LoadSaveStrategies.LoadSaveStrategyFactory;
 
 public class BelegDatabase {
 
     private TreeMap<String, BelegSoort> belegSoort;
     private LoadSaveStrategy<String, BelegSoort> strategy;
 
-    public BelegDatabase() throws Exception {
-        strategy = new BelegTekstLoadSaveStrategy();
+    public BelegDatabase(String format) throws Exception {
+        strategy= LoadSaveStrategyFactory.createLoadSaveStrategy(format);
         this.belegSoort = new TreeMap<>();
         load();
     }

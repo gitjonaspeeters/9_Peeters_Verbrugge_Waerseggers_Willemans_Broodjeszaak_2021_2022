@@ -24,8 +24,8 @@ public class AdminMainPane extends BorderPane {
 
 
     public AdminMainPane() throws Exception {
-        this.database= new BroodjesDatabase();
-        this.belegDatabase = new BelegDatabase();
+        this.database= new BroodjesDatabase("XLSBroodje");
+        this.belegDatabase = new BelegDatabase("XLSBeleg");
         TabPane tabPane = new TabPane();
         //Tab spelVerloopTab = new Tab("Spelverloop");
         SandwichOverviewPane sandwichOverviewPane = new SandwichOverviewPane();

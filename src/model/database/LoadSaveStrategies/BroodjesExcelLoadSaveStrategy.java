@@ -41,7 +41,7 @@ public class BroodjesExcelLoadSaveStrategy extends ExcelLoadSaveTemplate impleme
     @Override
     public void save(Map a) throws IOException, BiffException, WriteException {
         try {
-            super.save(a, new File("src/bestanden/broodjes.txt"));
+            super.save(a, new File("src/bestanden/broodjes.xls"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -30,7 +30,7 @@ public class BelegExcelLoadSaveStrategy extends ExcelLoadSaveTemplate implements
     @Override
     public Map load() throws Exception {
         try {
-            return super.load(new File("src/bestanden/beleg.txt"));
+            return super.load(new File("src/bestanden/beleg.xls"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class BelegExcelLoadSaveStrategy extends ExcelLoadSaveTemplate implements
     @Override
     public void save(Map a) throws IOException {
         try {
-            super.save(a, new File("src/bestanden/beleg.txt"));
+            super.save(a, new File("src/bestanden/beleg.xls"));
         } catch (IOException | BiffException | WriteException e) {
             e.printStackTrace();
         }
