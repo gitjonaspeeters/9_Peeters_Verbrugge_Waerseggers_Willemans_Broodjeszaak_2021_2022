@@ -30,7 +30,7 @@ public class BroodjesExcelLoadSaveStrategy extends ExcelLoadSaveTemplate impleme
     @Override
     public Map load() throws Exception {
         try {
-            return super.load(new File("src/bestanden/broodjes.txt"));
+            return super.load(new File("src/bestanden/broodjes.xls"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,8 +1,10 @@
 package model.database.LoadSaveStrategies;
 
 public enum LoadSaveStrategyEnum {
-    XLS("Excel", "model.database.LoadSaveStrategies.BroodjesExcelLoadSaveStrategy"),
-    TXT("Tekst", "model.database.LoadSaveStrategies.BroodjesTekstLoadSaveStrategy");
+    XLSBroodje("Excel", "model.database.LoadSaveStrategies.BroodjesExcelLoadSaveStrategy"),
+    TXTBroodje("Tekst", "model.database.LoadSaveStrategies.BroodjesTekstLoadSaveStrategy"),
+    XLSBeleg("Excel", "model.database.LoadSaveStrategies.BelegExcelLoadSaveStrategy"),
+    TXTBeleg("Tekst", "model.database.LoadSaveStrategies.BelegTekstLoadSaveStrategy");
 
     private final String name;
     private final String propertyName;

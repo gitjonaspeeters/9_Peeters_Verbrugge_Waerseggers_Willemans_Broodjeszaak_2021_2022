@@ -11,6 +11,7 @@ import model.BelegSoort;
 import model.Broodje;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
+import model.database.LoadSaveStrategies.LoadSaveStrategyFactory;
 import utilities.TekstLoadSaveTemplate;
 import view.panels.SandwichOverviewPane;
 
@@ -90,6 +91,7 @@ refreshBeleg();
     }
 
     public void refreshbroodjes() {
+
 
         ObservableList<Broodje> broodjes = FXCollections.observableArrayList(database.getBroodjes().values());
 

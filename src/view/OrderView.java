@@ -20,6 +20,8 @@ import model.Broodje;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
 import model.database.BroodjesDatabase;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 import javafx.scene.control.Label;
 
