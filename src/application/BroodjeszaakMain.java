@@ -1,5 +1,6 @@
 package application;
 	
+import controller.OrderViewController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.AdminView;
@@ -11,7 +12,7 @@ public class BroodjeszaakMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		AdminView adminView = new AdminView();
-		OrderView orderView = new OrderView();
+		OrderView orderView = new OrderView(new OrderViewController());
 		KitchenView kitchenView = new KitchenView();
 	}
 	

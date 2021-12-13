@@ -1,48 +1,38 @@
-package view;
+package view.panels;
 
-
+import controller.BroodjesBelegController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import model.BelegSoort;
 import model.Broodje;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
-import model.database.LoadSaveStrategies.LoadSaveStrategyFactory;
-import utilities.TekstLoadSaveTemplate;
-import view.panels.SandwichOverviewPane;
 
-import java.io.IOException;
+public class BroodjesBelegPane extends GridPane {
 
-public class AdminMainPane extends BorderPane {
     private TableView<Broodje> table;
     private TableView<BelegSoort> tablebeleg;
-    private BroodjesDatabase database;
-    private BelegDatabase belegDatabase;
+    private BroodjesBelegController controller;
 
 
-    public AdminMainPane() throws Exception {
-        this.database= new BroodjesDatabase("XLSBroodje");
-        this.belegDatabase = new BelegDatabase("XLSBeleg");
-        TabPane tabPane = new TabPane();
-        //Tab spelVerloopTab = new Tab("Spelverloop");
-        SandwichOverviewPane sandwichOverviewPane = new SandwichOverviewPane();
-        Tab broodjesTab = new Tab("Broodjes/BelegSoort", sandwichOverviewPane);
-        Tab instellingTab = new Tab("Instellingen");
-        Tab statistiekTab = new Tab("Statistieken");
-        table = new TableView<>();
+
+
+    public BroodjesBelegPane(BroodjesBelegController controller) throws Exception {
+        this.controller = controller;
 
         Label label=new Label("Broodjes: ");
         Label label1=new Label("BelegSoort: ");
 
-
-        GridPane grid = new GridPane();
-
-
-        refreshbroodjes();
+        this.table = new TableView<>();
+        this.refreshbroodjes();
         TableColumn<Broodje, String> colTitle = new TableColumn<Broodje, String>("Soort Broodje");
         colTitle.setMinWidth(150);
         colTitle.setCellValueFactory(new PropertyValueFactory<Broodje, String>("name"));
@@ -53,21 +43,10 @@ public class AdminMainPane extends BorderPane {
         colYear.setMinWidth(150);
         colYear.setCellValueFactory(new PropertyValueFactory<Broodje, Integer>("Aantal"));
         table.getColumns().addAll(colTitle, colYear, colPrice);
-        this.setCenter(tabPane);
-
-
-
-        broodjesTab.setContent(grid);
-        tabPane.getTabs().add(broodjesTab);
-        tabPane.getTabs().add(statistiekTab);
-        tabPane.getTabs().add(instellingTab);
 
         tablebeleg = new TableView<>();
-        
 
-
-
-refreshBeleg();
+        this.refreshBeleg();
         TableColumn<BelegSoort, String> colTitleBeleg = new TableColumn<BelegSoort, String>("Soort BelegSoort");
         colTitleBeleg.setMinWidth(150);
         colTitleBeleg.setCellValueFactory(new PropertyValueFactory<BelegSoort, String>("name"));
@@ -78,32 +57,30 @@ refreshBeleg();
         colYearBeleg.setMinWidth(150);
         colYearBeleg.setCellValueFactory(new PropertyValueFactory<BelegSoort, Integer>("Aantal"));
         tablebeleg.getColumns().addAll(colTitleBeleg, colYearBeleg, colPriceBeleg);
+        Paint paint= Paint.valueOf("Grey");
+        this.table.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
+        this.table.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 
 
         //grid layout
-        grid.add(label,0,0);
-        grid.add(table, 0,1 , 1, 2);
-        grid.add(label1,0,3);
-        grid.add(tablebeleg, 0, 4, 1, 2);
+        this.add(label,0,0);
+        this.add(table, 0,1 , 1, 2);
+        this.add(label1,0,3);
+        this.add(tablebeleg, 0, 4, 1, 2);
+        controller.setView(this);
 
-
-        this.setCenter(tabPane);
     }
 
     public void refreshbroodjes() {
-
-
-        ObservableList<Broodje> broodjes = FXCollections.observableArrayList(database.getBroodjes().values());
-
+        ObservableList<Broodje> broodjes = FXCollections.observableArrayList(controller.getBroodjes().values());
         table.setItems(broodjes);
         table.refresh();
     }
     public void refreshBeleg() {
 
-        ObservableList<BelegSoort> belegSoort = FXCollections.observableArrayList(belegDatabase.getBelegSoort().values());
+        ObservableList<BelegSoort> belegSoort = FXCollections.observableArrayList(controller.getBeleg().values());
 
         tablebeleg.setItems(belegSoort);
         tablebeleg.refresh();
     }
-
 }

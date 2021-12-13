@@ -1,5 +1,6 @@
 package view;
 
+import controller.OrderViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -34,14 +35,16 @@ import javafx.scene.layout.BorderStroke;
 import javax.swing.text.Style;
 
 public class OrderView {
-	//private Stage stage = new Stage();
+	private Stage stage = new Stage();
 
 	private BroodjesDatabase broodjes;
 	private BelegDatabase beleg;
 	private int Volgnr;
 
 
-	public  OrderView() throws Exception {
+
+	public  OrderView(OrderViewController controller) throws Exception {
+
 		this.Volgnr= 1;
 		this.broodjes= new BroodjesDatabase("XLSBroodje");
 		this.beleg = new BelegDatabase("XLSBeleg");
@@ -55,7 +58,7 @@ public class OrderView {
 		VBox p51= new VBox(10);
 		VBox p511= new VBox(10);
 		HBox p6= new HBox(10);
-		Stage stage = new Stage();
+
 		Scene scene = new Scene(p1, 650, 650);
 		stage.setTitle("Order view");
 
@@ -165,21 +168,17 @@ public class OrderView {
 
 
 		p1.getChildren().addAll(p2,p3,p4,p5,p6);
+
 		stage.setX(20);
 		stage.setY(20);
 		stage.setScene(scene);
 		stage.show();
+		controller.setView(this);
+
+
 	}
 
 
 
-	/*stage.setTitle("ORDER VIEW");
-	stage.initStyle(StageStyle.UTILITY);
-	stage.setX(20);
-	stage.setY(20);
-	Group root = new Group();
-	Scene scene = new Scene(root, 650, 650);
-	stage.setScene(scene);
-	stage.sizeToScene();
-	stage.show();*/
+
 }
