@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.BelegSoort;
+import model.Bestellijn;
 import model.Broodje;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
@@ -28,7 +29,10 @@ import javafx.scene.control.Label;
 
 import java.awt.*;
 import java.awt.TextField;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderStroke;
 
@@ -40,12 +44,16 @@ public class OrderView {
 	private BroodjesDatabase broodjes;
 	private BelegDatabase beleg;
 	private int Volgnr;
+	private ArrayList<Bestellijn> bestellijn;
+	private TreeMap<String,Integer> broodjesVoorraad;
+	private TreeMap<String,Integer> belegVoorraad;
+
 
 
 
 	public  OrderView(OrderViewController controller) throws Exception {
 
-		this.Volgnr= 1;
+		this.Volgnr= 0;
 		this.broodjes= new BroodjesDatabase("XLSBroodje");
 		this.beleg = new BelegDatabase("XLSBeleg");
 		VBox p1= new VBox();
@@ -77,7 +85,24 @@ public class OrderView {
 			{
 				Volgnr=Volgnr+1;
 				volgnr.setText("Volgnr: "+Volgnr);
+				for (Node b:p31.getChildren()){
+					b.setDisable(false);
+				}
+				for (Node b:p32.getChildren()){
+					b.setDisable(false);
+				}
+				for (Node b:p511.getChildren()) {
+					b.setDisable(false);
+				}
+				for (Node b:p51.getChildren()) {
+					b.setDisable(false);
+				}
+				for (Node b:p6.getChildren()) {
+					b.setDisable(false);
+				}
 
+
+				nieuwebestelling.setDisable(true);
 			}
 		};
 
@@ -94,23 +119,45 @@ public class OrderView {
 
 
 		//p31
+		controller.setView(this);
+		controller.update();
+		if (broodjesVoorraad!=null) {
+			for (String b : this.broodjesVoorraad.keySet()) {
+				if (broodjesVoorraad.get(b) > 0) {
+					Button buttonbroodjes = new Button(b);
+					buttonbroodjes.setDisable(true);
+					p31.getChildren().addAll(buttonbroodjes);
+				}
 
+			}
+		}
+		/*
 		for(Broodje broodje : this.broodjes.getBroodjes().values()){
 			if(broodje.getAantal()>0){
 				Button buttonbroodjes = new Button(broodje.getName());
 				p31.getChildren().addAll(buttonbroodjes);
 			}
 
-		}
+		}*/
 		//p32
+		if (belegVoorraad!=null) {
+			for (String b : this.belegVoorraad.keySet()) {
+				if (belegVoorraad.get(b) > 0) {
+					Button buttonbeleg = new Button(b);
+					buttonbeleg.setDisable(true);
+					p32.getChildren().addAll(buttonbeleg);
+				}
 
+			}
+		}
+		/*
 		for(BelegSoort beleg: this.beleg.getBelegSoort().values()){
 			if (beleg.getAantal()>0){
 				Button buttonbeleg = new Button(beleg.getName());
 				p32.getChildren().addAll(buttonbeleg);
 			}
 
-		}
+		}*/
 		//p3
 		p3.setPadding(new Insets(10));
 
@@ -138,7 +185,9 @@ public class OrderView {
 		//p511
 		Label label1 = new Label("Selecteer lijn in lijst");
 		Button voegtoe = new Button("Voeg zelfde broodje toe");
+		voegtoe.setDisable(true);
 		Button verwijder = new Button("Verwijder broodje");
+		verwijder.setDisable(true);
 		p511.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p511.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 		p511.setPadding(new Insets(10));
@@ -147,6 +196,7 @@ public class OrderView {
 		//p51
 		p51.getChildren().addAll(p511);
 		Button annuleer = new Button("Annuleer bestelling");
+		annuleer.setDisable(true);
 		p51.getChildren().addAll(annuleer);
 		//p5
 		p5.getChildren().addAll(table,p51);
@@ -157,10 +207,13 @@ public class OrderView {
 		p6.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p6.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 		Button afsluiten = new Button("AFSLUITEN BESTELLING");
+		afsluiten.setDisable(true);
 		Label betalen= new Label("Te betalen: ");
 		betalen.setAlignment(Pos.CENTER_RIGHT);
 		Button betaal = new Button("Betaal");
+		betaal.setDisable(true);
 		Button keuken = new Button("NAAR KEUKEN");
+		keuken.setDisable(true);
 		p6.getChildren().addAll(afsluiten,betalen,betaal,keuken);
 		p6.setPadding(new Insets(10));
 
@@ -176,6 +229,15 @@ public class OrderView {
 		controller.setView(this);
 
 
+	}
+	public void updateBestellijnen(ArrayList<Bestellijn> list){
+		this.bestellijn=list;
+	}
+	public void updateStatusBroodjesKnoppen(TreeMap<String,Integer> voorraadLijst){
+		broodjesVoorraad=voorraadLijst;
+	}
+	public void updateStatusBelegKnoppen(TreeMap<String,Integer> voorraadLijst){
+		belegVoorraad=voorraadLijst;
 	}
 
 

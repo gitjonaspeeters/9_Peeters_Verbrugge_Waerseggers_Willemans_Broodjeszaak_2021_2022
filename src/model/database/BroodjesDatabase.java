@@ -1,6 +1,7 @@
 package model.database;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import model.BelegSoort;
 import model.Broodje;
 import model.database.LoadSaveStrategies.BroodjesTekstLoadSaveStrategy;
 import model.database.LoadSaveStrategies.LoadSaveStrategy;
@@ -33,5 +34,12 @@ public class BroodjesDatabase {
 
     public TreeMap<String, Broodje> getBroodjes(){
         return broodjes;
+    }
+    public TreeMap<String,Integer> getVoorraadLijstBroodje(){
+        TreeMap<String,Integer> v=new TreeMap<>();
+        for (Broodje b:broodjes.values()) {
+            v.put(b.getName(),b.getAantal());
+        }
+        return v;
     }
 }

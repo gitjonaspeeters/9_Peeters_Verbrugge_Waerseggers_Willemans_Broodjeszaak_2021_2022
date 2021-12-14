@@ -1,6 +1,7 @@
 package controller;
 
 import model.BelegSoort;
+import model.BestelFacade;
 import model.Broodje;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
@@ -10,14 +11,17 @@ import view.panels.BroodjesBelegPane;
 
 import java.util.Map;
 
-public class BroodjesBelegController  {
+public class BroodjesBelegController implements Observer  {
     BroodjesDatabase broodjesDatabase;
     BelegDatabase belegDatabase;
     BroodjesBelegPane view;
+    BestelFacade facade;
 
     public BroodjesBelegController() throws Exception {
         this.broodjesDatabase = new BroodjesDatabase("XLSBroodje");
         this.belegDatabase = new BelegDatabase("XLSBeleg");
+        facade=new BestelFacade();
+        facade.addObserver(this);
     }
 
     public void setView(BroodjesBelegPane view){
@@ -32,4 +36,8 @@ public class BroodjesBelegController  {
     }
 
 
+    @Override
+    public void update() {
+
+    }
 }

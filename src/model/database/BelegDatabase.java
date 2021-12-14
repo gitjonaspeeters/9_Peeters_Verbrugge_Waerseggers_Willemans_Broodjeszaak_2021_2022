@@ -32,5 +32,12 @@ public class BelegDatabase {
     public TreeMap<String, BelegSoort> getBelegSoort(){
         return belegSoort;
     }
+    public TreeMap<String,Integer> getVoorraadLijstBeleg(){
+        TreeMap<String,Integer> v=new TreeMap<>();
+        for (BelegSoort b:belegSoort.values()) {
+            v.put(b.getName(),b.getAantal());
+        }
+        return v;
+    }
 
 }
