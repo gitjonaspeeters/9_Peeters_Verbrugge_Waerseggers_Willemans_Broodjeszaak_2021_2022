@@ -15,10 +15,10 @@ public class OrderViewController implements Observer {
         facade=new BestelFacade();
         facade.addObserver(this);
     }
-    private void setAsObserver(){
-        if ()
-    }
 
+    public int startnieuwebestelling(){
+        return facade.startNieuweBestelling();
+    }
     public void toevoegenBroodje(String broodje){
         facade.voegBestelLijnToe(broodje);
     }

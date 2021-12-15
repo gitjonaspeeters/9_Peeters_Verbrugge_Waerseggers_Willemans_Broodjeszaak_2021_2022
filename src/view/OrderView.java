@@ -39,13 +39,15 @@ public class OrderView {
 	private TreeMap<String,Integer> belegVoorraad;
 	private OrderViewController controller;
 	private TableView table;
-	private Button nieuwebestelling;
-	private Button ;
-	private Button;
-	private Button;
-	private Button;
-	private Button;
-	private Button;
+	private Button nieuwebestelling=new Button("Nieuwe bestelling");
+	private Button zelfdebestelling = new Button("Voeg zelfde broodje toe");
+	private Button verwijder =new Button("Verwijder broodje");
+	private Button annuleer =new Button("Annuleer bestelling");
+	private Button afsluiten= new Button("Afsluiten bestelling");
+	private Button betalen =new Button("Betaal");
+	private Button naarkeuken= new Button("Naar keuken");
+	private ArrayList<Button> broodjesKnoppen=new ArrayList<>();
+	private ArrayList<Button> belegKnoppen=new ArrayList<>();
 
 
 
@@ -54,7 +56,6 @@ public class OrderView {
 
 	public  OrderView(OrderViewController controller) throws Exception {
 		this.controller = controller;
-		this.Volgnr= 0;
 		this.broodjes= new BroodjesDatabase("XLSBroodje");
 		this.beleg = new BelegDatabase("XLSBeleg");
 		VBox p1= new VBox();
@@ -68,6 +69,14 @@ public class OrderView {
 		VBox p511= new VBox(10);
 		HBox p6= new HBox(10);
 		this.table = new TableView();
+		afsluiten.setDisable(true);
+		annuleer.setDisable(true);
+		nieuwebestelling.setDisable(false);
+		zelfdebestelling.setDisable(true);
+		betalen.setDisable(true);
+		naarkeuken.setDisable(true);
+
+
 
 
 		Scene scene = new Scene(p1, 650, 650);
@@ -75,7 +84,6 @@ public class OrderView {
 
 		//p1
 		Paint paint= Paint.valueOf("Grey");
-
 		p1.setPadding(new Insets(10));
 
 		//p2
@@ -104,7 +112,6 @@ public class OrderView {
 					buttonbeleg.setDisable(true);
 					belegKnoppen.add(buttonbeleg);
 				}
-
 			}
 			p32.getChildren().addAll(belegKnoppen);
 		}
