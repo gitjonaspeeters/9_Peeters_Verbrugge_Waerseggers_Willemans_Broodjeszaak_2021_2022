@@ -2,8 +2,7 @@ package controller;
 
 import model.BelegSoort;
 import model.BestelFacade;
-import model.database.BelegDatabase;
-import model.database.BroodjesDatabase;
+import model.Bestellijn;
 import model.observer.Observer;
 import view.OrderView;
 
@@ -16,9 +15,21 @@ public class OrderViewController implements Observer {
     public OrderViewController() throws Exception {
         facade=new BestelFacade();
         facade.addObserver(this);
+    }
+    private void setAsObserver(){
+        if ()
+    }
 
+    public void toevoegenBroodje(String broodje){
+        facade.voegBestelLijnToe(broodje);
+    }
 
+    public void toevoegenBeleg(String broodje,String beleg){
+        facade.voegBelegToeAanBestelLijn(broodje,beleg);
+    }
 
+    public ArrayList<Bestellijn> getBestellijnen(){
+        return  facade.getBestelLijnen();
     }
 
     public void setView(OrderView view){

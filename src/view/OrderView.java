@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,34 +12,25 @@ import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import model.BelegSoort;
 import model.Bestellijn;
 import model.Broodje;
 import model.database.BelegDatabase;
-import model.database.BroodjesDatabase;
 import model.database.BroodjesDatabase;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import javafx.scene.control.Label;
 
-import java.awt.*;
-import java.awt.TextField;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderStroke;
 
-import javax.swing.text.Style;
-
 public class OrderView {
 	private Stage stage = new Stage();
-
+	ObservableList<Object> items;
 	private BroodjesDatabase broodjes;
 	private BelegDatabase beleg;
 	private int Volgnr;
@@ -52,7 +42,7 @@ public class OrderView {
 
 
 	public  OrderView(OrderViewController controller) throws Exception {
-
+		this.controller = controller;
 		this.Volgnr= 0;
 		this.broodjes= new BroodjesDatabase("XLSBroodje");
 		this.beleg = new BelegDatabase("XLSBeleg");
@@ -176,8 +166,10 @@ public class OrderView {
 		TableView table = new TableView<>();
 		TableColumn<Broodje, String> Broodje = new TableColumn<Broodje, String>("Broodje");
 		Broodje.setMinWidth(180);
-		TableColumn<Broodje, String> Beleg = new TableColumn<Broodje, String>("Beleg");
+		Broodje.setCellValueFactory(new PropertyValueFactory<>("Broodje"));
+		TableColumn<model.Broodje, Integer> Beleg = new TableColumn<>("Beleg");
 		Beleg.setMinWidth(180);
+		Beleg.setCellValueFactory(new PropertyValueFactory<>("Beleg"));
 		table.getColumns().addAll( Broodje, Beleg);
 
 
@@ -197,7 +189,7 @@ public class OrderView {
 		p51.getChildren().addAll(p511);
 		Button annuleer = new Button("Annuleer bestelling");
 		annuleer.setDisable(true);
-		p51.getChildren().addAll(annuleer);
+		p51.getChildren().addAll(annuleer);*/
 		//p5
 		p5.getChildren().addAll(table,p51);
 		p5.setPadding(new Insets(10));
@@ -238,6 +230,53 @@ public class OrderView {
 	}
 	public void updateStatusBelegKnoppen(TreeMap<String,Integer> voorraadLijst){
 		belegVoorraad=voorraadLijst;
+	}
+
+	public void setStateBestelling(){
+		Volgnr=Volgnr-1;
+		volgnr.setText("Volgnr: "+Volgnr);
+		for (Node b:p31.getChildren()){
+			b.setDisable(true);
+		}
+		for (Node b:p32.getChildren()){
+			b.setDisable(true);
+		}
+		for (Node b:p511.getChildren()) {
+			b.setDisable(true);
+		}
+		for (Node b:p51.getChildren()) {
+			b.setDisable(true);
+		}
+		for (Node b:p6.getChildren()) {
+			b.setDisable(true);
+		}
+	}
+
+	public void voegBroodjetoe(HBox p31){
+
+
+		if (broodjesVoorraad!=null) {
+			for (String b : this.broodjesVoorraad.keySet()) {
+				if (broodjesVoorraad.get(b) > 0) {
+
+					Button buttonbroodjes = new Button(b);
+					buttonbroodjes.setOnAction(e -> {
+						System.out.println(b);
+						controller.toevoegenBroodje(b);
+						System.out.println(controller.getBestellijnen());
+
+						ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
+						System.out.println(bestellijns);
+						table.setItems(bestellijns);
+
+						table.refresh();
+					});
+					buttonbroodjes.setDisable(true);
+					p31.getChildren().addAll(buttonbroodjes);
+				}
+
+			}
+		}
 	}
 
 

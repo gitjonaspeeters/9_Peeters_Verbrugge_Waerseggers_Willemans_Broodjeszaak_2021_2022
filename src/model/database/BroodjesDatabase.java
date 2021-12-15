@@ -32,6 +32,10 @@ public class BroodjesDatabase {
         }
     }
 
+    public Broodje getBroodje(String broodje){
+        return broodjes.get(broodje);
+    }
+
     public TreeMap<String, Broodje> getBroodjes(){
         return broodjes;
     }

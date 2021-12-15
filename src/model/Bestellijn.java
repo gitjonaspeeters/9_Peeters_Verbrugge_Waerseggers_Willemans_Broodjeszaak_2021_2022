@@ -17,6 +17,15 @@ public class Bestellijn {
     public void addBeleg(String beleg){
         this.beleg.add(beleg);
     }
+
+    public String getBroodje() {
+        return broodje;
+    }
+
+    public ArrayList<String> getBeleg() {
+        return beleg;
+    }
+
     public void removeBeleg(String beleg){
         this.beleg.remove(beleg);
     }

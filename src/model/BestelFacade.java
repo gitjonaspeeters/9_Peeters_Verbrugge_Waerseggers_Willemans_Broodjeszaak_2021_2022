@@ -33,7 +33,6 @@ public class BestelFacade implements Subject {
     public void notifyObservers() throws Exception {
         for (Observer o : observers) {
             o.update();
-
         }
     }
     public void voegBestelLijnToe(String broodje){bestelling.voegBestelLijnToe(broodje);};

@@ -36,7 +36,7 @@ public class Broodje implements Comparable<Broodje>{
 		return aantal;
 	}
 
-	public void setAantal(int aantal) {
+	public void aanpassenVoorraad(int aantal) {
 		this.aantal = aantal;
 	}
 

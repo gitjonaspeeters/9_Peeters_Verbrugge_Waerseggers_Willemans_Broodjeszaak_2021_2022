@@ -36,7 +36,7 @@ public class BelegSoort implements  Comparable<BelegSoort>{
         return aantal;
     }
 
-    public void setAantal(int aantal) {
+    public void aanpassenVoorraad(int aantal) {
         this.aantal = aantal;
     }
 
