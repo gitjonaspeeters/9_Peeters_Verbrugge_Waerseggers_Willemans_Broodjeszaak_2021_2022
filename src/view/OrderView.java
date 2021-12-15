@@ -73,7 +73,6 @@ public class OrderView {
 		Scene scene = new Scene(p1, 650, 650);
 		stage.setTitle("Order view");
 
-
 		//p1
 		Paint paint= Paint.valueOf("Grey");
 
@@ -81,45 +80,13 @@ public class OrderView {
 
 		//p2
 		p2.setPadding(new Insets(10));
-		Button nieuwebestelling = new Button("Nieuwe bestelling");
-		Label volgnr= new Label("Volgnr: "+this.Volgnr);
-
-
-
-		// when button is pressed
-		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e)
-			{
-				Volgnr=Volgnr+1;
-				volgnr.setText("Volgnr: "+Volgnr);
-				for (Node b:p31.getChildren()){
-					b.setDisable(false);
-				}
-				for (Node b:p32.getChildren()){
-					b.setDisable(false);
-				}
-				for (Node b:p511.getChildren()) {
-					b.setDisable(false);
-				}
-				for (Node b:p51.getChildren()) {
-					b.setDisable(false);
-				}
-				for (Node b:p6.getChildren()) {
-					b.setDisable(false);
-				}
-
-
-				nieuwebestelling.setDisable(true);
-			}
-		};
-		nieuwebestelling.setOnAction(event2);
-
 		ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
 		goedkoopstegratis.setMinWidth(350);
 		goedkoopstegratis.setValue("Goedkoopste broodje gratis");
 		goedkoopstegratis.show();
-
-		p2.getChildren().addAll(nieuwebestelling,volgnr, goedkoopstegratis);
+		Label v=new Label("Volgnr: "+Volgnr);
+		nieuwebestelling.setOnAction(e -> setStateBestelling());
+		p2.getChildren().addAll(nieuwebestelling,v, goedkoopstegratis);
 
 
 
@@ -135,10 +102,11 @@ public class OrderView {
 				if (belegVoorraad.get(b) > 0) {
 					Button buttonbeleg = new Button(b);
 					buttonbeleg.setDisable(true);
-					p32.getChildren().addAll(buttonbeleg);
+					belegKnoppen.add(buttonbeleg);
 				}
 
 			}
+			p32.getChildren().addAll(belegKnoppen);
 		}
 
 		//p3
@@ -169,31 +137,17 @@ public class OrderView {
 
 		//p511
 		Label label1 = new Label("Selecteer lijn in lijst");
-		Button voegtoe = new Button("Voeg zelfde broodje toe");
-		voegtoe.setDisable(true);
-		Button verwijder = new Button("Verwijder broodje");
+
+		zelfdebestelling.setDisable(true);
+
 		verwijder.setDisable(true);
 		p511.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p511.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 		p511.setPadding(new Insets(10));
-		p511.getChildren().addAll(label1,voegtoe,verwijder);
+		p511.getChildren().addAll(label1,zelfdebestelling,verwijder);
 
 		//p51
 		p51.getChildren().addAll(p511);
-		/*EventHandler<ActionEvent> event51 = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e)
-			{
-
-
-
-				nieuwebestelling.setDisable(false);
-			}
-		};
-		Button annuleer = new Button("Annuleer bestelling");
-		annuleer.setOnAction(event51);
-		annuleer.setDisable(true);
-		p51.getChildren().addAll(annuleer);*/
-		//p5
 		p5.getChildren().addAll(table,p51);
 		p5.setPadding(new Insets(10));
 		p5.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
@@ -201,15 +155,9 @@ public class OrderView {
 		//p6
 		p6.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p6.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
-		Button afsluiten = new Button("AFSLUITEN BESTELLING");
-		afsluiten.setDisable(true);
-		Label betalen= new Label("Te betalen: ");
+		Label betalen1= new Label("Te betalen: ");
 		betalen.setAlignment(Pos.CENTER_RIGHT);
-		Button betaal = new Button("Betaal");
-		betaal.setDisable(true);
-		Button keuken = new Button("NAAR KEUKEN");
-		keuken.setDisable(true);
-		p6.getChildren().addAll(afsluiten,betalen,betaal,keuken);
+		p6.getChildren().addAll(afsluiten,betalen1,betalen1,naarkeuken);
 		p6.setPadding(new Insets(10));
 
 
@@ -236,49 +184,41 @@ public class OrderView {
 	}
 
 	public void setStateBestelling(){
-		Volgnr=Volgnr-1;
-		volgnr.setText("Volgnr: "+Volgnr);
-		for (Node b:p31.getChildren()){
-			b.setDisable(true);
+        Volgnr = controller.startnieuwebestelling();
+		afsluiten.setDisable(false);
+		annuleer.setDisable(false);
+		nieuwebestelling.setDisable(true);
+		zelfdebestelling.setDisable(false);
+		betalen.setDisable(false);
+		naarkeuken.setDisable(false);
+
+		for(Button b : broodjesKnoppen){
+			b.setDisable(false);
 		}
-		for (Node b:p32.getChildren()){
-			b.setDisable(true);
+
+		for(Button b : belegKnoppen){
+			b.setDisable(false);
 		}
-		for (Node b:p511.getChildren()) {
-			b.setDisable(true);
-		}
-		for (Node b:p51.getChildren()) {
-			b.setDisable(true);
-		}
-		for (Node b:p6.getChildren()) {
-			b.setDisable(true);
-		}
+
 	}
 
 	public void voegBroodjetoe(HBox p31){
-
-
 		if (broodjesVoorraad!=null) {
 			for (String b : this.broodjesVoorraad.keySet()) {
 				if (broodjesVoorraad.get(b) > 0) {
-
 					Button buttonbroodjes = new Button(b);
 					buttonbroodjes.setOnAction(e -> {
-						System.out.println(b);
 						controller.toevoegenBroodje(b);
-						System.out.println(controller.getBestellijnen());
-
 						ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
-						System.out.println(bestellijns);
 						table.setItems(bestellijns);
 
 						table.refresh();
 					});
 					buttonbroodjes.setDisable(true);
-					p31.getChildren().addAll(buttonbroodjes);
+					broodjesKnoppen.add(buttonbroodjes);
 				}
-
 			}
+			p31.getChildren().addAll(broodjesKnoppen);
 		}
 	}
 

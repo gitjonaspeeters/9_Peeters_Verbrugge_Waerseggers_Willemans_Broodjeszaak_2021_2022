@@ -49,4 +49,5 @@ public abstract class BestellingState {
     public void startBereiding(){
         throw new IllegalArgumentException("Kan bestelling nog niet bereiden");
     }
+    public void klaargemaakt(){throw new IllegalArgumentException("De bestelling is nog niet klaargemaakt");}
 }

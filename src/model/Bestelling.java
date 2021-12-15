@@ -5,6 +5,7 @@ import model.bestelStates.*;
 import java.util.ArrayList;
 
 public class Bestelling {
+
     private ArrayList<Bestellijn> bestellijnen;
     private BestellingState Afgesloten;
     private BestellingState Betaald;
@@ -13,16 +14,11 @@ public class Bestelling {
     private BestellingState InWachtrij;
     private BestellingState InWacht;
     private BestellingState Annuleren;
-
+    private BestellingState Klaargemaakt;
     private BestellingState state;
+    private int volgnr=0;
 
 
-
-
-
-    public Bestelling(ArrayList<Bestellijn> bestellijnen) {
-        this.bestellijnen = bestellijnen;
-    }
 
     public Bestelling() {
         Afgesloten = new Afgesloten(this);
@@ -32,17 +28,25 @@ public class Bestelling {
         InWachtrij =  new InWachtrij(this);
         InWacht = new InWacht(this);
         Annuleren = new Annuleren(this);
+        Klaargemaakt=new Klaargemaakt(this);
         bestellijnen=new ArrayList<>();
         this.state = InWacht;
-
+        this.bestellijnen=new ArrayList<>();
+        this.volgnr+=1;
 
     }
+
+    public int getVolgnr() {
+        return volgnr;
+    }
+
 
     public BestellingState getAnnuleren() {
         return Annuleren;
     }
 
     public void setAnnuleren(BestellingState annuleren) {
+        volgnr-=1;
         Annuleren = annuleren;
     }
 
@@ -72,6 +76,9 @@ public class Bestelling {
 
     public BestellingState getInBereiding() {
         return InBereiding;
+    }
+    public BestellingState getKlaargemaakt(){
+        return Klaargemaakt;
     }
 
     public void setInBereiding(BestellingState inBereiding) {

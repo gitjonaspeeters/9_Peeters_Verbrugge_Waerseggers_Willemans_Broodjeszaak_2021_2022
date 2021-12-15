@@ -1,20 +1,27 @@
 package model;
 
+import controller.OrderViewController;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
 import model.observer.Observer;
 import model.observer.Subject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public class BestelFacade implements Subject {
     Bestelling bestelling;
     BroodjesDatabase broodjesDatabase;
     BelegDatabase belegDatabase;
+    HashMap<BestellingsEvents,Observer> events=new HashMap<>();
 
     public BestelFacade() throws Exception {
-        this.bestelling = new Bestelling();
+        for (Observer o:observers){
+            if (o.getClass().toString().equalsIgnoreCase("OrderViewController"))
+                events.put(BestellingsEvents.START_NIEUWE_BESTELLING,o);
+        }
+
         this.broodjesDatabase = new BroodjesDatabase("XLSBroodje");
         this.belegDatabase = new BelegDatabase("XLSBeleg");
     }
@@ -34,6 +41,10 @@ public class BestelFacade implements Subject {
         for (Observer o : observers) {
             o.update();
         }
+    }
+    public int startNieuweBestelling(){
+        bestelling = new Bestelling();
+        return bestelling.getVolgnr();
     }
 
     public void voegBestelLijnToe(String broodje){

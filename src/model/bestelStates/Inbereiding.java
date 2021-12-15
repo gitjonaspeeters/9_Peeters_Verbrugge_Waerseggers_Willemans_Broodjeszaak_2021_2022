@@ -6,7 +6,8 @@ public class Inbereiding extends BestellingState {
     public Inbereiding(Bestelling bestelling) {
         super(bestelling);
     }
-    public void klaarGemaakt(){
-        //getBestelling().setState(getBestelling().getKlaargemaakt());
+    
+    public void klaargemaakt(){
+        getBestelling().setState(getBestelling().getKlaargemaakt());
     }
 }
