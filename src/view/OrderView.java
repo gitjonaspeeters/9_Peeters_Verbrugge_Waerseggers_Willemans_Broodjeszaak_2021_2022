@@ -37,6 +37,17 @@ public class OrderView {
 	private ArrayList<Bestellijn> bestellijn;
 	private TreeMap<String,Integer> broodjesVoorraad;
 	private TreeMap<String,Integer> belegVoorraad;
+	private OrderViewController controller;
+	private TableView table;
+	private Button nieuwebestelling;
+	private Button ;
+	private Button;
+	private Button;
+	private Button;
+	private Button;
+	private Button;
+
+
 
 
 
@@ -56,6 +67,8 @@ public class OrderView {
 		VBox p51= new VBox(10);
 		VBox p511= new VBox(10);
 		HBox p6= new HBox(10);
+		this.table = new TableView();
+
 
 		Scene scene = new Scene(p1, 650, 650);
 		stage.setTitle("Order view");
@@ -70,7 +83,11 @@ public class OrderView {
 		p2.setPadding(new Insets(10));
 		Button nieuwebestelling = new Button("Nieuwe bestelling");
 		Label volgnr= new Label("Volgnr: "+this.Volgnr);
-		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+
+
+
+		// when button is pressed
+		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e)
 			{
 				Volgnr=Volgnr+1;
@@ -95,9 +112,7 @@ public class OrderView {
 				nieuwebestelling.setDisable(true);
 			}
 		};
-
-		// when button is pressed
-		nieuwebestelling.setOnAction(event);
+		nieuwebestelling.setOnAction(event2);
 
 		ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
 		goedkoopstegratis.setMinWidth(350);
@@ -111,24 +126,9 @@ public class OrderView {
 		//p31
 		controller.setView(this);
 		controller.update();
-		if (broodjesVoorraad!=null) {
-			for (String b : this.broodjesVoorraad.keySet()) {
-				if (broodjesVoorraad.get(b) > 0) {
-					Button buttonbroodjes = new Button(b);
-					buttonbroodjes.setDisable(true);
-					p31.getChildren().addAll(buttonbroodjes);
-				}
+		this.voegBroodjetoe(p31);
 
-			}
-		}
-		/*
-		for(Broodje broodje : this.broodjes.getBroodjes().values()){
-			if(broodje.getAantal()>0){
-				Button buttonbroodjes = new Button(broodje.getName());
-				p31.getChildren().addAll(buttonbroodjes);
-			}
 
-		}*/
 		//p32
 		if (belegVoorraad!=null) {
 			for (String b : this.belegVoorraad.keySet()) {
@@ -140,14 +140,7 @@ public class OrderView {
 
 			}
 		}
-		/*
-		for(BelegSoort beleg: this.beleg.getBelegSoort().values()){
-			if (beleg.getAantal()>0){
-				Button buttonbeleg = new Button(beleg.getName());
-				p32.getChildren().addAll(buttonbeleg);
-			}
 
-		}*/
 		//p3
 		p3.setPadding(new Insets(10));
 
@@ -163,7 +156,7 @@ public class OrderView {
 
 
 		//tabel
-		TableView table = new TableView<>();
+
 		TableColumn<Broodje, String> Broodje = new TableColumn<Broodje, String>("Broodje");
 		Broodje.setMinWidth(180);
 		Broodje.setCellValueFactory(new PropertyValueFactory<>("Broodje"));
@@ -187,7 +180,17 @@ public class OrderView {
 
 		//p51
 		p51.getChildren().addAll(p511);
+		/*EventHandler<ActionEvent> event51 = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e)
+			{
+
+
+
+				nieuwebestelling.setDisable(false);
+			}
+		};
 		Button annuleer = new Button("Annuleer bestelling");
+		annuleer.setOnAction(event51);
 		annuleer.setDisable(true);
 		p51.getChildren().addAll(annuleer);*/
 		//p5

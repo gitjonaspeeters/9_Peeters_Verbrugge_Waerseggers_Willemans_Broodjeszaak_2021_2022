@@ -111,6 +111,7 @@ public class Bestelling {
     }
     public void voegBestelLijnToe(String broodje){
         Bestellijn bestellijn=new Bestellijn(broodje);
+        bestellijnen.add(bestellijn);
     }
 
     public void voegBelegtoe(String beleg, String broodje){
@@ -130,5 +131,9 @@ public class Bestelling {
 
     public ArrayList<Bestellijn> getBestelLijnen() {
         return bestellijnen;
+    }
+
+    public void verwijderBestellijn(int i) {
+        bestellijnen.remove(i);
     }
 }

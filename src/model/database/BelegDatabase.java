@@ -28,7 +28,9 @@ public class BelegDatabase {
             this.belegSoort.put(belegs.getName(), belegs);
         }
     }
-
+    public  BelegSoort getBeleg(String beleg){
+        return belegSoort.get(beleg);
+    }
     public TreeMap<String, BelegSoort> getBelegSoort(){
         return belegSoort;
     }

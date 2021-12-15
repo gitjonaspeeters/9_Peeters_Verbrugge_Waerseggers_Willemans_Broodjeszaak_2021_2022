@@ -35,7 +35,19 @@ public class BestelFacade implements Subject {
             o.update();
         }
     }
-    public void voegBestelLijnToe(String broodje){bestelling.voegBestelLijnToe(broodje);};
+
+    public void voegBestelLijnToe(String broodje){
+        if (getVoorraadLijstBroodje().get(broodje)>0){
+            broodjesDatabase.getBroodje(broodje).aanpassenVoorraad(getVoorraadLijstBroodje().get(broodje)-1);
+            bestelling.voegBestelLijnToe(broodje);
+        }
+    }
+    public void voegBelegToeAanBestelLijn(String broodje,String beleg){
+        if (getVoorraadLijstBeleg().get(beleg)>0){
+            belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-1);
+            bestelling.voegBelegtoe(broodje,beleg);
+        }
+    }
     public ArrayList<Bestellijn> getBestelLijnen(){return bestelling.getBestelLijnen();}
     public TreeMap<String,Integer> getVoorraadLijstBroodje(){
         return broodjesDatabase.getVoorraadLijstBroodje();
@@ -43,5 +55,6 @@ public class BestelFacade implements Subject {
     public TreeMap<String,Integer> getVoorraadLijstBeleg(){
         return belegDatabase.getVoorraadLijstBeleg();
     }
+
 
 }

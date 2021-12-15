@@ -1,12 +1,11 @@
 package controller;
 
-import model.BelegSoort;
 import model.BestelFacade;
 import model.Bestellijn;
 import model.observer.Observer;
 import view.OrderView;
 
-import java.util.Observable;
+import java.util.ArrayList;
 
 public class OrderViewController implements Observer {
     public OrderView view;
