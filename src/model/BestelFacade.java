@@ -86,4 +86,16 @@ public class BestelFacade implements Subject {
     }
 
 
+    public void voegIdentiekeBestelLijnToe(Bestellijn bestellijn) {
+        for(String b: bestellijn.getBeleg()){
+            belegDatabase.getBeleg(b).aanpassenVoorraad(getVoorraadLijstBeleg().get(b) -1);
+        }
+        broodjesDatabase.getBroodje(bestellijn.broodje).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.broodje) -1);
+        bestelling.voegIdentiekeBestelling(bestellijn);
+        try{
+            notifyObservers(BestellingsEvents.VOEG_IDENTIEKE_BESTELLING_TOE);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -17,6 +17,7 @@ public class OrderViewController implements Observer {
         facade.addObserver(this);
         facade.schrijfInVoorEvent(BestellingsEvents.VOEG_BESTELLIJN_TOE,this);
         facade.schrijfInVoorEvent(BestellingsEvents.VOEG_BELEG_TOE,this);
+        facade.schrijfInVoorEvent(BestellingsEvents.VOEG_IDENTIEKE_BESTELLING_TOE,this);
     }
 
     public int startnieuwebestelling(){
@@ -28,6 +29,10 @@ public class OrderViewController implements Observer {
 
     public void toevoegenBeleg(Bestellijn bestellijn,String beleg){
         facade.voegBelegToeAanBestelLijn(bestellijn,beleg);
+    }
+
+    public void voegIdentiekeBestelling(Bestellijn bestellijn){
+        facade.voegIdentiekeBestelLijnToe(bestellijn);
     }
 
     public ArrayList<Bestellijn> getBestellijnen(){

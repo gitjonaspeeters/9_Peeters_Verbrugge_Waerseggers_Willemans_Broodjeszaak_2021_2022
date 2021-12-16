@@ -14,11 +14,16 @@ public class Bestellijn {
     public Bestellijn(String broodje) {
         this.broodje = broodje;
     }
+
     public void addBeleg(String beleg){
         if (this.beleg==null){
             this.beleg=new ArrayList<>();
         }
         this.beleg.add(beleg);
+    }
+
+    public void addAll( ArrayList beleg){
+        this.beleg = beleg;
     }
 
     public String getBroodje() {

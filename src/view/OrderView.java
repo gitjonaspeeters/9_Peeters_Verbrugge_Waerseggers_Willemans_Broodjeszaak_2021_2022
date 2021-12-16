@@ -30,7 +30,6 @@ import javafx.scene.layout.BorderStroke;
 
 public class OrderView {
 	private Stage stage = new Stage();
-	ObservableList<Object> items;
 	private BroodjesDatabase broodjes;
 	private BelegDatabase beleg;
 	private int Volgnr;
@@ -119,8 +118,6 @@ public class OrderView {
 		p4.setPadding(new Insets(5));
 		p4.getChildren().addAll(label);
 
-
-
 		//tabel
 
 		TableColumn<Broodje, String> Broodje = new TableColumn<Broodje, String>("Broodje");
@@ -131,13 +128,11 @@ public class OrderView {
 		Beleg.setCellValueFactory(new PropertyValueFactory<>("Beleg"));
 		table.getColumns().addAll( Broodje, Beleg);
 
-
-
 		//p511
 		Label label1 = new Label("Selecteer lijn in lijst");
 
 		zelfdebestelling.setDisable(true);
-
+		zelfdebestelling.setOnAction(e -> voegIdentiekeBestellingtoe());
 		verwijder.setDisable(true);
 		p511.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p511.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
@@ -157,9 +152,6 @@ public class OrderView {
 		betalen.setAlignment(Pos.CENTER_RIGHT);
 		p6.getChildren().addAll(afsluiten,betalen1,naarkeuken);
 		p6.setPadding(new Insets(10));
-
-
-
 
 		p1.getChildren().addAll(p2,p3,p4,p5,p6);
 
@@ -191,6 +183,23 @@ public class OrderView {
 		naarkeuken.setDisable(false);
 		zetJuisteBroodjesBelegKnoppenAan();
 
+	}
+
+	public void voegIdentiekeBestellingtoe(){
+		Bestellijn best = kiesBestellijn();
+
+		controller.voegIdentiekeBestelling(best);
+		zetJuisteBroodjesBelegKnoppenAan();
+		refreshTabel();
+		if (broodjesVoorraad.get(best.getBroodje()) == 0) {
+			zelfdebestelling.setDisable(true);
+
+			}
+		for(int i = 0; i < belegVoorraad.size() ; i++){
+			if(belegVoorraad.get(best.getBeleg().get(i)) == 0){
+				zelfdebestelling.setDisable(true);
+			}
+		}
 	}
 
 	public void voegBroodjetoe(HBox p31){
@@ -237,6 +246,7 @@ public class OrderView {
 		}
 		return best;
 	}
+
 	public void zetJuisteBroodjesBelegKnoppenAan(){
 		for (Button b:broodjesKnoppen){
 			if (broodjesVoorraad.get(b.getText())>0){

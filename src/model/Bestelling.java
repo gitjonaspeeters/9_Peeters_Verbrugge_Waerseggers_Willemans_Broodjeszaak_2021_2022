@@ -131,6 +131,14 @@ public class Bestelling {
 
     }
 
+    public void voegAllBelegtoe(Bestellijn bestellijn, ArrayList beleg){
+        for (Bestellijn b:bestellijnen) {
+            if (b.equals(bestellijn)){
+                b.addAll(beleg);
+            }
+        }
+    }
+
     public Bestellijn getBestellijn(String broodje){
         for(Bestellijn bestellijn : bestellijnen){
             if(bestellijn.broodje.equals(broodje)){
@@ -148,5 +156,9 @@ public class Bestelling {
 
     public void verwijderBestellijn(int i) {
         bestellijnen.remove(i);
+    }
+
+    public void voegIdentiekeBestelling(Bestellijn bestellijn) {
+        bestellijnen.add(new Bestellijn(bestellijn.broodje, bestellijn.getBeleg()));
     }
 }
