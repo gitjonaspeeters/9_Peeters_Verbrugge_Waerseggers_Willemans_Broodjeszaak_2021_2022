@@ -105,17 +105,7 @@ public class OrderView {
 
 
 		//p32
-		this.voegBelegtoe(p32);/*
-		if (belegVoorraad!=null) {
-			for (String b : this.belegVoorraad.keySet()) {
-				if (belegVoorraad.get(b) > 0) {
-					Button buttonbeleg = new Button(b);
-					buttonbeleg.setDisable(true);
-					belegKnoppen.add(buttonbeleg);
-				}
-			}
-			p32.getChildren().addAll(belegKnoppen);
-		}*/
+		this.voegBelegtoe(p32);
 
 		//p3
 		p3.setPadding(new Insets(10));
@@ -199,14 +189,7 @@ public class OrderView {
 		zelfdebestelling.setDisable(false);
 		betalen.setDisable(false);
 		naarkeuken.setDisable(false);
-
-		for(Button b : broodjesKnoppen){
-			b.setDisable(false);
-		}
-
-		for(Button b : belegKnoppen){
-			b.setDisable(false);
-		}
+		zetJuisteBroodjesBelegKnoppenAan();
 
 	}
 
@@ -217,15 +200,8 @@ public class OrderView {
 					Button buttonbroodjes = new Button(b);
 					buttonbroodjes.setOnAction(e -> {
 						controller.toevoegenBroodje(b);
-						ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
-						table.setItems(bestellijns);
-
-
-						table.refresh();
-
-						if (broodjesVoorraad.get(b)==0){
-							buttonbroodjes.setDisable(true);
-						}
+						refreshTabel();
+						zetJuisteBroodjesBelegKnoppenAan();
 					});
 					buttonbroodjes.setDisable(true);
 					broodjesKnoppen.add(buttonbroodjes);
@@ -241,16 +217,10 @@ public class OrderView {
 				if (belegVoorraad.get(b) > 0) {
 					Button buttonbeleg = new Button(b);
 					buttonbeleg.setOnAction(e -> {
-						Bestellijn best= (Bestellijn) table.getSelectionModel().getSelectedItem();
-
+						Bestellijn best=kiesBestellijn();
 						controller.toevoegenBeleg(best,b);
-						ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
-						table.setItems(bestellijns);
-						table.refresh();
-
-						if (belegVoorraad.get(b)==0){
-							buttonbeleg.setDisable(true);
-						}
+						refreshTabel();
+						zetJuisteBroodjesBelegKnoppenAan();
 					});
 					buttonbeleg.setDisable(true);
 					belegKnoppen.add(buttonbeleg);
@@ -259,11 +229,33 @@ public class OrderView {
 			p32.getChildren().addAll(belegKnoppen);
 		}
 	}
-
-
-
-
-
-
-
+	public Bestellijn kiesBestellijn(){
+		if (controller.getBestellijnen()==null||controller.getBestellijnen().size()==0) throw new IllegalStateException("Er zijn nog geen bestellijnen");
+		Bestellijn best= (Bestellijn) table.getSelectionModel().getSelectedItem();
+		if (best==null){
+			best=controller.getBestellijnen().get(controller.getBestellijnen().size()-1);
+		}
+		return best;
+	}
+	public void zetJuisteBroodjesBelegKnoppenAan(){
+		for (Button b:broodjesKnoppen){
+			if (broodjesVoorraad.get(b.getText())>0){
+				b.setDisable(false);
+			}else {
+				b.setDisable(true);
+			}
+		}
+		for (Button b:belegKnoppen){
+			if (belegVoorraad.get(b.getText())>0&&controller.getBestellijnen()!=null&&controller.getBestellijnen().size()>0){
+				b.setDisable(false);
+			}else {
+				b.setDisable(true);
+			}
+		}
+	}
+	public void refreshTabel(){
+		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
+		table.setItems(bestellijns);
+		table.refresh();
+	}
 }

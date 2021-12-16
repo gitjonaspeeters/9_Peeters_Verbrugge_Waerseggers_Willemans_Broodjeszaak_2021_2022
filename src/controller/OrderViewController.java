@@ -16,6 +16,7 @@ public class OrderViewController implements Observer {
         this.facade=facade;
         facade.addObserver(this);
         facade.schrijfInVoorEvent(BestellingsEvents.VOEG_BESTELLIJN_TOE,this);
+        facade.schrijfInVoorEvent(BestellingsEvents.VOEG_BELEG_TOE,this);
     }
 
     public int startnieuwebestelling(){
@@ -43,7 +44,5 @@ public class OrderViewController implements Observer {
             view.updateStatusBelegKnoppen(facade.getVoorraadLijstBeleg());
             view.updateStatusBroodjesKnoppen(facade.getVoorraadLijstBroodje());
         }
-
     }
-
 }

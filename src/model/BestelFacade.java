@@ -43,9 +43,12 @@ public class BestelFacade implements Subject {
 
     @Override
     public void notifyObservers(BestellingsEvents bestellingsEvents) throws Exception {
-        for (Observer o : events.get(bestellingsEvents)) {
-            o.update();
+        if (events!=null){
+            for (Observer o : events.get(bestellingsEvents)) {
+                o.update();
+            }
         }
+
     }
     public int startNieuweBestelling(){
         bestelling = new Bestelling();
@@ -67,6 +70,11 @@ public class BestelFacade implements Subject {
         if (getVoorraadLijstBeleg().get(beleg)>0){
             belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-1);
             bestelling.voegBelegtoe(bestellijn,beleg);
+            try{
+                notifyObservers(BestellingsEvents.VOEG_BELEG_TOE);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
     public ArrayList<Bestellijn> getBestelLijnen(){return bestelling.getBestelLijnen();}
