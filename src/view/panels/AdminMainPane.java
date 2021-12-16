@@ -14,11 +14,11 @@ public class AdminMainPane extends BorderPane {
 
 
 
-    public AdminMainPane() throws Exception {
+    public AdminMainPane(BroodjesBelegController b) throws Exception {
         this.tabPane= new TabPane();
         this.tabs= new ArrayList<>();
 
-        this.tabs.add(new Tab("Broodjes/BelegSoort", new BroodjesBelegPane(new BroodjesBelegController() )));
+        this.tabs.add(new Tab("Broodjes/BelegSoort", new BroodjesBelegPane(b)));
         this.tabs.add(new Tab("Instellingen"));
         this.tabs.add(new Tab("Statistieken"));
         for (Tab t:tabs){

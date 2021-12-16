@@ -2,6 +2,7 @@ package controller;
 
 import model.BestelFacade;
 import model.Bestellijn;
+import model.BestellingsEvents;
 import model.observer.Observer;
 import view.OrderView;
 
@@ -11,9 +12,10 @@ public class OrderViewController implements Observer {
     public OrderView view;
     private BestelFacade facade;
 
-    public OrderViewController() throws Exception {
-        facade=new BestelFacade();
+    public OrderViewController(BestelFacade facade) throws Exception {
+        this.facade=facade;
         facade.addObserver(this);
+        facade.schrijfInVoorEvent(BestellingsEvents.VOEG_BESTELLIJN_TOE,this);
     }
 
     public int startnieuwebestelling(){
@@ -23,8 +25,8 @@ public class OrderViewController implements Observer {
         facade.voegBestelLijnToe(broodje);
     }
 
-    public void toevoegenBeleg(String broodje,String beleg){
-        facade.voegBelegToeAanBestelLijn(broodje,beleg);
+    public void toevoegenBeleg(Bestellijn bestellijn,String beleg){
+        facade.voegBelegToeAanBestelLijn(bestellijn,beleg);
     }
 
     public ArrayList<Bestellijn> getBestellijnen(){
@@ -43,4 +45,5 @@ public class OrderViewController implements Observer {
         }
 
     }
+
 }

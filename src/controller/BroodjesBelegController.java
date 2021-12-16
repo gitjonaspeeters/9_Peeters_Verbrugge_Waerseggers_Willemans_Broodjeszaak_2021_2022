@@ -17,11 +17,11 @@ public class BroodjesBelegController implements Observer  {
     BroodjesBelegPane view;
     BestelFacade facade;
 
-    public BroodjesBelegController() throws Exception {
+    public BroodjesBelegController(BestelFacade facade) throws Exception {
         this.broodjesDatabase = new BroodjesDatabase("XLSBroodje");
         this.belegDatabase = new BelegDatabase("XLSBeleg");
-        facade=new BestelFacade();
-        facade.addObserver(this);
+        this.facade=facade;
+        this.facade.addObserver(this);
     }
 
     public void setView(BroodjesBelegPane view){

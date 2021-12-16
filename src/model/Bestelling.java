@@ -121,8 +121,14 @@ public class Bestelling {
         bestellijnen.add(bestellijn);
     }
 
-    public void voegBelegtoe(String beleg, String broodje){
-        getBestellijn(broodje).addBeleg(beleg);
+    public void voegBelegtoe(Bestellijn bestellijn, String beleg){
+        for (Bestellijn b:bestellijnen) {
+            if (b.equals(bestellijn)){
+                b.addBeleg(beleg);
+            }
+
+        }
+
     }
 
     public Bestellijn getBestellijn(String broodje){

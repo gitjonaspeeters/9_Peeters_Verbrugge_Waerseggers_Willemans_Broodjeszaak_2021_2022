@@ -1,6 +1,7 @@
 package model.observer;
 
 import jxl.read.biff.BiffException;
+import model.BestellingsEvents;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,5 +13,5 @@ public interface Subject {
 
     public void removeObserver(Observer observer);
 
-    public void notifyObservers() throws Exception;
+    public void notifyObservers(BestellingsEvents bestellingsEvents) throws Exception;
 }

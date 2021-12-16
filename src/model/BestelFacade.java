@@ -14,16 +14,21 @@ public class BestelFacade implements Subject {
     Bestelling bestelling;
     BroodjesDatabase broodjesDatabase;
     BelegDatabase belegDatabase;
-    HashMap<BestellingsEvents,Observer> events=new HashMap<>();
+    HashMap<BestellingsEvents,ArrayList<Observer>> events=new HashMap<>();
 
     public BestelFacade() throws Exception {
-        for (Observer o:observers){
-            if (o.getClass().toString().equalsIgnoreCase("OrderViewController"))
-                events.put(BestellingsEvents.START_NIEUWE_BESTELLING,o);
-        }
-
         this.broodjesDatabase = new BroodjesDatabase("XLSBroodje");
         this.belegDatabase = new BelegDatabase("XLSBeleg");
+    }
+    public void schrijfInVoorEvent(BestellingsEvents e,Observer o){
+        if (events.containsKey(e)){
+            events.get(e).add(o);
+        }else {
+            ArrayList<Observer> observers1=new ArrayList<>();
+            observers1.add(o);
+            events.put(e,observers1);
+        }
+
     }
 
     @Override
@@ -37,8 +42,8 @@ public class BestelFacade implements Subject {
     }
 
     @Override
-    public void notifyObservers() throws Exception {
-        for (Observer o : observers) {
+    public void notifyObservers(BestellingsEvents bestellingsEvents) throws Exception {
+        for (Observer o : events.get(bestellingsEvents)) {
             o.update();
         }
     }
@@ -51,12 +56,17 @@ public class BestelFacade implements Subject {
         if (getVoorraadLijstBroodje().get(broodje)>0){
             broodjesDatabase.getBroodje(broodje).aanpassenVoorraad(getVoorraadLijstBroodje().get(broodje)-1);
             bestelling.voegBestelLijnToe(broodje);
+            try {
+                notifyObservers(BestellingsEvents.VOEG_BESTELLIJN_TOE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-    public void voegBelegToeAanBestelLijn(String broodje,String beleg){
+    public void voegBelegToeAanBestelLijn(Bestellijn bestellijn,String beleg){
         if (getVoorraadLijstBeleg().get(beleg)>0){
             belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-1);
-            bestelling.voegBelegtoe(broodje,beleg);
+            bestelling.voegBelegtoe(bestellijn,beleg);
         }
     }
     public ArrayList<Bestellijn> getBestelLijnen(){return bestelling.getBestelLijnen();}

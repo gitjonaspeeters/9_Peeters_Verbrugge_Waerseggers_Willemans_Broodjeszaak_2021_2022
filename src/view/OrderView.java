@@ -105,6 +105,7 @@ public class OrderView {
 
 
 		//p32
+		this.voegBelegtoe(p32);/*
 		if (belegVoorraad!=null) {
 			for (String b : this.belegVoorraad.keySet()) {
 				if (belegVoorraad.get(b) > 0) {
@@ -114,7 +115,7 @@ public class OrderView {
 				}
 			}
 			p32.getChildren().addAll(belegKnoppen);
-		}
+		}*/
 
 		//p3
 		p3.setPadding(new Insets(10));
@@ -164,7 +165,7 @@ public class OrderView {
 		p6.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 		Label betalen1= new Label("Te betalen: ");
 		betalen.setAlignment(Pos.CENTER_RIGHT);
-		p6.getChildren().addAll(afsluiten,betalen1,betalen1,naarkeuken);
+		p6.getChildren().addAll(afsluiten,betalen1,naarkeuken);
 		p6.setPadding(new Insets(10));
 
 
@@ -219,7 +220,12 @@ public class OrderView {
 						ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
 						table.setItems(bestellijns);
 
+
 						table.refresh();
+
+						if (broodjesVoorraad.get(b)==0){
+							buttonbroodjes.setDisable(true);
+						}
 					});
 					buttonbroodjes.setDisable(true);
 					broodjesKnoppen.add(buttonbroodjes);
@@ -228,6 +234,34 @@ public class OrderView {
 			p31.getChildren().addAll(broodjesKnoppen);
 		}
 	}
+
+	public void voegBelegtoe(HBox p32){
+		if (belegVoorraad!=null) {
+			for (String b : this.belegVoorraad.keySet()) {
+				if (belegVoorraad.get(b) > 0) {
+					Button buttonbeleg = new Button(b);
+					buttonbeleg.setOnAction(e -> {
+						Bestellijn best= (Bestellijn) table.getSelectionModel().getSelectedItem();
+
+						controller.toevoegenBeleg(best,b);
+						ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
+						table.setItems(bestellijns);
+						table.refresh();
+
+						if (belegVoorraad.get(b)==0){
+							buttonbeleg.setDisable(true);
+						}
+					});
+					buttonbeleg.setDisable(true);
+					belegKnoppen.add(buttonbeleg);
+				}
+			}
+			p32.getChildren().addAll(belegKnoppen);
+		}
+	}
+
+
+
 
 
 

@@ -15,6 +15,9 @@ public class Bestellijn {
         this.broodje = broodje;
     }
     public void addBeleg(String beleg){
+        if (this.beleg==null){
+            this.beleg=new ArrayList<>();
+        }
         this.beleg.add(beleg);
     }
 
