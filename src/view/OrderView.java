@@ -187,19 +187,10 @@ public class OrderView {
 
 	public void voegIdentiekeBestellingtoe(){
 		Bestellijn best = kiesBestellijn();
-
 		controller.voegIdentiekeBestelling(best);
 		zetJuisteBroodjesBelegKnoppenAan();
 		refreshTabel();
-		if (broodjesVoorraad.get(best.getBroodje()) == 0) {
-			zelfdebestelling.setDisable(true);
 
-			}
-		for(int i = 0; i < belegVoorraad.size() ; i++){
-			if(belegVoorraad.get(best.getBeleg().get(i)) == 0){
-				zelfdebestelling.setDisable(true);
-			}
-		}
 	}
 
 	public void voegBroodjetoe(HBox p31){

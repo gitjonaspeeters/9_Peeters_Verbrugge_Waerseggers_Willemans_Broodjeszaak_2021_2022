@@ -15,16 +15,18 @@ public class Bestellijn {
         this.broodje = broodje;
     }
 
-    public void addBeleg(String beleg){
-        if (this.beleg==null){
-            this.beleg=new ArrayList<>();
+    public void addBeleg(String b){
+        if (beleg==null){
+            beleg=new ArrayList<>();
         }
-        this.beleg.add(beleg);
+        beleg.add(b);
+        System.out.println(this.getBroodje()+this.getBeleg());
+
     }
 
-    public void addAll( ArrayList beleg){
+    /*public void addAll( ArrayList beleg){
         this.beleg = beleg;
-    }
+    }*/
 
     public String getBroodje() {
         return broodje;
