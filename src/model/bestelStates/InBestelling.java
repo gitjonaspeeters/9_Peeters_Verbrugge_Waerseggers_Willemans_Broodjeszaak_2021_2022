@@ -30,8 +30,12 @@ public class InBestelling extends BestellingState{
         getBestelling().getBestellijnen().add(bestellijn);
     }
     @Override
-    public void toevoegenBeleg(String beleg,int i){
-        getBestelling().getBestellijnen().get(i).addBeleg(beleg);
+    public void toevoegenBeleg(String beleg,Bestellijn bestellijn){
+        for(int i=0; i< getBestelling().getBestellijnen().size(); i++){
+            if(getBestelling().getBestellijnen().get(i) == bestellijn){
+                getBestelling().getBestellijnen().get(i).addBeleg(beleg);
+            }
+        }
     }
 
 }

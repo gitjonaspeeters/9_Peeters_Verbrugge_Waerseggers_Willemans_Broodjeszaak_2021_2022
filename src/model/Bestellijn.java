@@ -20,8 +20,6 @@ public class Bestellijn {
             beleg=new ArrayList<>();
         }
         beleg.add(b);
-        System.out.println(this.getBroodje()+this.getBeleg());
-
     }
 
     /*public void addAll( ArrayList beleg){

@@ -86,14 +86,19 @@ public class OrderView {
 		p1.setPadding(new Insets(10));
 
 		//p2
-		p2.setPadding(new Insets(10));
-		ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
-		goedkoopstegratis.setMinWidth(350);
-		goedkoopstegratis.setValue("Goedkoopste broodje gratis");
-		goedkoopstegratis.show();
-		Label v=new Label("Volgnr: "+Volgnr);
-		nieuwebestelling.setOnAction(e -> setStateBestelling());
-		p2.getChildren().addAll(nieuwebestelling,v, goedkoopstegratis);
+
+			p2.setPadding(new Insets(10));
+			ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
+			goedkoopstegratis.setMinWidth(350);
+			goedkoopstegratis.setValue("Goedkoopste broodje gratis");
+			goedkoopstegratis.show();
+
+			nieuwebestelling.setOnAction(e -> setStateBestelling());
+			Label v=new Label("Volgnr: "+Volgnr);
+			p2.getChildren().addAll(nieuwebestelling,v, goedkoopstegratis);
+
+
+
 
 
 
@@ -174,10 +179,12 @@ public class OrderView {
 	}
 
 	public void setStateBestelling(){
-        Volgnr = controller.startnieuwebestelling();
+        Volgnr= controller.startNieuweBestellingState();
+
+		System.out.println(Volgnr);
 		afsluiten.setDisable(false);
 		annuleer.setDisable(false);
-		nieuwebestelling.setDisable(true);
+		nieuwebestelling.setDisable(false);
 		zelfdebestelling.setDisable(false);
 		betalen.setDisable(false);
 		naarkeuken.setDisable(false);

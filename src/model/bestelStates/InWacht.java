@@ -14,7 +14,9 @@ public class InWacht extends BestellingState{
 
     @Override
     public void nieuweBestelling(){
+
         getBestelling().setState(getBestelling().getInbestelling());
+
     }
 
 }

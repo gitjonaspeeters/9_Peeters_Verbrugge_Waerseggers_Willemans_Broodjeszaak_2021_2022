@@ -1,6 +1,7 @@
 package model;
 
 import controller.OrderViewController;
+import model.bestelStates.BestellingState;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
 import model.observer.Observer;
@@ -43,7 +44,7 @@ public class BestelFacade implements Subject {
 
     @Override
     public void notifyObservers(BestellingsEvents bestellingsEvents) throws Exception {
-        if (events!=null){
+        if (events!=null || events.size() == 0){
             for (Observer o : events.get(bestellingsEvents)) {
                 o.update();
             }
@@ -51,14 +52,31 @@ public class BestelFacade implements Subject {
 
     }
     public int startNieuweBestelling(){
-        bestelling = new Bestelling();
-        return bestelling.getVolgnr();
+
+       if (bestelling==null){
+           bestelling = new Bestelling();
+
+       }else {
+           bestelling=new Bestelling(this.bestelling);
+       }
+        try {
+            notifyObservers(BestellingsEvents.START_NIEUWE_BESTELLING);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(bestelling.getVolgnr());
+
+
+        return bestelling.startNieuweBestelling();
+
+
+
     }
 
     public void voegBestelLijnToe(String broodje){
         if (getVoorraadLijstBroodje().get(broodje)>0){
             broodjesDatabase.getBroodje(broodje).aanpassenVoorraad(getVoorraadLijstBroodje().get(broodje)-1);
-            bestelling.voegBestelLijnToe(broodje);
+            bestelling.voegBestellijnToeState(broodje);
             try {
                 notifyObservers(BestellingsEvents.VOEG_BESTELLIJN_TOE);
             } catch (Exception e) {
@@ -84,6 +102,10 @@ public class BestelFacade implements Subject {
     }
     public TreeMap<String,Integer> getVoorraadLijstBeleg(){
         return belegDatabase.getVoorraadLijstBeleg();
+    }
+
+    public void setState(BestellingState state){
+        bestelling.setState(state);
     }
 
 
@@ -131,15 +153,5 @@ public class BestelFacade implements Subject {
         }
 
     }
-    public void debug(){
-        for (Bestellijn b:bestelling.getBestellijnen()) {
-            System.out.println(b.getBroodje()+": ");
-            if (b.getBeleg()!=null){
-                for (String s:b.getBeleg()) {
-                    System.out.println("\t"+s);
-                }
-            }
 
-        }
-    }
 }

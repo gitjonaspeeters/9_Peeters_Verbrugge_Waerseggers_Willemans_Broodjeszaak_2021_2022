@@ -14,6 +14,7 @@ public abstract class BestellingState {
         return bestelling;
     }
     public void nieuweBestelling() {
+        System.out.println("Dikke lul");
         throw new IllegalArgumentException("Je kan geen bestelling starten");
     }
     public void voegBestellijnToe(String broodje) {
@@ -34,7 +35,7 @@ public abstract class BestellingState {
         throw new IllegalArgumentException("Je kan dit broodje niet verwijderen");
     }
 
-    public void toevoegenBeleg(String beleg, int index){
+    public void toevoegenBeleg(String beleg, Bestellijn bestellijn){
         throw new IllegalArgumentException("Je kan geen beleg toevoegen");
     }
 

@@ -40,6 +40,10 @@ public class Bestelling {
         return volgnr;
     }
 
+    public void verhoogVolgnr(){
+        this.volgnr++;
+    }
+
 
     public BestellingState getAnnuleren() {
         return Annuleren;
@@ -121,13 +125,19 @@ public class Bestelling {
         bestellijnen.add(bestellijn);
     }
 
-    public void voegBelegtoe(Bestellijn bestellijn, String beleg){
-        for (Bestellijn b:bestellijnen) {
-            if (b.toString().equals(bestellijn.toString())){
-                b.addBeleg(beleg);
+    public int startNieuweBestelling(){
 
-            }
-        }
+        state.nieuweBestelling();
+        return volgnr;
+    }
+
+    public void voegBestellijnToeState(String broodje){
+        System.out.println(state);
+        state.voegBestellijnToe(broodje);
+    }
+
+    public void voegBelegtoe(Bestellijn bestellijn, String beleg){
+        state.toevoegenBeleg(beleg, bestellijn);
     }
 
     public Bestellijn getBestellijn(String broodje){
@@ -150,7 +160,7 @@ public class Bestelling {
     }
 
     public void voegIdentiekeBestelling(Bestellijn bestellijn) {
-        bestellijnen.add(new Bestellijn(bestellijn.getBroodje(), bestellijn.getBeleg()));
+        state.voegIdentiekeBestellijnToe(new Bestellijn(bestellijn.getBroodje(), bestellijn.getBeleg()));
 
     }
 }
