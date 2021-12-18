@@ -16,7 +16,7 @@ public class Bestelling {
     private BestellingState Annuleren;
     private BestellingState Klaargemaakt;
     private BestellingState state;
-    private int volgnr=0;
+    private int volgnr;
 
 
 
@@ -29,10 +29,23 @@ public class Bestelling {
         InWacht = new InWacht(this);
         Annuleren = new Annuleren(this);
         Klaargemaakt=new Klaargemaakt(this);
-        bestellijnen=new ArrayList<>();
+        volgnr=1;
         this.state = InWacht;
         this.bestellijnen=new ArrayList<>();
-        this.volgnr+=1;
+
+    }
+    public Bestelling(Bestelling s) {
+        Afgesloten = new Afgesloten(this);
+        Betaald = new Betaald(this);
+        InBereiding = new Inbereiding(this);
+        Inbestelling = new InBestelling(this);
+        InWachtrij =  new InWachtrij(this);
+        InWacht = new InWacht(this);
+        Annuleren = new Annuleren(this);
+        Klaargemaakt=new Klaargemaakt(this);
+        this.state = s.getState();
+        volgnr=s.getVolgnr()+1;
+        this.bestellijnen=new ArrayList<>();
 
     }
 
