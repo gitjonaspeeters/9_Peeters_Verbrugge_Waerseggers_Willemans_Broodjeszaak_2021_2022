@@ -14,7 +14,6 @@ public abstract class BestellingState {
         return bestelling;
     }
     public void nieuweBestelling() {
-        System.out.println("Dikke lul");
         throw new IllegalArgumentException("Je kan geen bestelling starten");
     }
     public void voegBestellijnToe(String broodje) {

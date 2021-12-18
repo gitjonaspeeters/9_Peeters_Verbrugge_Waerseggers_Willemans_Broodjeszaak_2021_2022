@@ -64,7 +64,7 @@ public class BestelFacade implements Subject {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(bestelling.getVolgnr());
+
 
 
         return bestelling.startNieuweBestelling();
@@ -125,32 +125,39 @@ public class BestelFacade implements Subject {
             return false;
         }
         TreeMap<String,Integer> belegBestellijn=new TreeMap<>();
-        for (String beleg:bestellijn.getBeleg()) {
-            if (belegBestellijn.containsKey(beleg)){
-                belegBestellijn.put(beleg,belegBestellijn.get(beleg)+1);
-            }else {
-                belegBestellijn.put(beleg,1);
+        if (bestellijn.getBeleg()!=null){
+            for (String beleg:bestellijn.getBeleg()) {
+                if (belegBestellijn.containsKey(beleg)){
+                    belegBestellijn.put(beleg,belegBestellijn.get(beleg)+1);
+                }else {
+                    belegBestellijn.put(beleg,1);
+                }
+            }
+            for (String beleg:belegBestellijn.keySet()){
+                if (belegDatabase.getVoorraadLijstBeleg().get(beleg)<belegBestellijn.get(beleg)) return false;
             }
         }
-        for (String beleg:belegBestellijn.keySet()){
-            if (belegDatabase.getVoorraadLijstBeleg().get(beleg)<belegBestellijn.get(beleg)) return false;
-        }
+
         return true;
     }
     public void aanpassenVooraadIngredientenVoorBestellijn(Bestellijn bestellijn){
         broodjesDatabase.getBroodje(bestellijn.getBroodje()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())-1);
 
         TreeMap<String,Integer> belegBestellijn=new TreeMap<>();
-        for (String beleg:bestellijn.getBeleg()) {
-            if (belegBestellijn.containsKey(beleg)){
-                belegBestellijn.put(beleg,belegBestellijn.get(beleg)+1);
-            }else {
-                belegBestellijn.put(beleg,1);
+        if (bestellijn.getBeleg()!=null){
+            for (String beleg:bestellijn.getBeleg()) {
+                if (belegBestellijn.containsKey(beleg)){
+                    belegBestellijn.put(beleg,belegBestellijn.get(beleg)+1);
+                }else {
+                    belegBestellijn.put(beleg,1);
+                }
             }
+            for (String beleg:belegBestellijn.keySet()){
+                belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-belegBestellijn.get(beleg));
+            }
+
         }
-        for (String beleg:belegBestellijn.keySet()){
-            belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-belegBestellijn.get(beleg));
-        }
+
 
     }
 

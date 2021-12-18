@@ -145,7 +145,6 @@ public class Bestelling {
     }
 
     public void voegBestellijnToeState(String broodje){
-        System.out.println(state);
         state.voegBestellijnToe(broodje);
     }
 

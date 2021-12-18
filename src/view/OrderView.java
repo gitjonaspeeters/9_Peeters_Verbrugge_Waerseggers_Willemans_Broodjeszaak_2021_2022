@@ -181,7 +181,7 @@ public class OrderView {
 	public void setStateBestelling(){
         Volgnr= controller.startNieuweBestellingState();
 
-		System.out.println(Volgnr);
+
 		afsluiten.setDisable(false);
 		annuleer.setDisable(false);
 		nieuwebestelling.setDisable(false);
