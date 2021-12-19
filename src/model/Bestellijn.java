@@ -19,7 +19,13 @@ public class Bestellijn {
         if (beleg==null){
             beleg=new ArrayList<>();
         }
+        ArrayList<String> beleg=new ArrayList<>();
+
+        for (String s:getBeleg()) {
+            beleg.add(s);
+        }
         beleg.add(b);
+        this.beleg=beleg;
     }
 
     /*public void addAll( ArrayList beleg){
