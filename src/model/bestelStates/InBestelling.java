@@ -22,8 +22,14 @@ public class InBestelling extends BestellingState{
         getBestelling().setState(getBestelling().getAnnuleren());
     }
     @Override
-    public void verwijderBroodje(int index){
-        getBestelling().verwijderBestellijn(index);
+    public void verwijderBroodje(Bestellijn bestellijn){
+        for(int i= 0; i < getBestelling().getBestellijnen().size(); i++){
+            if(getBestelling().getBestellijnen().get(i) == bestellijn){
+                getBestelling().verwijderBestellijn(i);
+            }
+        }
+
+
     }
     @Override
     public void voegIdentiekeBestellijnToe(Bestellijn bestellijn){

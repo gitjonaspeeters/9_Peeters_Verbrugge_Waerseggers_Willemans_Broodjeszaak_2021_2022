@@ -74,6 +74,8 @@ public class OrderView {
 		zelfdebestelling.setDisable(true);
 		betalen.setDisable(true);
 		naarkeuken.setDisable(true);
+		verwijder.setDisable(true);
+
 
 
 
@@ -138,7 +140,7 @@ public class OrderView {
 
 		zelfdebestelling.setDisable(true);
 		zelfdebestelling.setOnAction(e -> voegIdentiekeBestellingtoe());
-		verwijder.setDisable(true);
+		verwijder.setOnAction(e -> verwijderBestellijn());
 		p511.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p511.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 		p511.setPadding(new Insets(10));
@@ -180,14 +182,13 @@ public class OrderView {
 
 	public void setStateBestelling(){
         Volgnr= controller.startNieuweBestellingState();
-
-
 		afsluiten.setDisable(false);
 		annuleer.setDisable(false);
 		nieuwebestelling.setDisable(false);
 		zelfdebestelling.setDisable(false);
 		betalen.setDisable(false);
 		naarkeuken.setDisable(false);
+		verwijder.setDisable(false);
 		zetJuisteBroodjesBelegKnoppenAan();
 
 	}
@@ -198,6 +199,13 @@ public class OrderView {
 		zetJuisteBroodjesBelegKnoppenAan();
 		refreshTabel();
 
+	}
+
+	public void verwijderBestellijn(){
+		Bestellijn best= kiesBestellijn();
+		controller.verwijderBestellijn(best);
+		zetJuisteBroodjesBelegKnoppenAan();
+		refreshTabel();
 	}
 
 	public void voegBroodjetoe(HBox p31){

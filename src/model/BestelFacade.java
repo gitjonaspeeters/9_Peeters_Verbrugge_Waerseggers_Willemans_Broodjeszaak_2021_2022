@@ -51,6 +51,19 @@ public class BestelFacade implements Subject {
         }
 
     }
+
+    public void verwijderBestellijn(Bestellijn bestellijn){
+        broodjesDatabase.getBroodje(bestellijn.getBroodje()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())+1);
+        for(int i = 0; i < bestellijn.getBeleg().size(); i++){
+            belegDatabase.getBeleg(bestellijn.getBeleg().get(i)).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestellijn.getBeleg().get(i)) +1);
+        }
+        bestelling.verwijderBestelling(bestellijn);
+        try {
+            notifyObservers(BestellingsEvents.VERWIJDER_BESTELLIJN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public int startNieuweBestelling(){
 
        if (bestelling==null){

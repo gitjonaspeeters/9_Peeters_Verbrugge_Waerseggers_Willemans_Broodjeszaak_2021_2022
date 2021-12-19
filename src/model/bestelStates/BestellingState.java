@@ -30,7 +30,7 @@ public abstract class BestellingState {
         throw new IllegalArgumentException("Je kan deze bestelling niet annuleren");
     }
 
-    public void verwijderBroodje(int index){
+    public void verwijderBroodje(Bestellijn bestellijn){
         throw new IllegalArgumentException("Je kan dit broodje niet verwijderen");
     }
 

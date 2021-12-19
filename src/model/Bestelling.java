@@ -67,6 +67,8 @@ public class Bestelling {
         Annuleren = annuleren;
     }
 
+
+
     public ArrayList<Bestellijn> getBestellijnen() {
         return bestellijnen;
     }
@@ -169,6 +171,10 @@ public class Bestelling {
 
     public void verwijderBestellijn(int i) {
         bestellijnen.remove(i);
+    }
+
+    public void verwijderBestelling(Bestellijn bestellijn){
+        state.verwijderBroodje(bestellijn);
     }
 
     public void voegIdentiekeBestelling(Bestellijn bestellijn) {
