@@ -20,8 +20,11 @@ public class OrderViewController implements Observer {
         facade.schrijfInVoorEvent(BestellingsEvents.VOEG_IDENTIEKE_BESTELLING_TOE,this);
         facade.schrijfInVoorEvent(BestellingsEvents.START_NIEUWE_BESTELLING,this);
         facade.schrijfInVoorEvent(BestellingsEvents.VERWIJDER_BESTELLIJN,this);
+        facade.schrijfInVoorEvent(BestellingsEvents.ANNULLEER,this);
     }
-
+    public int annuleer(){
+        return facade.annuleer();
+    }
 
     public void toevoegenBroodje(String broodje){
         facade.voegBestelLijnToe(broodje);

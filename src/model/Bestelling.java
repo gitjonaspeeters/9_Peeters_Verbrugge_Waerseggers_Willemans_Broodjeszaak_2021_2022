@@ -146,6 +146,11 @@ public class Bestelling {
         return volgnr;
     }
 
+    public int annuleerBestelling(){
+        state.annuleren();
+        return volgnr-1;
+    }
+
     public void voegBestellijnToeState(String broodje){
         state.voegBestellijnToe(broodje);
     }

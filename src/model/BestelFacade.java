@@ -52,11 +52,23 @@ public class BestelFacade implements Subject {
 
     }
 
+
+    public int annuleer(){
+        int res = bestelling.annuleerBestelling();
+        try {
+            notifyObservers(BestellingsEvents.ANNULLEER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public void verwijderBestellijn(Bestellijn bestellijn){
         broodjesDatabase.getBroodje(bestellijn.getBroodje()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())+1);
+        if(bestellijn.getBeleg() != null){
         for(int i = 0; i < bestellijn.getBeleg().size(); i++){
             belegDatabase.getBeleg(bestellijn.getBeleg().get(i)).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestellijn.getBeleg().get(i)) +1);
-        }
+        }}
         bestelling.verwijderBestelling(bestellijn);
         try {
             notifyObservers(BestellingsEvents.VERWIJDER_BESTELLIJN);

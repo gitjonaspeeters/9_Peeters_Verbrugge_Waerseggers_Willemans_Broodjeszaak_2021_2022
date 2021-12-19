@@ -147,7 +147,10 @@ public class OrderView {
 		p511.getChildren().addAll(label1,zelfdebestelling,verwijder);
 
 		//p51
-		p51.getChildren().addAll(p511);
+		annuleer.setOnAction(e -> setAnnuleerBestelling());
+		p51.getChildren().addAll(p511,annuleer);
+
+		//p5
 		p5.getChildren().addAll(table,p51);
 		p5.setPadding(new Insets(10));
 		p5.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
@@ -184,13 +187,33 @@ public class OrderView {
         Volgnr= controller.startNieuweBestellingState();
 		afsluiten.setDisable(false);
 		annuleer.setDisable(false);
-		nieuwebestelling.setDisable(false);
+		nieuwebestelling.setDisable(true);
 		zelfdebestelling.setDisable(false);
 		betalen.setDisable(false);
 		naarkeuken.setDisable(false);
 		verwijder.setDisable(false);
 		zetJuisteBroodjesBelegKnoppenAan();
 
+
+
+	}
+
+	public void setAnnuleerBestelling(){
+		Volgnr= controller.annuleer();
+		afsluiten.setDisable(true);
+		annuleer.setDisable(true);
+		nieuwebestelling.setDisable(false);
+		zelfdebestelling.setDisable(true);
+		betalen.setDisable(true);
+		naarkeuken.setDisable(true);
+		verwijder.setDisable(true);
+		zetJuisteBroodjesBelegKnoppenAan();
+		for(Button b : belegKnoppen){
+			b.setDisable(true);
+		}
+		for(Button b : broodjesKnoppen){
+			b.setDisable(true);
+		}
 	}
 
 	public void voegIdentiekeBestellingtoe(){
