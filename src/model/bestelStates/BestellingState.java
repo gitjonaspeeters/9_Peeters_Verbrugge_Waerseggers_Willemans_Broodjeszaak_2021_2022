@@ -14,12 +14,12 @@ public abstract class BestellingState {
         return bestelling;
     }
     public void nieuweBestelling() {
-        throw new IllegalArgumentException("Je kan geen bestelling starten");
+        throw new IllegalArgumentException("Je kan geen bestelling starten ");
     }
     public void voegBestellijnToe(String broodje) {
         throw new IllegalArgumentException("Je kan deze bestellijn niet toevoegen");
     }
-    public void annuleren() {throw new IllegalArgumentException("Je kan deze bestelling niet annuleren");
+    public void annuleren() {throw new IllegalArgumentException("Je kan deze bestelling niet annuleren ");
     }
 
     public void voegIdentiekeBestellijnToe(Bestellijn bestellijn){

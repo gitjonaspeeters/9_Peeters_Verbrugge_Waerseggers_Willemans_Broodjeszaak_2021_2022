@@ -82,6 +82,7 @@ public class BestelFacade implements Subject {
            bestelling = new Bestelling();
 
        }else {
+
            bestelling=new Bestelling(this.bestelling);
        }
         try {

@@ -48,6 +48,18 @@ public class OrderView {
 	private ArrayList<Button> broodjesKnoppen=new ArrayList<>();
 	private ArrayList<Button> belegKnoppen=new ArrayList<>();
 
+	private VBox p1= new VBox();
+	private HBox p2= new HBox(25);
+	private VBox p3= new VBox(10);
+	private HBox p31= new HBox(20);
+	private HBox p32= new HBox(20);
+	private HBox p4= new HBox();
+	private HBox p5= new HBox(20);
+	private VBox p51= new VBox(10);
+	private VBox p511= new VBox(10);
+	private HBox p6= new HBox(10);
+
+
 
 
 
@@ -57,17 +69,8 @@ public class OrderView {
 		this.controller = controller;
 		this.broodjes= new BroodjesDatabase("XLSBroodje");
 		this.beleg = new BelegDatabase("XLSBeleg");
-		VBox p1= new VBox();
-		HBox p2= new HBox(25);
-		VBox p3= new VBox(10);
-		HBox p31= new HBox(20);
-		HBox p32= new HBox(20);
-		HBox p4= new HBox();
-		HBox p5= new HBox(20);
-		VBox p51= new VBox(10);
-		VBox p511= new VBox(10);
-		HBox p6= new HBox(10);
 		this.table = new TableView();
+
 		afsluiten.setDisable(true);
 		annuleer.setDisable(true);
 		nieuwebestelling.setDisable(false);
@@ -75,6 +78,7 @@ public class OrderView {
 		betalen.setDisable(true);
 		naarkeuken.setDisable(true);
 		verwijder.setDisable(true);
+
 
 
 
@@ -88,21 +92,15 @@ public class OrderView {
 		p1.setPadding(new Insets(10));
 
 		//p2
+		p2.setPadding(new Insets(10));
+		ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
+		goedkoopstegratis.setMinWidth(350);
+		goedkoopstegratis.setValue("Goedkoopste broodje gratis");
+		goedkoopstegratis.show();
 
-			p2.setPadding(new Insets(10));
-			ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
-			goedkoopstegratis.setMinWidth(350);
-			goedkoopstegratis.setValue("Goedkoopste broodje gratis");
-			goedkoopstegratis.show();
-
-			nieuwebestelling.setOnAction(e -> setStateBestelling());
-			Label v=new Label("Volgnr: "+Volgnr);
-			p2.getChildren().addAll(nieuwebestelling,v, goedkoopstegratis);
-
-
-
-
-
+		nieuwebestelling.setOnAction(e -> setStateBestelling());
+		Label v=new Label("Volgnr: "+Volgnr);
+		p2.getChildren().addAll(nieuwebestelling,v, goedkoopstegratis);
 
 		//p31
 		controller.setView(this);
@@ -147,7 +145,7 @@ public class OrderView {
 		p511.getChildren().addAll(label1,zelfdebestelling,verwijder);
 
 		//p51
-		annuleer.setOnAction(e -> setAnnuleerBestelling());
+		annuleer.setOnAction(e -> {verwijderAll();setAnnuleerBestelling();});
 		p51.getChildren().addAll(p511,annuleer);
 
 		//p5
@@ -185,6 +183,7 @@ public class OrderView {
 
 	public void setStateBestelling(){
         Volgnr= controller.startNieuweBestellingState();
+		updateVolgnr();
 		afsluiten.setDisable(false);
 		annuleer.setDisable(false);
 		nieuwebestelling.setDisable(true);
@@ -193,13 +192,17 @@ public class OrderView {
 		naarkeuken.setDisable(false);
 		verwijder.setDisable(false);
 		zetJuisteBroodjesBelegKnoppenAan();
-
-
+	}
+	public void updateVolgnr(){
+		p2.getChildren().remove(1);
+		Label v=new Label("Volgnr: "+Volgnr);
+		p2.getChildren().add(1,v);
 
 	}
 
 	public void setAnnuleerBestelling(){
 		Volgnr= controller.annuleer();
+		updateVolgnr();
 		afsluiten.setDisable(true);
 		annuleer.setDisable(true);
 		nieuwebestelling.setDisable(false);
@@ -214,6 +217,11 @@ public class OrderView {
 		for(Button b : broodjesKnoppen){
 			b.setDisable(true);
 		}
+
+
+	}
+	public void verwijderAll(){
+		while (table.getItems().size()>0)verwijderBestellijn();
 	}
 
 	public void voegIdentiekeBestellingtoe(){

@@ -43,7 +43,7 @@ public class Bestelling {
         InWacht = new InWacht(this);
         Annuleren = new Annuleren(this);
         Klaargemaakt=new Klaargemaakt(this);
-        this.state = s.getState();
+        this.state = InWacht;
         volgnr=s.getVolgnr()+1;
         this.bestellijnen=new ArrayList<>();
 
@@ -148,7 +148,8 @@ public class Bestelling {
 
     public int annuleerBestelling(){
         state.annuleren();
-        return volgnr-1;
+        volgnr-=1;
+        return volgnr;
     }
 
     public void voegBestellijnToeState(String broodje){
