@@ -63,12 +63,8 @@ public class Broodje implements Comparable<Broodje>{
 
 	@Override
 	public String toString() {
-		return "Broodje{" +
-				"name='" + name + '\'' +
-				", prijs=" + prijs +
-				", aantal=" + aantal +
-				", verkocht=" + verkocht +
-				'}';
+		return  name;
+
 	}
 
 	@Override

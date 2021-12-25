@@ -60,4 +60,11 @@ public class OrderViewController implements Observer {
             view.updateStatusBroodjesKnoppen(facade.getVoorraadLijstBroodje());
         }
     }
+
+    public void aflsuitenBestelling() {
+        facade.aflsluitenBestelling();
+    }
+    public double  getPrijs(){
+        return facade.getPrijs();
+    }
 }

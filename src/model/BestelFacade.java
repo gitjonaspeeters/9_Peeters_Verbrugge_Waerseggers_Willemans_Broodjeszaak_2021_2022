@@ -102,7 +102,7 @@ public class BestelFacade implements Subject {
     public void voegBestelLijnToe(String broodje){
         if (getVoorraadLijstBroodje().get(broodje)>0){
             broodjesDatabase.getBroodje(broodje).aanpassenVoorraad(getVoorraadLijstBroodje().get(broodje)-1);
-            bestelling.voegBestellijnToeState(broodje);
+            bestelling.voegBestellijnToeState(broodjesDatabase.getBroodje(broodje));
             try {
                 notifyObservers(BestellingsEvents.VOEG_BESTELLIJN_TOE);
             } catch (Exception e) {
@@ -113,7 +113,7 @@ public class BestelFacade implements Subject {
     public void voegBelegToeAanBestelLijn(Bestellijn bestellijn,String beleg){
         if (getVoorraadLijstBeleg().get(beleg)>0){
             belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-1);
-            bestelling.voegBelegtoe(bestellijn,beleg);
+            bestelling.voegBelegtoe(bestellijn,belegDatabase.getBeleg(beleg));
 
             try{
                 notifyObservers(BestellingsEvents.VOEG_BELEG_TOE);
@@ -187,4 +187,11 @@ public class BestelFacade implements Subject {
 
     }
 
+    public void aflsluitenBestelling() {
+        bestelling.aflsuitenBestelling();
+    }
+
+    public double getPrijs() {
+        return bestelling.getPrijs();
+    }
 }

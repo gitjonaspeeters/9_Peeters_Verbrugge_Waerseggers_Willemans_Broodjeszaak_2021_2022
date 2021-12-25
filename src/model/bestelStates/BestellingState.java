@@ -1,7 +1,9 @@
 package model.bestelStates;
 
+import model.BelegSoort;
 import model.Bestellijn;
 import model.Bestelling;
+import model.Broodje;
 
 public abstract class BestellingState {
     private Bestelling bestelling;
@@ -16,7 +18,7 @@ public abstract class BestellingState {
     public void nieuweBestelling() {
         throw new IllegalArgumentException("Je kan geen bestelling starten ");
     }
-    public void voegBestellijnToe(String broodje) {
+    public void voegBestellijnToe(Broodje broodje) {
         throw new IllegalArgumentException("Je kan deze bestellijn niet toevoegen");
     }
     public void annuleren() {throw new IllegalArgumentException("Je kan deze bestelling niet annuleren ");
@@ -34,7 +36,7 @@ public abstract class BestellingState {
         throw new IllegalArgumentException("Je kan dit broodje niet verwijderen");
     }
 
-    public void toevoegenBeleg(String beleg, Bestellijn bestellijn){
+    public void toevoegenBeleg(BelegSoort beleg, Bestellijn bestellijn){
         throw new IllegalArgumentException("Je kan geen beleg toevoegen");
     }
 

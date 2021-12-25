@@ -10,7 +10,8 @@ public class InBestelling extends BestellingState{
         super(bestelling);
     }
     @Override
-    public void voegBestellijnToe(String broodje){
+    public void voegBestellijnToe(Broodje broodje){
+
         getBestelling().voegBestelLijnToe(broodje);
     }
     @Override
@@ -36,7 +37,7 @@ public class InBestelling extends BestellingState{
         getBestelling().getBestellijnen().add(bestellijn);
     }
     @Override
-    public void toevoegenBeleg(String beleg,Bestellijn bestellijn){
+    public void toevoegenBeleg(BelegSoort beleg,Bestellijn bestellijn){
         for(int i=0; i< getBestelling().getBestellijnen().size(); i++){
             if(getBestelling().getBestellijnen().get(i) == bestellijn){
                 getBestelling().getBestellijnen().get(i).addBeleg(beleg);

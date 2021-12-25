@@ -3,25 +3,25 @@ package model;
 import java.util.ArrayList;
 
 public class Bestellijn {
-    String broodje;
-    ArrayList<String> beleg;
+    Broodje broodje;
+    ArrayList<BelegSoort> beleg;
 
-    public Bestellijn(String broodje, ArrayList<String> beleg) {
+    public Bestellijn(Broodje broodje, ArrayList<BelegSoort> beleg) {
         this.broodje = broodje;
         this.beleg = beleg;
     }
 
-    public Bestellijn(String broodje) {
+    public Bestellijn(Broodje broodje) {
         this.broodje = broodje;
     }
 
-    public void addBeleg(String b){
+    public void addBeleg(BelegSoort b){
         if (beleg==null){
             beleg=new ArrayList<>();
         }
-        ArrayList<String> beleg=new ArrayList<>();
+        ArrayList<BelegSoort> beleg=new ArrayList<>();
 
-        for (String s:getBeleg()) {
+        for (BelegSoort s:this.beleg) {
             beleg.add(s);
         }
         beleg.add(b);
@@ -32,11 +32,11 @@ public class Bestellijn {
         this.beleg = beleg;
     }*/
 
-    public String getBroodje() {
+    public Broodje getBroodje() {
         return broodje;
     }
 
-    public ArrayList<String> getBeleg() {
+    public ArrayList<BelegSoort> getBeleg() {
         return beleg;
     }
 

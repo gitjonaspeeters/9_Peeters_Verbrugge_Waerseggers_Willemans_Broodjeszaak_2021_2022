@@ -135,7 +135,7 @@ public class Bestelling {
     public void setState(BestellingState state){
         this.state = state;
     }
-    public void voegBestelLijnToe(String broodje){
+    public void voegBestelLijnToe(Broodje broodje){
         Bestellijn bestellijn=new Bestellijn(broodje);
         bestellijnen.add(bestellijn);
     }
@@ -152,11 +152,11 @@ public class Bestelling {
         return volgnr;
     }
 
-    public void voegBestellijnToeState(String broodje){
+    public void voegBestellijnToeState(Broodje broodje){
         state.voegBestellijnToe(broodje);
     }
 
-    public void voegBelegtoe(Bestellijn bestellijn, String beleg){
+    public void voegBelegtoe(Bestellijn bestellijn, BelegSoort beleg){
         state.toevoegenBeleg(beleg, bestellijn);
     }
 

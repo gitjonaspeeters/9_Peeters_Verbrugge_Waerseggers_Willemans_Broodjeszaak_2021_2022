@@ -50,12 +50,7 @@ public class BelegSoort implements  Comparable<BelegSoort>{
 
     @Override
     public String toString() {
-        return "BelegSoort{" +
-                "name='" + name + '\'' +
-                ", prijs=" + prijs +
-                ", aantal=" + aantal +
-                ", verkocht=" + verkocht +
-                '}';
+        return  name ;
     }
 
     @Override

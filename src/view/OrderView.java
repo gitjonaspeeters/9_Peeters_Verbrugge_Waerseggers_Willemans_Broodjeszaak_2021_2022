@@ -58,6 +58,10 @@ public class OrderView {
 	private VBox p51= new VBox(10);
 	private VBox p511= new VBox(10);
 	private HBox p6= new HBox(10);
+	private ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
+	private double prijs;
+	private Label betalen1= new Label("Te betalen: " + prijs);
+
 
 
 
@@ -94,7 +98,8 @@ public class OrderView {
 		//p2
 		p2.setPadding(new Insets(10));
 		ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
-		goedkoopstegratis.setMinWidth(350);
+
+		goedkoopstegratis.getItems().add("Goedkoopste broodje gratis");
 		goedkoopstegratis.setValue("Goedkoopste broodje gratis");
 		goedkoopstegratis.show();
 
@@ -156,7 +161,8 @@ public class OrderView {
 		//p6
 		p6.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p6.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
-		Label betalen1= new Label("Te betalen: ");
+		afsluiten.setOnAction(e -> setAfsluitenBestelling());
+
 		betalen.setAlignment(Pos.CENTER_RIGHT);
 		p6.getChildren().addAll(afsluiten,betalen1,naarkeuken);
 		p6.setPadding(new Insets(10));
@@ -217,8 +223,30 @@ public class OrderView {
 		for(Button b : broodjesKnoppen){
 			b.setDisable(true);
 		}
+	}
 
 
+	public void setAfsluitenBestelling(){
+		prijs = controller.getPrijs();
+		System.out.println(prijs);
+
+		betalen1 = new Label("\"Te betalen: \" + prijs");
+		controller.aflsuitenBestelling();
+
+		afsluiten.setDisable(true);
+		annuleer.setDisable(true);
+		nieuwebestelling.setDisable(false);
+		zelfdebestelling.setDisable(true);
+		betalen.setDisable(true);
+		naarkeuken.setDisable(true);
+		verwijder.setDisable(true);
+		zetJuisteBroodjesBelegKnoppenAan();
+		for(Button b : belegKnoppen){
+			b.setDisable(true);
+		}
+		for(Button b : broodjesKnoppen){
+			b.setDisable(true);
+		}
 	}
 	public void verwijderAll(){
 		while (table.getItems().size()>0)verwijderBestellijn();
