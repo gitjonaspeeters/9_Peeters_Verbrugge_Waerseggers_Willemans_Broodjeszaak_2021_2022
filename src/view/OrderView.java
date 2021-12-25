@@ -58,7 +58,7 @@ public class OrderView {
 	private VBox p51= new VBox(10);
 	private VBox p511= new VBox(10);
 	private HBox p6= new HBox(10);
-	private ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
+	private ChoiceBox<String> korting = new ChoiceBox<String>();
 	private double prijs;
 	private Label betalen1= new Label("Te betalen: " + prijs);
 
@@ -97,15 +97,17 @@ public class OrderView {
 
 		//p2
 		p2.setPadding(new Insets(10));
-		ChoiceBox<String> goedkoopstegratis = new ChoiceBox<String>();
+		this.korting = new ChoiceBox<String>();
 
-		goedkoopstegratis.getItems().add("Goedkoopste broodje gratis");
-		goedkoopstegratis.setValue("Goedkoopste broodje gratis");
-		goedkoopstegratis.show();
+		this.korting.getItems().add("Goedkoopste broodje gratis");
+		this.korting.getItems().add("10% korting");
+		this.korting.getItems().add("Geen korting");
+		this.korting.setValue("Geen korting");
+		this.korting.show();
 
 		nieuwebestelling.setOnAction(e -> setStateBestelling());
 		Label v=new Label("Volgnr: "+Volgnr);
-		p2.getChildren().addAll(nieuwebestelling,v, goedkoopstegratis);
+		p2.getChildren().addAll(nieuwebestelling,v, this.korting);
 
 		//p31
 		controller.setView(this);
@@ -227,11 +229,16 @@ public class OrderView {
 
 
 	public void setAfsluitenBestelling(){
-		prijs = controller.getPrijs();
-		System.out.println(prijs);
+		prijs = controller.getPrijsNaKorting(korting.getValue());
 
-		betalen1 = new Label("\"Te betalen: \" + prijs");
+		double p=prijs*100;
+		p=Math.round(p);
+		p=p/100;
+		betalen1 = new Label("Te betalen: €" + p);
+		p6.getChildren().remove(1);
+		p6.getChildren().add(1,betalen1);
 		controller.aflsuitenBestelling();
+
 
 		afsluiten.setDisable(true);
 		annuleer.setDisable(true);
@@ -329,6 +336,11 @@ public class OrderView {
 		}
 	}
 	public void refreshTabel(){
+		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
+		table.setItems(bestellijns);
+		table.refresh();
+	}
+	public void refreshBedrag(){
 		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
 		table.setItems(bestellijns);
 		table.refresh();

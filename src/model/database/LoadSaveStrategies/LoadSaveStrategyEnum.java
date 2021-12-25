@@ -23,6 +23,4 @@ public enum LoadSaveStrategyEnum {
     public  String getPropertyName() {
         return propertyName;
     }
-
-
 }

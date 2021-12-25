@@ -67,4 +67,10 @@ public class OrderViewController implements Observer {
     public double  getPrijs(){
         return facade.getPrijs();
     }
+
+    public double getPrijsNaKorting(String korting) {
+        if (korting.equalsIgnoreCase("Goedkoopste broodje gratis")) return facade.getPrijsNaKorting("GOEDKOOPSTEGRATIS");
+        if (korting.equalsIgnoreCase("10% korting")) return facade.getPrijsNaKorting("PERCENT_VAN_HEEL_DE_BESTELLING");
+        return facade.getPrijsNaKorting("GEEN_KORTING");
+    }
 }

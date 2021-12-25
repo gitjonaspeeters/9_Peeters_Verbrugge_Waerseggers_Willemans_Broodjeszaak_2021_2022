@@ -4,6 +4,7 @@ import controller.OrderViewController;
 import model.bestelStates.BestellingState;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
+import model.korting.KortingFactory;
 import model.observer.Observer;
 import model.observer.Subject;
 
@@ -193,5 +194,8 @@ public class BestelFacade implements Subject {
 
     public double getPrijs() {
         return bestelling.getPrijs();
+    }
+    public double getPrijsNaKorting(String korting){
+        return KortingFactory.Korting(korting).BerekenKorting(bestelling);
     }
 }
