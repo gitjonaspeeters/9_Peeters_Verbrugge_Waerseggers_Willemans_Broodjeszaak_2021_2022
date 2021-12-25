@@ -64,10 +64,10 @@ public class BestelFacade implements Subject {
     }
 
     public void verwijderBestellijn(Bestellijn bestellijn){
-        broodjesDatabase.getBroodje(bestellijn.getBroodje()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())+1);
+        broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())+1);
         if(bestellijn.getBeleg() != null){
         for(int i = 0; i < bestellijn.getBeleg().size(); i++){
-            belegDatabase.getBeleg(bestellijn.getBeleg().get(i)).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestellijn.getBeleg().get(i)) +1);
+            belegDatabase.getBeleg(bestellijn.getBeleg().get(i).getName()).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestellijn.getBeleg().get(i)) +1);
         }}
         bestelling.verwijderBestelling(bestellijn);
         try {
@@ -152,11 +152,11 @@ public class BestelFacade implements Subject {
         }
         TreeMap<String,Integer> belegBestellijn=new TreeMap<>();
         if (bestellijn.getBeleg()!=null){
-            for (String beleg:bestellijn.getBeleg()) {
+            for (BelegSoort beleg:bestellijn.getBeleg()) {
                 if (belegBestellijn.containsKey(beleg)){
-                    belegBestellijn.put(beleg,belegBestellijn.get(beleg)+1);
+                    belegBestellijn.put(beleg.getName(),belegBestellijn.get(beleg)+1);
                 }else {
-                    belegBestellijn.put(beleg,1);
+                    belegBestellijn.put(beleg.getName(),1);
                 }
             }
             for (String beleg:belegBestellijn.keySet()){
@@ -167,15 +167,15 @@ public class BestelFacade implements Subject {
         return true;
     }
     public void aanpassenVooraadIngredientenVoorBestellijn(Bestellijn bestellijn){
-        broodjesDatabase.getBroodje(bestellijn.getBroodje()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())-1);
+        broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())-1);
 
         TreeMap<String,Integer> belegBestellijn=new TreeMap<>();
         if (bestellijn.getBeleg()!=null){
-            for (String beleg:bestellijn.getBeleg()) {
+            for (BelegSoort beleg:bestellijn.getBeleg()) {
                 if (belegBestellijn.containsKey(beleg)){
-                    belegBestellijn.put(beleg,belegBestellijn.get(beleg)+1);
+                    belegBestellijn.put(beleg.getName(),belegBestellijn.get(beleg)+1);
                 }else {
-                    belegBestellijn.put(beleg,1);
+                    belegBestellijn.put(beleg.getName(),1);
                 }
             }
             for (String beleg:belegBestellijn.keySet()){

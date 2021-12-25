@@ -43,4 +43,18 @@ public class Bestellijn {
     public void removeBeleg(String beleg){
         this.beleg.remove(beleg);
     }
+
+    public double getPrijs(){
+        double r=0;
+        r+=broodje.getPrijs();
+        if (beleg != null&&beleg.size()>0){
+            for (BelegSoort b:beleg) {
+                r+=b.getPrijs();
+            }
+
+        }
+        return r;
+
+
+    }
 }

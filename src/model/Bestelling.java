@@ -187,4 +187,16 @@ public class Bestelling {
         state.voegIdentiekeBestellijnToe(new Bestellijn(bestellijn.getBroodje(), bestellijn.getBeleg()));
 
     }
+    public double getPrijs(){
+        double prijs=0.0;
+        for (int i = 0; i <bestellijnen.size(); i++) {
+            prijs+=bestellijnen.get(i).getPrijs();
+
+        }
+        return prijs;
+    }
+
+    public void aflsuitenBestelling() {
+        state.afsluiten();
+    }
 }
