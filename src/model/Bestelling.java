@@ -199,4 +199,12 @@ public class Bestelling {
     public void aflsuitenBestelling() {
         state.afsluiten();
     }
+
+    public void betalen(){
+        state.betalen();
+    }
+
+    public void setInWachtrij(){
+        state.zendNaarKeuken();
+    }
 }

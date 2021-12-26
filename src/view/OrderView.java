@@ -206,6 +206,7 @@ public class OrderView {
 		Label v=new Label("Volgnr: "+Volgnr);
 		p2.getChildren().add(1,v);
 
+
 	}
 
 	public void setAnnuleerBestelling(){
@@ -241,8 +242,8 @@ public class OrderView {
 
 
 		afsluiten.setDisable(true);
-		annuleer.setDisable(true);
-		nieuwebestelling.setDisable(false);
+		annuleer.setDisable(false);
+		nieuwebestelling.setDisable(true);
 		zelfdebestelling.setDisable(true);
 		betalen.setDisable(true);
 		naarkeuken.setDisable(true);
@@ -254,11 +255,23 @@ public class OrderView {
 		for(Button b : broodjesKnoppen){
 			b.setDisable(true);
 		}
+		table.getItems().clear();
+
 	}
 	public void verwijderAll(){
 		while (table.getItems().size()>0)verwijderBestellijn();
 	}
+	public void zendNaarKeuken(){
+		controller.setInwachrij();
+		afsluiten.setDisable(true);
+		annuleer.setDisable(true);
+		nieuwebestelling.setDisable(false);
+		zelfdebestelling.setDisable(true);
+		betalen.setDisable(true);
+		naarkeuken.setDisable(true);
+		verwijder.setDisable(true);
 
+	}
 	public void voegIdentiekeBestellingtoe(){
 		Bestellijn best = kiesBestellijn();
 		controller.voegIdentiekeBestelling(best);

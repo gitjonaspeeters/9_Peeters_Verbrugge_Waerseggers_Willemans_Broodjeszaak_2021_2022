@@ -37,7 +37,10 @@ public class BroodjesBelegController implements Observer  {
 
 
     @Override
-    public void update() {
-
+    public void update() throws Exception {
+        if (view != null) {
+            view.refreshBeleg();
+            view.refreshbroodjes();
+        }
     }
 }

@@ -10,6 +10,7 @@ import model.observer.Subject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class BestelFacade implements Subject {
@@ -17,6 +18,7 @@ public class BestelFacade implements Subject {
     BroodjesDatabase broodjesDatabase;
     BelegDatabase belegDatabase;
     HashMap<BestellingsEvents,ArrayList<Observer>> events=new HashMap<>();
+    HashMap<Integer, Bestelling>  wachtrij = new HashMap<>();
 
     public BestelFacade() throws Exception {
         this.broodjesDatabase = new BroodjesDatabase("XLSBroodje");
@@ -198,4 +200,24 @@ public class BestelFacade implements Subject {
     public double getPrijsNaKorting(String korting){
         return KortingFactory.Korting(korting).BerekenKorting(bestelling);
     }
+
+    public int setInWachtrij() {
+        bestelling.setInWachtrij();
+        wachtrij.put(bestelling.getVolgnr(),bestelling);
+        return bestelling.getVolgnr();
+    }
+
+    public int getAantalBroodjesWachtrij(int volgnr){
+        return wachtrij.get(volgnr).getBestellijnen().size();
+    }
+
+    public int getWachtrijAantalvanBroodje(int volgnr, String broodje){
+        return wachtrij.get(volgnr).
+    }
+
+    public int getWachtrijAantalvanBeleg(String beleg){
+
+    }
+
+
 }

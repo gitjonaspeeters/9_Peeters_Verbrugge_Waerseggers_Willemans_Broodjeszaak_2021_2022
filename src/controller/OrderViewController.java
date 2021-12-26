@@ -73,4 +73,8 @@ public class OrderViewController implements Observer {
         if (korting.equalsIgnoreCase("10% korting")) return facade.getPrijsNaKorting("PERCENT_VAN_HEEL_DE_BESTELLING");
         return facade.getPrijsNaKorting("GEEN_KORTING");
     }
+
+    public void setInwachrij(){
+        facade.setInWachtrij();
+    }
 }
