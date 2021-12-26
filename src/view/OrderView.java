@@ -21,6 +21,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javafx.scene.layout.BackgroundFill;
@@ -29,7 +31,6 @@ import javafx.scene.layout.BorderStroke;
 public class OrderView {
 	private Stage stage = new Stage();
 	private int Volgnr;
-	private ArrayList<Bestellijn> bestellijn;
 	private TreeMap<String,Integer> broodjesVoorraad;
 	private TreeMap<String,Integer> belegVoorraad;
 	private OrderViewController controller;
@@ -126,12 +127,13 @@ public class OrderView {
 		updateAantalBroodjes();
 		//tabel
 
-		TableColumn<Broodje, String> Broodje = new TableColumn<Broodje, String>("Broodje");
+
+		TableColumn<String, String> Broodje = new TableColumn<String, String>("Broodje");
 		Broodje.setMinWidth(180);
-		Broodje.setCellValueFactory(new PropertyValueFactory<>("Broodje"));
-		TableColumn<model.Broodje, Integer> Beleg = new TableColumn<>("Beleg");
+		Broodje.setCellValueFactory(new PropertyValueFactory<>("String"));
+		TableColumn<String, Integer> Beleg = new TableColumn<>("Beleg");
 		Beleg.setMinWidth(180);
-		Beleg.setCellValueFactory(new PropertyValueFactory<>("Beleg"));
+		Beleg.setCellValueFactory(new PropertyValueFactory<>("ArrayList<String>"));
 		table.getColumns().addAll( Broodje, Beleg);
 
 		//p511
@@ -184,9 +186,7 @@ public class OrderView {
 		controller.setBetalen();
 	}
 
-	public void updateBestellijnen(ArrayList<Bestellijn> list){
-		this.bestellijn=list;
-	}
+
 	public void updateStatusBroodjesKnoppen(TreeMap<String,Integer> voorraadLijst){
 		broodjesVoorraad=voorraadLijst;
 	}
@@ -280,7 +280,7 @@ public class OrderView {
 
 	}
 	public void voegIdentiekeBestellingtoe(){
-		Bestellijn best = kiesBestellijn();
+		int best = kiesBestellijn();
 		controller.voegIdentiekeBestelling(best);
 		zetJuisteBroodjesBelegKnoppenAan();
 		refreshTabel();
@@ -289,7 +289,7 @@ public class OrderView {
 	}
 
 	public void verwijderBestellijn(){
-		Bestellijn best= kiesBestellijn();
+		int best= kiesBestellijn();
 		controller.verwijderBestellijn(best);
 		zetJuisteBroodjesBelegKnoppenAan();
 		refreshTabel();
@@ -321,7 +321,7 @@ public class OrderView {
 				if (belegVoorraad.get(b) > 0) {
 					Button buttonbeleg = new Button(b);
 					buttonbeleg.setOnAction(e -> {
-						Bestellijn best=kiesBestellijn();
+						int best=kiesBestellijn();
 						controller.toevoegenBeleg(best,b);
 						refreshTabel();
 						zetJuisteBroodjesBelegKnoppenAan();
@@ -333,11 +333,11 @@ public class OrderView {
 			p32.getChildren().addAll(belegKnoppen);
 		}
 	}
-	public Bestellijn kiesBestellijn(){
+	public int kiesBestellijn(){
 		if (controller.getBestellijnen()==null||controller.getBestellijnen().size()==0) throw new IllegalStateException("Er zijn nog geen bestellijnen");
-		Bestellijn best= (Bestellijn) table.getSelectionModel().getSelectedItem();
-		if (best==null){
-			best=controller.getBestellijnen().get(controller.getBestellijnen().size()-1);
+		int best= table.getSelectionModel().getSelectedIndex();
+		if (table.getSelectionModel().getSelectedItem()==null){
+			best=controller.getBestellijnen().keySet().toArray().length-1;
 		}
 		return best;
 	}
@@ -359,7 +359,8 @@ public class OrderView {
 		}
 	}
 	public void refreshTabel(){
-		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
+		ObservableList<Map<String,ArrayList<String>>> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
+		System.out.println(bestellijns);
 		table.setItems(bestellijns);
 		table.refresh();
 	}
@@ -370,9 +371,5 @@ public class OrderView {
 			aantalbroodjes.setText("AantalBroodjes: 0");
 		}
 	}
-	public void refreshBedrag(){
-		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
-		table.setItems(bestellijns);
-		table.refresh();
-	}
+
 }

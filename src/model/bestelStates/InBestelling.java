@@ -37,8 +37,12 @@ public class InBestelling extends BestellingState{
         getBestelling().getBestellijnen().add(bestellijn);
     }
     @Override
-    public void toevoegenBeleg(BelegSoort beleg,int index){
-        getBestelling().getBestellijnen().get(index).addBeleg(beleg);
+    public void toevoegenBeleg(BelegSoort beleg,Bestellijn bestellijn){
+        for(int i=0; i< getBestelling().getBestellijnen().size(); i++){
+            if(getBestelling().getBestellijnen().get(i) == bestellijn){
+                getBestelling().getBestellijnen().get(i).addBeleg(beleg);
+            }
+        }
     }
 
 }

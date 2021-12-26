@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bestellijn {
     Broodje broodje;
@@ -35,10 +37,22 @@ public class Bestellijn {
     public Broodje getBroodje() {
         return broodje;
     }
+    public String getBroodjeString() {
+        return broodje.getName();
+    }
 
     public ArrayList<BelegSoort> getBeleg() {
         return beleg;
     }
+    public ArrayList<String> getBelegString() {
+        ArrayList<String> bel=new ArrayList<>();
+        if (beleg==null) return bel;
+        for (int i=0;i<beleg.size();i++) {
+            bel.add(beleg.get(i).getName());
+        }
+        return bel;
+    }
+
 
     public void removeBeleg(String beleg){
         this.beleg.remove(beleg);

@@ -69,12 +69,12 @@ public class BestelFacade implements Subject {
     }
 
     public void verwijderBestellijn(int index){
-        broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje().getName())+1);
-        if(bestellijn.getBeleg() != null){
-        for(int i = 0; i < bestellijn.getBeleg().size(); i++){
-            belegDatabase.getBeleg(bestellijn.getBeleg().get(i).getName()).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestellijn.getBeleg().get(i).getName()) +1);
+        broodjesDatabase.getBroodje(bestelling.getBestellijn(index).getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestelling.getBestellijn(index).getBroodje().getName())+1);
+        if(bestelling.getBestellijn(index).getBeleg() != null){
+        for(int i = 0; i < bestelling.getBestellijn(index).getBeleg().size(); i++){
+            belegDatabase.getBeleg(bestelling.getBestellijn(index).getBeleg().get(i).getName()).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestelling.getBestellijn(index).getBeleg().get(i).getName()) +1);
         }}
-        bestelling.verwijderBestelling(bestellijn);
+        bestelling.verwijderBestelling(bestelling.getBestellijn(index));
         try {
             notifyObservers(BestellingsEvents.VERWIJDER_BESTELLIJN);
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class BestelFacade implements Subject {
     public void voegBelegToeAanBestelLijn(int index,String beleg){
         if (getVoorraadLijstBeleg().get(beleg)>0){
             belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-1);
-            bestelling.voegBelegtoe(index,belegDatabase.getBeleg(beleg));
+            bestelling.voegBelegtoe(bestelling.getBestellijn(index),belegDatabase.getBeleg(beleg));
 
             try{
                 notifyObservers(BestellingsEvents.VOEG_BELEG_TOE);
@@ -118,7 +118,16 @@ public class BestelFacade implements Subject {
             }
         }
     }
-    public ArrayList<Bestellijn> getBestelLijnen(){return bestelling.getBestelLijnen();}
+    public Map<String,ArrayList<String>> getBestelLijnen(){
+        HashMap<String,ArrayList<String>> map;
+        map=new HashMap<>();
+        for (Bestellijn b:bestelling.getBestelLijnen()){
+            map.put(b.getBroodjeString(),b.getBelegString());
+        }
+        return map;
+
+
+    }
     public TreeMap<String,Integer> getVoorraadLijstBroodje(){
         return broodjesDatabase.getVoorraadLijstBroodje();
     }
@@ -131,10 +140,10 @@ public class BestelFacade implements Subject {
     }
 
 
-    public void voegIdentiekeBestelLijnToe(Bestellijn bestellijn) {
-        if (genoegIngredientenVoorBestellijn(bestellijn)){
-                bestelling.voegIdentiekeBestelling(bestellijn);
-                aanpassenVooraadIngredientenVoorBestellijn(bestellijn);
+    public void voegIdentiekeBestelLijnToe(int bestellijn) {
+        if (genoegIngredientenVoorBestellijn(bestelling.getBestellijn(bestellijn))){
+                bestelling.voegIdentiekeBestelling(bestelling.getBestellijn(bestellijn));
+                aanpassenVooraadIngredientenVoorBestellijn(bestelling.getBestellijn(bestellijn));
         }
         try{
             notifyObservers(BestellingsEvents.VOEG_IDENTIEKE_BESTELLING_TOE);
@@ -196,7 +205,7 @@ public class BestelFacade implements Subject {
         wachtrij.put(bestelling.getVolgnr(),bestelling);
         return bestelling.getVolgnr();
     }
-
+/*
     public int getAantalBroodjesWachtrij(int volgnr){
         return wachtrij.get(volgnr).getBestellijnen().size();
     }
@@ -207,7 +216,7 @@ public class BestelFacade implements Subject {
 
     public int getWachtrijAantalvanBeleg(String beleg){
 
-    }
+    }*/
 
 
 }

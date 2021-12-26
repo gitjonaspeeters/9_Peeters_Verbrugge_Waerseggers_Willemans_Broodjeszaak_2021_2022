@@ -156,17 +156,12 @@ public class Bestelling {
         state.voegBestellijnToe(broodje);
     }
 
-    public void voegBelegtoe(int index, BelegSoort beleg){
-        state.toevoegenBeleg(beleg, index);
+    public void voegBelegtoe(Bestellijn bestellijn, BelegSoort beleg){
+        state.toevoegenBeleg(beleg, bestellijn);
     }
 
-    public Bestellijn getBestellijn(String broodje){
-        for(Bestellijn bestellijn : bestellijnen){
-            if(bestellijn.broodje.equals(broodje)){
-                return bestellijn;
-            }
-        }
-        return null;
+    public Bestellijn getBestellijn(int broodje){
+        return bestellijnen.get(broodje);
     }
 
 

@@ -6,6 +6,8 @@ import model.observer.Observer;
 import view.OrderView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderViewController implements Observer {
     public OrderView view;
@@ -42,11 +44,11 @@ public class OrderViewController implements Observer {
         facade.verwijderBestellijn(bestellijn);
     }
 
-    public void voegIdentiekeBestelling(Bestellijn bestellijn){
+    public void voegIdentiekeBestelling(int bestellijn){
         facade.voegIdentiekeBestelLijnToe(bestellijn);
     }
 
-    public ArrayList<Bestellijn> getBestellijnen(){
+    public Map<String,ArrayList<String>> getBestellijnen(){
         return  facade.getBestelLijnen();
     }
 
