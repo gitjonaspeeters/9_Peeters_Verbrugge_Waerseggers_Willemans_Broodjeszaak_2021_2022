@@ -204,10 +204,18 @@ public class BestelFacade implements Subject {
     public void setInWachtrij() {
         bestelling.setInWachtrij();
         wachtrij.put(bestelling.getVolgnr(),bestelling);
+        try {
+            notifyObservers(BestellingsEvents.ZET_IN_WACHTRIJ);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Integer> volgnummers(){
-        return (ArrayList<Integer>) wachtrij.keySet();
+        return wachtrij.keySet().toArray();
+        for (Integer i:wachtrij.keySet()) {
+
+        }
     }
     public int getAantalBestellingen(){
         return wachtrij.size();

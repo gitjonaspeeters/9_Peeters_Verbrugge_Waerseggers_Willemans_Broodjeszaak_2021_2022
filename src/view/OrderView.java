@@ -278,6 +278,7 @@ public class OrderView {
 		naarkeuken.setDisable(true);
 		verwijder.setDisable(true);
 
+
 	}
 	public void voegIdentiekeBestellingtoe(){
 		int best = kiesBestellijn();
