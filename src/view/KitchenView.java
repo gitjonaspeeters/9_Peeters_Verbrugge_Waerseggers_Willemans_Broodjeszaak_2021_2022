@@ -22,14 +22,13 @@ public class KitchenView {
 	private Button volgende = new Button("Volgende Bestelling");
 	private Button afgewerkt = new Button("Bestelling afgewerkt");
 	private int inwachtij;
-	private int volgnr;
 	private int aantalbroodjes;
 	private int aantalbroodjesvanzelfde;
 	private int aantalbelegvanzelfde;
-	private Label labelwachtrij= new Label("Bestellingen in wachtrij:" + inwachtij);
-	private Label labelbestelling= new Label("Volgnummer bestelling:" + volgnr + " - Aantal broodjes:");
+	private Label labelwachtrij = new Label();
+	private Label labelbestelling = new Label();
 
-	
+
 	public KitchenView(KitchenviewController controller){
 		this.controller = controller;
 		stage.setTitle("KITCHEN VIEW");
@@ -37,7 +36,7 @@ public class KitchenView {
 		stage.setX(680);
 		stage.setY(470);
 
-		p1.getChildren().addAll(p2,labelwachtrij,p3);
+
 		p1.setPadding(new Insets(10));
 		p2.getChildren().addAll(volgende,afgewerkt);
 		p2.setPadding(new Insets(10));
@@ -46,14 +45,23 @@ public class KitchenView {
 		p2.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 		p3.getChildren().addAll(labelbestelling);
 		p3.setPadding(new Insets(10));
+		p1.getChildren().addAll(p2,labelwachtrij,p3);
 
 
 		Scene scene = new Scene(p1, 650, 200);
 
 
 		stage.setScene(scene);
-		stage.sizeToScene();			
+		stage.sizeToScene();
 		stage.show();
 		this.controller.setView(this);
+	}
+
+	public void setNieuweBestelling(){
+		labelwachtrij.setText("Er zijn nu" + controller.getAantalBestellingen() + "bestellingen");
+		for(int i : controller.volgnummer()){
+			labelbestelling.setText("Volgnummer bestelling" + i + " - Aantal broodjes" + controller.getAantalBroodjesWachtrij(i));
+		}
+
 	}
 }

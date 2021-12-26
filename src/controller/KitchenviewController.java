@@ -6,6 +6,8 @@ import model.observer.Observer;
 import view.KitchenView;
 import view.OrderView;
 
+import java.util.ArrayList;
+
 public class KitchenviewController implements Observer {
     private BestelFacade facade;
     public KitchenView view;
@@ -17,7 +19,7 @@ public class KitchenviewController implements Observer {
     @Override
     public void update() throws Exception {
         if (view != null) {
-
+            view.setNieuweBestelling();
         }
     }
 
@@ -25,7 +27,27 @@ public class KitchenviewController implements Observer {
         this.view = view;
     }
 
-    public void getWachtrij(){
+    public int getAantalBestellingen(){
+        return facade.getAantalBestellingen();
+    }
 
+    public ArrayList<Integer> volgnummer(){
+        return facade.volgnummers();
+    }
+
+    public int getAantalBroodjesWachtrij(int volgnr){
+        return facade.getAantalBroodjesWachtrij(volgnr);
+    }
+    public int getWachtrijAantalvanBroodje(int volgnr, String broodje){
+        return facade.getWachtrijAantalvanBroodje(volgnr,broodje);
+    }
+    public int getWachtrijAantalvanBeleg(int volgnr, String beleg){
+        return getWachtrijAantalvanBeleg(volgnr, beleg);
+    }
+    public String getWachtrijBroodje(int volgnr){
+        return facade.getWachtrijBroodje(volgnr);
+    }
+    public ArrayList<String> getBelegWachtrij(int volgnr, String broodje) {
+        return  facade.getBelegWachtrij(volgnr, broodje);
     }
 }

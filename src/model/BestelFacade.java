@@ -71,9 +71,9 @@ public class BestelFacade implements Subject {
     public void verwijderBestellijn(int index){
         broodjesDatabase.getBroodje(bestelling.getBestellijn(index).getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestelling.getBestellijn(index).getBroodje().getName())+1);
         if(bestelling.getBestellijn(index).getBeleg() != null){
-        for(int i = 0; i < bestelling.getBestellijn(index).getBeleg().size(); i++){
-            belegDatabase.getBeleg(bestelling.getBestellijn(index).getBeleg().get(i).getName()).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestelling.getBestellijn(index).getBeleg().get(i).getName()) +1);
-        }}
+            for(int i = 0; i < bestelling.getBestellijn(index).getBeleg().size(); i++){
+                belegDatabase.getBeleg(bestelling.getBestellijn(index).getBeleg().get(i).getName()).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestelling.getBestellijn(index).getBeleg().get(i).getName()) +1);
+            }}
         bestelling.verwijderBestelling(bestelling.getBestellijn(index));
         try {
             notifyObservers(BestellingsEvents.VERWIJDER_BESTELLIJN);
@@ -82,11 +82,11 @@ public class BestelFacade implements Subject {
         }
     }
     public int startNieuweBestelling(){
-       if (bestelling==null){
-           bestelling = new Bestelling();
-       }else {
-           bestelling=new Bestelling(this.bestelling);
-       }
+        if (bestelling==null){
+            bestelling = new Bestelling();
+        }else {
+            bestelling=new Bestelling(this.bestelling);
+        }
         try {
             notifyObservers(BestellingsEvents.START_NIEUWE_BESTELLING);
         } catch (Exception e) {
@@ -142,8 +142,8 @@ public class BestelFacade implements Subject {
 
     public void voegIdentiekeBestelLijnToe(int bestellijn) {
         if (genoegIngredientenVoorBestellijn(bestelling.getBestellijn(bestellijn))){
-                bestelling.voegIdentiekeBestelling(bestelling.getBestellijn(bestellijn));
-                aanpassenVooraadIngredientenVoorBestellijn(bestelling.getBestellijn(bestellijn));
+            bestelling.voegIdentiekeBestelling(bestelling.getBestellijn(bestellijn));
+            aanpassenVooraadIngredientenVoorBestellijn(bestelling.getBestellijn(bestellijn));
         }
         try{
             notifyObservers(BestellingsEvents.VOEG_IDENTIEKE_BESTELLING_TOE);
@@ -200,23 +200,66 @@ public class BestelFacade implements Subject {
         return KortingFactory.Korting(korting).BerekenKorting(bestelling);
     }
 
-    public int setInWachtrij() {
+
+    public void setInWachtrij() {
         bestelling.setInWachtrij();
         wachtrij.put(bestelling.getVolgnr(),bestelling);
-        return bestelling.getVolgnr();
     }
-/*
+
+    public ArrayList<Integer> volgnummers(){
+        return (ArrayList<Integer>) wachtrij.keySet();
+    }
+    public int getAantalBestellingen(){
+        return wachtrij.size();
+    }
     public int getAantalBroodjesWachtrij(int volgnr){
         return wachtrij.get(volgnr).getBestellijnen().size();
     }
 
     public int getWachtrijAantalvanBroodje(int volgnr, String broodje){
-        return wachtrij.get(volgnr).
+        int result = 0;
+        for(int i =0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++){
+            if(wachtrij.get(volgnr).getBestellijnen().get(i).broodje.equals(broodje)){
+                result++;
+            }
+        }
+        return result;
     }
 
-    public int getWachtrijAantalvanBeleg(String beleg){
+    public int getWachtrijAantalvanBeleg(int volgnr, String beleg){
+        int result = 0;
+        for(int i =0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++){
+            for (int j =0; j < wachtrij.get(volgnr).getBestellijnen().get(i).beleg.size(); j++){
+                if(wachtrij.get(volgnr).getBestellijnen().get(i).beleg.get(i).equals(beleg)){
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
 
-    }*/
+    public String getWachtrijBroodje(int volgnr){
+        String result= null;
+        for (int i = 0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++) {
+            result=  wachtrij.get(volgnr).getBestellijnen().get(i).getBroodje().getName();
+        }
+        return result;
+    }
+
+    public ArrayList<String> getBelegWachtrij(int volgnr, String broodje) {
+        ArrayList<String> result = null;
+        for (int i = 0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++) {
+            for (int j = 0; j < wachtrij.get(volgnr).getBestellijnen().get(i).beleg.size(); j++) {
+                if (wachtrij.get(volgnr).getBestellijnen().get(i).equals(broodje)) {
+                    result.add(wachtrij.get(volgnr).getBestellijnen().get(i).beleg.get(j).getName());
+                }
+            }
+        }
+        return result;
+    }
 
 
 }
+
+
+
