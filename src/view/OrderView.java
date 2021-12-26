@@ -126,9 +126,11 @@ public class OrderView {
 		p3.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 
 		//p4
-		Label label = new Label("Aantal broodje:");
-		p4.setPadding(new Insets(5));
-		p4.getChildren().addAll(label);
+		updateAantalBroodjes();
+
+
+
+
 
 		//tabel
 
@@ -145,7 +147,7 @@ public class OrderView {
 
 		zelfdebestelling.setDisable(true);
 		zelfdebestelling.setOnAction(e -> voegIdentiekeBestellingtoe());
-		verwijder.setOnAction(e -> verwijderBestellijn());
+		verwijder.setOnAction(e -> {verwijderBestellijn();});
 		p511.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
 		p511.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 		p511.setPadding(new Insets(10));
@@ -166,7 +168,7 @@ public class OrderView {
 		afsluiten.setOnAction(e -> setAfsluitenBestelling());
 
 		betalen.setAlignment(Pos.CENTER_RIGHT);
-		p6.getChildren().addAll(afsluiten,betalen1,naarkeuken);
+		p6.getChildren().addAll(afsluiten,betalen1,betalen,naarkeuken);
 		p6.setPadding(new Insets(10));
 
 		p1.getChildren().addAll(p2,p3,p4,p5,p6);
@@ -264,6 +266,7 @@ public class OrderView {
 		controller.voegIdentiekeBestelling(best);
 		zetJuisteBroodjesBelegKnoppenAan();
 		refreshTabel();
+		updateAantalBroodjes();
 
 	}
 
@@ -272,6 +275,7 @@ public class OrderView {
 		controller.verwijderBestellijn(best);
 		zetJuisteBroodjesBelegKnoppenAan();
 		refreshTabel();
+		updateAantalBroodjes();
 	}
 
 	public void voegBroodjetoe(HBox p31){
@@ -282,6 +286,7 @@ public class OrderView {
 					buttonbroodjes.setOnAction(e -> {
 						controller.toevoegenBroodje(b);
 						refreshTabel();
+						updateAantalBroodjes();
 						zetJuisteBroodjesBelegKnoppenAan();
 					});
 					buttonbroodjes.setDisable(true);
@@ -339,6 +344,18 @@ public class OrderView {
 		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
 		table.setItems(bestellijns);
 		table.refresh();
+	}
+	public void updateAantalBroodjes(){
+		try {
+			Label label= new Label("Aantal broodjes: "+ controller.getBestellijnen().size());
+			p4.setPadding(new Insets(5));
+			p4.getChildren().remove(0);
+			p4.getChildren().addAll(label);
+		}catch (Exception e){
+			Label label = new Label("Aantal broodjes: 0");
+			p4.setPadding(new Insets(5));
+			p4.getChildren().addAll(label);
+		}
 	}
 	public void refreshBedrag(){
 		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
