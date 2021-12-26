@@ -65,10 +65,10 @@ public class BestelFacade implements Subject {
     }
 
     public void verwijderBestellijn(Bestellijn bestellijn){
-        broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())+1);
+        broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje().getName())+1);
         if(bestellijn.getBeleg() != null){
         for(int i = 0; i < bestellijn.getBeleg().size(); i++){
-            belegDatabase.getBeleg(bestellijn.getBeleg().get(i).getName()).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestellijn.getBeleg().get(i)) +1);
+            belegDatabase.getBeleg(bestellijn.getBeleg().get(i).getName()).aanpassenVoorraad(getVoorraadLijstBeleg().get(bestellijn.getBeleg().get(i).getName()) +1);
         }}
         bestelling.verwijderBestelling(bestellijn);
         try {
@@ -148,14 +148,14 @@ public class BestelFacade implements Subject {
         }
     }
     public boolean genoegIngredientenVoorBestellijn(Bestellijn bestellijn){
-        if (broodjesDatabase.getVoorraadLijstBroodje().get(bestellijn.getBroodje())==0){
+        if (broodjesDatabase.getVoorraadLijstBroodje().get(bestellijn.getBroodje().getName())==0){
             return false;
         }
         TreeMap<String,Integer> belegBestellijn=new TreeMap<>();
         if (bestellijn.getBeleg()!=null){
             for (BelegSoort beleg:bestellijn.getBeleg()) {
-                if (belegBestellijn.containsKey(beleg)){
-                    belegBestellijn.put(beleg.getName(),belegBestellijn.get(beleg)+1);
+                if (belegBestellijn.containsKey(beleg.getName())){
+                    belegBestellijn.put(beleg.getName(),belegBestellijn.get(beleg.getName())+1);
                 }else {
                     belegBestellijn.put(beleg.getName(),1);
                 }
@@ -168,13 +168,13 @@ public class BestelFacade implements Subject {
         return true;
     }
     public void aanpassenVooraadIngredientenVoorBestellijn(Bestellijn bestellijn){
-        broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje())-1);
+        broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje().getName())-1);
 
         TreeMap<String,Integer> belegBestellijn=new TreeMap<>();
         if (bestellijn.getBeleg()!=null){
             for (BelegSoort beleg:bestellijn.getBeleg()) {
-                if (belegBestellijn.containsKey(beleg)){
-                    belegBestellijn.put(beleg.getName(),belegBestellijn.get(beleg)+1);
+                if (belegBestellijn.containsKey(beleg.getName())){
+                    belegBestellijn.put(beleg.getName(),belegBestellijn.get(beleg.getName())+1);
                 }else {
                     belegBestellijn.put(beleg.getName(),1);
                 }

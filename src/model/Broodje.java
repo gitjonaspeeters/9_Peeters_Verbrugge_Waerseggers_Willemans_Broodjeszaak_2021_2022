@@ -67,9 +67,11 @@ public class Broodje implements Comparable<Broodje>{
 
 	}
 
+
 	@Override
-		public int compareTo(Broodje arg0) {
-			return this.getName().compareTo(arg0.getName());
-		}
+	public int compareTo(Broodje o) {
+			return this.getName().compareTo(o.getName());
 	}
+
+}
 
