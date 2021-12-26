@@ -30,7 +30,8 @@ public class KitchenView {
 	private Label labelbestelling= new Label("Volgnummer bestelling:" + volgnr + " - Aantal broodjes:");
 
 	
-	public KitchenView(){			
+	public KitchenView(KitchenviewController controller){
+		this.controller = controller;
 		stage.setTitle("KITCHEN VIEW");
 		stage.initStyle(StageStyle.UTILITY);
 		stage.setX(680);

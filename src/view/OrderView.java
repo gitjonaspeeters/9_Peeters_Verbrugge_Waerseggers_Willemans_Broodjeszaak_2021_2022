@@ -13,8 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import model.Bestellijn;
-import model.Broodje;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
 import javafx.event.ActionEvent;
@@ -30,8 +28,6 @@ import javafx.scene.layout.BorderStroke;
 
 public class OrderView {
 	private Stage stage = new Stage();
-	private BroodjesDatabase broodjes;
-	private BelegDatabase beleg;
 	private int Volgnr;
 	private ArrayList<Bestellijn> bestellijn;
 	private TreeMap<String,Integer> broodjesVoorraad;
@@ -72,8 +68,6 @@ public class OrderView {
 
 	public  OrderView(OrderViewController controller) throws Exception {
 		this.controller = controller;
-		this.broodjes= new BroodjesDatabase("XLSBroodje");
-		this.beleg = new BelegDatabase("XLSBeleg");
 		this.table = new TableView();
 
 		afsluiten.setDisable(true);
@@ -166,6 +160,8 @@ public class OrderView {
 		afsluiten.setOnAction(e -> setAfsluitenBestelling());
 
 		betalen.setAlignment(Pos.CENTER_RIGHT);
+		betalen.setOnAction(e -> setBetalen());
+		naarkeuken.setOnAction(e -> zendNaarKeuken());
 		p6.getChildren().addAll(afsluiten,betalen1,betalen,naarkeuken);
 		p6.setPadding(new Insets(10));
 
@@ -179,6 +175,15 @@ public class OrderView {
 
 
 	}
+
+	private void setBetalen() {
+		annuleer.setDisable(true);
+		naarkeuken.setDisable(false);
+		betalen.setDisable(true);
+		betalen1.setText("Te betalen: 0.0");
+		controller.setBetalen();
+	}
+
 	public void updateBestellijnen(ArrayList<Bestellijn> list){
 		this.bestellijn=list;
 	}
@@ -196,9 +201,10 @@ public class OrderView {
 		annuleer.setDisable(false);
 		nieuwebestelling.setDisable(true);
 		zelfdebestelling.setDisable(false);
-		betalen.setDisable(false);
-		naarkeuken.setDisable(false);
+		betalen.setDisable(true);
+		naarkeuken.setDisable(true);
 		verwijder.setDisable(false);
+		korting.setDisable(false);
 		zetJuisteBroodjesBelegKnoppenAan();
 	}
 	public void updateVolgnr(){
@@ -219,6 +225,7 @@ public class OrderView {
 		betalen.setDisable(true);
 		naarkeuken.setDisable(true);
 		verwijder.setDisable(true);
+		korting.setDisable(true);
 		zetJuisteBroodjesBelegKnoppenAan();
 		for(Button b : belegKnoppen){
 			b.setDisable(true);
@@ -240,12 +247,12 @@ public class OrderView {
 		p6.getChildren().add(1,betalen1);
 		controller.aflsuitenBestelling();
 
-
+		korting.setDisable(true);
 		afsluiten.setDisable(true);
 		annuleer.setDisable(false);
 		nieuwebestelling.setDisable(true);
 		zelfdebestelling.setDisable(true);
-		betalen.setDisable(true);
+		betalen.setDisable(false);
 		naarkeuken.setDisable(true);
 		verwijder.setDisable(true);
 		zetJuisteBroodjesBelegKnoppenAan();

@@ -156,8 +156,8 @@ public class Bestelling {
         state.voegBestellijnToe(broodje);
     }
 
-    public void voegBelegtoe(Bestellijn bestellijn, BelegSoort beleg){
-        state.toevoegenBeleg(beleg, bestellijn);
+    public void voegBelegtoe(int index, BelegSoort beleg){
+        state.toevoegenBeleg(beleg, index);
     }
 
     public Bestellijn getBestellijn(String broodje){

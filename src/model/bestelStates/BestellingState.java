@@ -36,7 +36,7 @@ public abstract class BestellingState {
         throw new IllegalArgumentException("Je kan dit broodje niet verwijderen");
     }
 
-    public void toevoegenBeleg(BelegSoort beleg, Bestellijn bestellijn){
+    public void toevoegenBeleg(BelegSoort beleg, int index){
         throw new IllegalArgumentException("Je kan geen beleg toevoegen");
     }
 

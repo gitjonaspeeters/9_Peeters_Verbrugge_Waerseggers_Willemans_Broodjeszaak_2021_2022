@@ -54,7 +54,9 @@ public class BestelFacade implements Subject {
         }
 
     }
-
+    public void betaal(){
+        bestelling.betalen();
+    }
 
     public int annuleer(){
         int res = bestelling.annuleerBestelling();
@@ -66,7 +68,7 @@ public class BestelFacade implements Subject {
         return res;
     }
 
-    public void verwijderBestellijn(Bestellijn bestellijn){
+    public void verwijderBestellijn(int index){
         broodjesDatabase.getBroodje(bestellijn.getBroodje().getName()).aanpassenVoorraad(getVoorraadLijstBroodje().get(bestellijn.getBroodje().getName())+1);
         if(bestellijn.getBeleg() != null){
         for(int i = 0; i < bestellijn.getBeleg().size(); i++){
@@ -80,12 +82,9 @@ public class BestelFacade implements Subject {
         }
     }
     public int startNieuweBestelling(){
-
        if (bestelling==null){
            bestelling = new Bestelling();
-
        }else {
-
            bestelling=new Bestelling(this.bestelling);
        }
         try {
@@ -93,13 +92,7 @@ public class BestelFacade implements Subject {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
         return bestelling.startNieuweBestelling();
-
-
-
     }
 
     public void voegBestelLijnToe(String broodje){
@@ -113,10 +106,10 @@ public class BestelFacade implements Subject {
             }
         }
     }
-    public void voegBelegToeAanBestelLijn(Bestellijn bestellijn,String beleg){
+    public void voegBelegToeAanBestelLijn(int index,String beleg){
         if (getVoorraadLijstBeleg().get(beleg)>0){
             belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-1);
-            bestelling.voegBelegtoe(bestellijn,belegDatabase.getBeleg(beleg));
+            bestelling.voegBelegtoe(index,belegDatabase.getBeleg(beleg));
 
             try{
                 notifyObservers(BestellingsEvents.VOEG_BELEG_TOE);
@@ -184,10 +177,7 @@ public class BestelFacade implements Subject {
             for (String beleg:belegBestellijn.keySet()){
                 belegDatabase.getBeleg(beleg).aanpassenVoorraad(getVoorraadLijstBeleg().get(beleg)-belegBestellijn.get(beleg));
             }
-
         }
-
-
     }
 
     public void aflsluitenBestelling() {

@@ -1,7 +1,6 @@
 package controller;
 
 import model.BestelFacade;
-import model.Bestellijn;
 import model.BestellingsEvents;
 import model.observer.Observer;
 import view.OrderView;
@@ -21,6 +20,8 @@ public class OrderViewController implements Observer {
         facade.schrijfInVoorEvent(BestellingsEvents.START_NIEUWE_BESTELLING,this);
         facade.schrijfInVoorEvent(BestellingsEvents.VERWIJDER_BESTELLIJN,this);
         facade.schrijfInVoorEvent(BestellingsEvents.ANNULLEER,this);
+        facade.schrijfInVoorEvent(BestellingsEvents.BETAAL,this);
+        facade.schrijfInVoorEvent(BestellingsEvents.ZET_IN_WACHTRIJ,this);
     }
     public int annuleer(){
         return facade.annuleer();
@@ -34,10 +35,10 @@ public class OrderViewController implements Observer {
         return facade.startNieuweBestelling();
     }
 
-    public void toevoegenBeleg(Bestellijn bestellijn,String beleg){
-        facade.voegBelegToeAanBestelLijn(bestellijn,beleg);
+    public void toevoegenBeleg(int index,String beleg){
+        facade.voegBelegToeAanBestelLijn(index,beleg);
     }
-    public void verwijderBestellijn(Bestellijn bestellijn){
+    public void verwijderBestellijn(int bestellijn){
         facade.verwijderBestellijn(bestellijn);
     }
 
@@ -66,6 +67,9 @@ public class OrderViewController implements Observer {
     }
     public double  getPrijs(){
         return facade.getPrijs();
+    }
+    public void setBetalen(){
+        facade.betaal();
     }
 
     public double getPrijsNaKorting(String korting) {

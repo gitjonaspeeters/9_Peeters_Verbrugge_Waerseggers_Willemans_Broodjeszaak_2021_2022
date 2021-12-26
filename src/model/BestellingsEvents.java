@@ -6,5 +6,7 @@ public enum BestellingsEvents {
     VOEG_BELEG_TOE,
     VOEG_IDENTIEKE_BESTELLING_TOE,
     VERWIJDER_BESTELLIJN,
+    BETAAL,
+    ZET_IN_WACHTRIJ,
     ANNULLEER;
 }

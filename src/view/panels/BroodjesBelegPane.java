@@ -77,9 +77,7 @@ public class BroodjesBelegPane extends GridPane {
         table.refresh();
     }
     public void refreshBeleg() {
-
         ObservableList<BelegSoort> belegSoort = FXCollections.observableArrayList(controller.getBeleg().values());
-
         tablebeleg.setItems(belegSoort);
         tablebeleg.refresh();
     }
