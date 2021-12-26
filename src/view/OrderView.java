@@ -61,6 +61,7 @@ public class OrderView {
 	private ChoiceBox<String> korting = new ChoiceBox<String>();
 	private double prijs;
 	private Label betalen1= new Label("Te betalen: " + prijs);
+	private Label aantalbroodjes=new Label();
 
 
 
@@ -126,12 +127,9 @@ public class OrderView {
 		p3.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"),BorderStrokeStyle.SOLID,CornerRadii.EMPTY, new BorderWidths(1))));
 
 		//p4
+		p4.getChildren().add(aantalbroodjes);
+		p4.setPadding(new Insets(5));
 		updateAantalBroodjes();
-
-
-
-
-
 		//tabel
 
 		TableColumn<Broodje, String> Broodje = new TableColumn<Broodje, String>("Broodje");
@@ -347,14 +345,9 @@ public class OrderView {
 	}
 	public void updateAantalBroodjes(){
 		try {
-			Label label= new Label("Aantal broodjes: "+ controller.getBestellijnen().size());
-			p4.setPadding(new Insets(5));
-			p4.getChildren().remove(0);
-			p4.getChildren().addAll(label);
+			aantalbroodjes.setText("AantalBroodjes: "+controller.getBestellijnen().size());
 		}catch (Exception e){
-			Label label = new Label("Aantal broodjes: 0");
-			p4.setPadding(new Insets(5));
-			p4.getChildren().addAll(label);
+			aantalbroodjes.setText("AantalBroodjes: 0");
 		}
 	}
 	public void refreshBedrag(){
