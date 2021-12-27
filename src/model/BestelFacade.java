@@ -276,7 +276,7 @@ public class BestelFacade implements Subject {
         try {
             BroodjesDatabase broodjesDatabase1=new BroodjesDatabase("XLSBroodje");
             for (String b:broodjesDatabase.getBroodjes().keySet()) {
-                broodjesDatabase.getBroodjes().get(b).setVerkocht((broodjesDatabase1.getVoorraadLijstBroodje().get(b)-broodjesDatabase.getVoorraadLijstBroodje().get(b)));}
+                broodjesDatabase.getBroodjes().get(b).setVerkocht(broodjesDatabase1.getBroodjes().get(b).getVerkocht()+(broodjesDatabase1.getVoorraadLijstBroodje().get(b)-broodjesDatabase.getVoorraadLijstBroodje().get(b)));}
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -284,7 +284,7 @@ public class BestelFacade implements Subject {
         try {
             BelegDatabase belegDatabase1=new BelegDatabase("XLSBeleg");
             for (String b:belegDatabase.getBelegSoort().keySet()) {
-                belegDatabase.getBelegSoort().get(b).setVerkocht((belegDatabase1.getVoorraadLijstBeleg().get(b)-belegDatabase.getVoorraadLijstBeleg().get(b)));}
+                belegDatabase.getBelegSoort().get(b).setVerkocht(belegDatabase1.getBelegSoort().get(b).getVerkocht()+(belegDatabase1.getVoorraadLijstBeleg().get(b)-belegDatabase.getVoorraadLijstBeleg().get(b)));}
         } catch (Exception e) {
             e.printStackTrace();
         }
