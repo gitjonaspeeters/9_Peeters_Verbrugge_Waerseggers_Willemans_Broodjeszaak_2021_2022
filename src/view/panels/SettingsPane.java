@@ -5,7 +5,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import jxl.read.biff.BiffException;
 import model.database.LoadSaveStrategies.LoadSaveStrategyEnum;
 import model.database.Settings;
@@ -26,15 +29,18 @@ public class SettingsPane extends GridPane {
 
     public SettingsPane(SettingsController controller) throws BiffException, IOException {
         settingsController=controller;
-        this.add(label, 0, 0);
+        Paint paint= Paint.valueOf("Grey");
+        this.add(label, 1, 0);
         this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
+        this.setBackground(new Background(new BackgroundFill(paint,null,new Insets(0))));
         LoadSaveStrategyEnum[] formaten = LoadSaveStrategyEnum.values();
-        LoadSaveStrategyEnum huidig = LoadSaveStrategyEnum.valueOf(Settings.getInstance().getProperty("formaat") + "Broodje");
+        String huidig = Settings.getInstance().getProperty("formaat");
         korting.setValue(huidig);
         korting.getItems().add("TXT");
         korting.getItems().add("XLS");
+        korting.setValue(huidig);
 
         this.add(korting, 1 , 1);
         this.add(label1, 1, 2);
@@ -43,6 +49,7 @@ public class SettingsPane extends GridPane {
         for(int i = 0; i < kortings.length; i++){
             formaat.getItems().add(kortings[i].getName());
         }
+        formaat.setValue(Settings.getInstance().getProperty("korting"));
         this.add(formaat, 1,3);
 
         save.setOnAction(e -> {

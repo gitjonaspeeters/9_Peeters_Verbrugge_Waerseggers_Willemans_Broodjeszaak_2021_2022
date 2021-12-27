@@ -44,6 +44,7 @@ public class BroodjesBelegPane extends GridPane {
         colYear.setCellValueFactory(new PropertyValueFactory<Broodje, Integer>("Aantal"));
         table.getColumns().addAll(colTitle, colYear, colPrice);
 
+
         tablebeleg = new TableView<>();
 
         this.refreshBeleg();

@@ -75,6 +75,7 @@ public class OrderView {
 		verwijder.setDisable(true);
 
 		Scene scene = new Scene(p1, 650, 650);
+
 		stage.setTitle("Order view");
 
 		//p1
