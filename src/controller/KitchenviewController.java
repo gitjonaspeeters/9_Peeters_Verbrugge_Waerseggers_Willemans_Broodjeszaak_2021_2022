@@ -38,13 +38,14 @@ public class KitchenviewController implements Observer {
     public int getAantalBroodjesWachtrij(int volgnr){
         return facade.getAantalBroodjesWachtrij(volgnr);
     }
-    public int getWachtrijAantalvanBroodje(int volgnr, String broodje){
-        return facade.getWachtrijAantalvanBroodje(volgnr,broodje);
+    public int getWachtrijAantalvanBroodje(int volgnr, String broodje, ArrayList beleg){
+        throw new IllegalArgumentException();
+        //facade.getWachtrijAantalvanBroodje(volgnr,broodje,beleg);
     }
     public int getWachtrijAantalvanBeleg(int volgnr, String beleg){
         return getWachtrijAantalvanBeleg(volgnr, beleg);
     }
-    public String getWachtrijBroodje(int volgnr){
+    public ArrayList<String> getWachtrijBroodje(int volgnr){
         return facade.getWachtrijBroodje(volgnr);
     }
     public ArrayList<String> getBelegWachtrij(int volgnr, String broodje) {

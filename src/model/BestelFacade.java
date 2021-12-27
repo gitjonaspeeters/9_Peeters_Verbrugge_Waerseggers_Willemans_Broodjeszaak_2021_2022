@@ -226,13 +226,14 @@ public class BestelFacade implements Subject {
         return wachtrij.get(volgnr).getBestellijnen().size();
     }
 
-    public int getWachtrijAantalvanBroodje(int volgnr, String broodje){
+    public int getWachtrijAantalvanBroodje(int volgnr, Bestellijn bestellijn){
         int result = 0;
         for(int i =0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++){
-            if(wachtrij.get(volgnr).getBestellijnen().get(i).broodje.equals(broodje)){
+
+            if(wachtrij.get(volgnr).getBestelLijnen().equals(bestellijn)){
                 result++;
+                }
             }
-        }
         return result;
     }
 
@@ -248,10 +249,11 @@ public class BestelFacade implements Subject {
         return result;
     }
 
-    public String getWachtrijBroodje(int volgnr){
-        String result= null;
+    public ArrayList<String> getWachtrijBroodje(int volgnr){
+        ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++) {
-            result=  wachtrij.get(volgnr).getBestellijnen().get(i).getBroodje().getName();
+            //System.out.println(wachtrij.get(volgnr).getBestellijnen().get(i).getBroodje().getName());
+            result.add(wachtrij.get(volgnr).getBestellijnen().get(i).getBroodje().getName());
         }
         return result;
     }
