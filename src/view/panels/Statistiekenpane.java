@@ -44,7 +44,7 @@ public class Statistiekenpane extends GridPane {
 
 
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
-        barChart.setTitle("Verkoop Statistieken");
+        barChart.setTitle("Verkoop Statistieken Broodje");
 
         for (Object s:controller.getBroodjes()){
             XYChart.Series<String, Number> series1 = new XYChart.Series<>();

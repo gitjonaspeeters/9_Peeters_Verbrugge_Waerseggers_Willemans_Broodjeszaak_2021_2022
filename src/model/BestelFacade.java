@@ -28,6 +28,7 @@ public class BestelFacade implements Subject {
         this.broodjesDatabase = new BroodjesDatabase(LoadSaveStrategyEnum.valueOf(Settings.getInstance().getProperty("formaat").toUpperCase(Locale.ROOT) +  "Broodje").name() );
 
         this.belegDatabase = new BelegDatabase(LoadSaveStrategyEnum.valueOf(Settings.getInstance().getProperty("formaat").toUpperCase(Locale.ROOT)+ "Beleg").name());
+        System.out.println(LoadSaveStrategyEnum.valueOf(Settings.getInstance().getProperty("formaat").toUpperCase(Locale.ROOT)+ "Beleg").name());
     }
     public void schrijfInVoorEvent(BestellingsEvents e,Observer o){
         if (events.containsKey(e)){
