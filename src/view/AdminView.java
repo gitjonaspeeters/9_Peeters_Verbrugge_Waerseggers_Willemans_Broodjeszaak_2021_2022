@@ -15,7 +15,7 @@ public class AdminView {
 		
 	public AdminView(BroodjesBelegController b, SettingsController s , StatistiekController r) throws Exception {
 		stage.setTitle("ADMIN VIEW");
-		stage.initStyle(StageStyle.UTILITY);
+
 		stage.setX(680);
 		stage.setY(20);
 		Group root = new Group();

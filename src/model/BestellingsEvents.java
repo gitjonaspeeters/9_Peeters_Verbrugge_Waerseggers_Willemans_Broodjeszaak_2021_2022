@@ -8,5 +8,6 @@ public enum BestellingsEvents {
     VERWIJDER_BESTELLIJN,
     BETAAL,
     ZET_IN_WACHTRIJ,
+    VERWIJDER_UIT_WACHTRIJ,
     ANNULLEER;
 }

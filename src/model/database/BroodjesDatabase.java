@@ -57,4 +57,11 @@ public class BroodjesDatabase {
         }
         return v;
     }
+    public TreeMap<String,Integer> getVerkochtLijstBroodje(){
+        TreeMap<String,Integer> v=new TreeMap<>();
+        for (Broodje b:broodjes.values()) {
+            v.put(b.getName(),b.getVerkocht());
+        }
+        return v;
+    }
 }

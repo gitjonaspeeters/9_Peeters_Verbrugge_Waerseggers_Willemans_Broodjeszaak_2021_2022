@@ -143,6 +143,11 @@ public class BestelFacade implements Subject {
     public TreeMap<String,Integer> getVoorraadLijstBeleg(){
         return belegDatabase.getVoorraadLijstBeleg();
     }
+    public TreeMap<String,Integer> getVerkochtLijstBroodje(){
+        return broodjesDatabase.getVerkochtLijstBroodje();
+    }
+    public TreeMap<String,Integer> getVerkochtLijstBeleg(){ return belegDatabase.getVerkochtLijstBeleg();
+    }
 
     public void setState(BestellingState state){
         bestelling.setState(state);
@@ -213,12 +218,6 @@ public class BestelFacade implements Subject {
     public void setInWachtrij() {
         bestelling.setInWachtrij();
         wachtrij.put(bestelling.getVolgnr(),bestelling);
-        try {
-            notifyObservers(BestellingsEvents.ZET_IN_WACHTRIJ);
-            notifyObservers(BestellingsEvents.ZET_IN_WACHTRIJ);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public ArrayList<Integer> volgnummers(){
@@ -286,34 +285,36 @@ public class BestelFacade implements Subject {
     }
 
 
-    public void aanpassenVoorraad() {
-        String formaat="XLSBroodje";
+    public void aanpassenVoorraad(String formaat) {
+        System.out.println(formaat);
+        String formaatBroodje = formaat+"Broodje";
         try {
-            BroodjesDatabase broodjesDatabase1=new BroodjesDatabase("XLSBroodje");
-            for (String b:broodjesDatabase.getBroodjes().keySet()) {
-                broodjesDatabase.getBroodjes().get(b).setVerkocht(broodjesDatabase1.getBroodjes().get(b).getVerkocht()+(broodjesDatabase1.getVoorraadLijstBroodje().get(b)-broodjesDatabase.getVoorraadLijstBroodje().get(b)));}
+            BroodjesDatabase broodjesDatabase1 = new BroodjesDatabase(formaatBroodje);
+            for (String b : broodjesDatabase.getBroodjes().keySet()) {
+                broodjesDatabase.getBroodjes().get(b).setVerkocht(broodjesDatabase1.getBroodjes().get(b).getVerkocht() + (broodjesDatabase1.getVoorraadLijstBroodje().get(b) - broodjesDatabase.getVoorraadLijstBroodje().get(b)));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String form="XLSBeleg";
+        String formaatBeleg = formaat+"Beleg";
         try {
-            BelegDatabase belegDatabase1=new BelegDatabase("XLSBeleg");
-            for (String b:belegDatabase.getBelegSoort().keySet()) {
-                belegDatabase.getBelegSoort().get(b).setVerkocht(belegDatabase1.getBelegSoort().get(b).getVerkocht()+(belegDatabase1.getVoorraadLijstBeleg().get(b)-belegDatabase.getVoorraadLijstBeleg().get(b)));}
+            BelegDatabase belegDatabase1 = new BelegDatabase(formaatBeleg);
+            for (String b : belegDatabase.getBelegSoort().keySet()) {
+                belegDatabase.getBelegSoort().get(b).setVerkocht(belegDatabase1.getBelegSoort().get(b).getVerkocht() + (belegDatabase1.getVoorraadLijstBeleg().get(b) - belegDatabase.getVoorraadLijstBeleg().get(b)));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            File file= new File("src/bestanden/broodjes.xls");
-            LoadSaveStrategyFactory.createLoadSaveStrategy(formaat).save(file,broodjesDatabase.getBroodjes());
-            File fileBeleg= new File("src/bestanden/beleg.txt");
-            LoadSaveStrategyFactory.createLoadSaveStrategy(form).save(fileBeleg,belegDatabase.getBelegSoort());
-        } catch (IOException e) {
+            File file = new File("src/bestanden/broodjes."+formaat.toLowerCase());
+            LoadSaveStrategyFactory.createLoadSaveStrategy(formaatBroodje).save(file, broodjesDatabase.getBroodjes());
+            File fileBeleg = new File("src/bestanden/beleg."+formaat.toLowerCase());
+            LoadSaveStrategyFactory.createLoadSaveStrategy(formaatBeleg).save(fileBeleg, belegDatabase.getBelegSoort());
+            notifyObservers(BestellingsEvents.ZET_IN_WACHTRIJ);
+
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (BiffException e) {
-            e.printStackTrace();
-        } catch (WriteException e) {
-            e.printStackTrace();
+
         }
     }
 }

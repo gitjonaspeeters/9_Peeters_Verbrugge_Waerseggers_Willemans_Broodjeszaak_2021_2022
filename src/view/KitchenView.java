@@ -2,16 +2,13 @@ package view;
 
 import controller.KitchenviewController;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-
-import java.awt.*;
 
 public class KitchenView {
     private Stage stage = new Stage();
@@ -30,11 +27,9 @@ public class KitchenView {
     Label label = new Label();
 
 
-
     public KitchenView(KitchenviewController controller) {
         this.controller = controller;
         stage.setTitle("KITCHEN VIEW");
-        stage.initStyle(StageStyle.UTILITY);
         stage.setX(680);
         stage.setY(470);
 
