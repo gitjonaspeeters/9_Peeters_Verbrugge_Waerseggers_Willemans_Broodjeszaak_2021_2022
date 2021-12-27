@@ -39,6 +39,17 @@ public class BroodjesDatabase {
     public TreeMap<String, Broodje> getBroodjes(){
         return broodjes;
     }
+    public TreeMap<String, Broodje> getBroodjesFromFile(){
+        try {
+            load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (Broodje b: broodjes.values()) {
+            //System.out.println(b.getName()+" "+b.getPrijs()+" "+b.getAantal()+" "+b.getVerkocht());
+        }
+        return broodjes;
+    }
     public TreeMap<String,Integer> getVoorraadLijstBroodje(){
         TreeMap<String,Integer> v=new TreeMap<>();
         for (Broodje b:broodjes.values()) {

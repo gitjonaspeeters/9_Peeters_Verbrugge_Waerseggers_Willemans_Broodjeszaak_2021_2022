@@ -34,8 +34,9 @@ public abstract class TekstLoadSaveTemplate<K,V>{
 
     public void save (Map a, File file) throws IOException {
         FileWriter fileWriter= new FileWriter(file);
+
         for(Object object: a.values()){
-            fileWriter.write(toStringEnzo(object));
+            fileWriter.write(toStringEnzo(object)+"\n");
         }
         fileWriter.close();
     }

@@ -57,11 +57,11 @@ public class KitchenView {
 		this.controller.setView(this);
 	}
 
-	public void setNieuweBestelling(){
-		labelwachtrij.setText("Er zijn nu" + controller.getAantalBestellingen() + "bestellingen");
-		for(int i : controller.volgnummer()){
-			labelbestelling.setText("Volgnummer bestelling" + i + " - Aantal broodjes" + controller.getAantalBroodjesWachtrij(i));
-		}
+    public void setNieuweBestelling() {
+        labelwachtrij.setText("Er zijn nu " + controller.getAantalBestellingen() + " bestellingen");
+        for (int i : controller.volgnummer()) {
+            label.setText("Volgnummer bestelling " + i + " - Aantal broodjes " + controller.getAantalBroodjesWachtrij(i));
+            }
+        }
+    }
 
-	}
-}

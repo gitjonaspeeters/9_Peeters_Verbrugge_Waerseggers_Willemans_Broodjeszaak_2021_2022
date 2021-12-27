@@ -13,8 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import model.database.BelegDatabase;
-import model.database.BroodjesDatabase;
+import model.Bestellijn;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -27,6 +26,7 @@ import java.util.TreeMap;
 
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderStroke;
+import model.Broodje;
 
 public class OrderView {
 	private Stage stage = new Stage();
@@ -60,13 +60,6 @@ public class OrderView {
 	private Label betalen1= new Label("Te betalen: " + prijs);
 	private Label aantalbroodjes=new Label();
 
-
-
-
-
-
-
-
 	public  OrderView(OrderViewController controller) throws Exception {
 		this.controller = controller;
 		this.table = new TableView();
@@ -78,11 +71,6 @@ public class OrderView {
 		betalen.setDisable(true);
 		naarkeuken.setDisable(true);
 		verwijder.setDisable(true);
-
-
-
-
-
 
 		Scene scene = new Scene(p1, 650, 650);
 		stage.setTitle("Order view");
@@ -127,14 +115,15 @@ public class OrderView {
 		updateAantalBroodjes();
 		//tabel
 
-
-		TableColumn<String, String> Broodje = new TableColumn<String, String>("Broodje");
+		TableColumn<Broodje, String> Broodje = new TableColumn<Broodje, String>("Broodje");
 		Broodje.setMinWidth(180);
-		Broodje.setCellValueFactory(new PropertyValueFactory<>("String"));
-		TableColumn<String, Integer> Beleg = new TableColumn<>("Beleg");
+		Broodje.setCellValueFactory(new PropertyValueFactory<>("Broodje"));
+		TableColumn<Broodje, Integer> Beleg = new TableColumn<>("Beleg");
 		Beleg.setMinWidth(180);
-		Beleg.setCellValueFactory(new PropertyValueFactory<>("ArrayList<String>"));
+		Beleg.setCellValueFactory(new PropertyValueFactory<>("Beleg"));
 		table.getColumns().addAll( Broodje, Beleg);
+
+
 
 		//p511
 		Label label1 = new Label("Selecteer lijn in lijst");
@@ -270,6 +259,7 @@ public class OrderView {
 	}
 	public void zendNaarKeuken(){
 		controller.setInwachrij();
+		controller.aanpassenVoorraad();
 		afsluiten.setDisable(true);
 		annuleer.setDisable(true);
 		nieuwebestelling.setDisable(false);
@@ -338,7 +328,7 @@ public class OrderView {
 		if (controller.getBestellijnen()==null||controller.getBestellijnen().size()==0) throw new IllegalStateException("Er zijn nog geen bestellijnen");
 		int best= table.getSelectionModel().getSelectedIndex();
 		if (table.getSelectionModel().getSelectedItem()==null){
-			best=controller.getBestellijnen().keySet().toArray().length-1;
+			best=controller.getBestellijnen().size()-1;
 		}
 		return best;
 	}
@@ -360,8 +350,7 @@ public class OrderView {
 		}
 	}
 	public void refreshTabel(){
-		ObservableList<Map<String,ArrayList<String>>> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
-		System.out.println(bestellijns);
+		ObservableList<Bestellijn> bestellijns= FXCollections.observableArrayList(controller.getBestellijnen());
 		table.setItems(bestellijns);
 		table.refresh();
 	}

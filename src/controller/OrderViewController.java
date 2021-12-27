@@ -1,6 +1,7 @@
 package controller;
 
 import model.BestelFacade;
+import model.Bestellijn;
 import model.BestellingsEvents;
 import model.observer.Observer;
 import view.OrderView;
@@ -48,7 +49,7 @@ public class OrderViewController implements Observer {
         facade.voegIdentiekeBestelLijnToe(bestellijn);
     }
 
-    public Map<String,ArrayList<String>> getBestellijnen(){
+    public ArrayList<Bestellijn> getBestellijnen(){
         return  facade.getBestelLijnen();
     }
 
@@ -82,5 +83,9 @@ public class OrderViewController implements Observer {
 
     public void setInwachrij(){
         facade.setInWachtrij();
+    }
+
+    public void aanpassenVoorraad() {
+        facade.aanpassenVoorraad();
     }
 }

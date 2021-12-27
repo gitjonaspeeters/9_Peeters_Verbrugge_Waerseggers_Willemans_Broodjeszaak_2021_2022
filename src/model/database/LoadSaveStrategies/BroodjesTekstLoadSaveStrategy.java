@@ -1,15 +1,20 @@
 package model.database.LoadSaveStrategies;
 
-import model.BelegSoort;
+import jxl.read.biff.BiffException;
+import jxl.write.WriteException;
 import model.Broodje;
+import model.database.BelegDatabase;
 import utilities.TekstLoadSaveTemplate;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Map;
 
 
-public class BroodjesTekstLoadSaveStrategy extends TekstLoadSaveTemplate implements LoadSaveStrategy{
+public class BroodjesTekstLoadSaveStrategy <K,V> extends TekstLoadSaveTemplate implements LoadSaveStrategy{
 
 
     @Override
@@ -23,13 +28,16 @@ public class BroodjesTekstLoadSaveStrategy extends TekstLoadSaveTemplate impleme
     }
 
     @Override
-    public void save(Map a) {
+    public void save(File file, Map a) throws IOException, BiffException, WriteException {
         try {
-            super.save(a, new File("src/bestanden/broodjes.txt"));
+            super.save(a, file);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
+
 
 
     @Override
@@ -45,7 +53,7 @@ public class BroodjesTekstLoadSaveStrategy extends TekstLoadSaveTemplate impleme
 
     @Override
     protected String toStringEnzo(Object object) {
-        String string= ((Broodje) object).getName() + ","+ ((Broodje) object).getPrijs() + ","+ ((Broodje) object).getAantal() + ","+ ((Broodje) object).getAantal();
+        String string= ((Broodje) object).getName() + ","+ ((Broodje) object).getPrijs() + ","+ ((Broodje) object).getAantal() + ","+ ((Broodje) object).getVerkocht();
         return string;
     }
 }

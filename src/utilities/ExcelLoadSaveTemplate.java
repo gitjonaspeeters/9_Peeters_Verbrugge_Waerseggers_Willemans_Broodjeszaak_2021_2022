@@ -8,6 +8,7 @@ import model.BelegSoort;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -33,11 +34,11 @@ public abstract class ExcelLoadSaveTemplate<K,V> {
     }
 
 
-    public void save(Map a, File file) throws IOException, BiffException, WriteException {
-        ArrayList<V> List= (ArrayList<V>) a.values();
+    public void save(Map<K,V> a, File file) throws IOException, BiffException, WriteException {
 
-        plugin.write(file,addV(List));
+        plugin.write(file,addV(a.values()));
     }
 
-    protected abstract ArrayList<ArrayList<String>> addV(ArrayList<V> list);
+    protected abstract ArrayList<ArrayList<String>> addV(Collection list);
+
 }

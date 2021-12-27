@@ -2,6 +2,7 @@ package controller;
 
 import model.BelegSoort;
 import model.BestelFacade;
+import model.BestellingsEvents;
 import model.Broodje;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
@@ -21,6 +22,7 @@ public class BroodjesBelegController implements Observer  {
         this.broodjesDatabase = new BroodjesDatabase("XLSBroodje");
         this.belegDatabase = new BelegDatabase("XLSBeleg");
         this.facade=facade;
+        facade.schrijfInVoorEvent(BestellingsEvents.ZET_IN_WACHTRIJ,this);
         this.facade.addObserver(this);
     }
 
@@ -28,7 +30,7 @@ public class BroodjesBelegController implements Observer  {
         this.view = view;
     }
     public Map<String, Broodje> getBroodjes(){
-        return broodjesDatabase.getBroodjes();
+        return broodjesDatabase.getBroodjesFromFile();
     }
 
     public Map<String, BelegSoort> getBeleg(){

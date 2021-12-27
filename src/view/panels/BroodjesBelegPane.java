@@ -74,6 +74,9 @@ public class BroodjesBelegPane extends GridPane {
     public void refreshbroodjes() {
         ObservableList<Broodje> broodjes = FXCollections.observableArrayList(controller.getBroodjes().values());
         table.setItems(broodjes);
+        /*for (Broodje b:broodjes) {
+            System.out.println(b.getName()+" "+b.getPrijs()+" "+b.getAantal()+" "+b.getVerkocht());
+        }*/
         table.refresh();
     }
     public void refreshBeleg() {

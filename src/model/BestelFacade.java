@@ -1,13 +1,18 @@
 package model;
 
 import controller.OrderViewController;
+import jxl.read.biff.BiffException;
+import jxl.write.WriteException;
 import model.bestelStates.BestellingState;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
+import model.database.LoadSaveStrategies.LoadSaveStrategyFactory;
 import model.korting.KortingFactory;
 import model.observer.Observer;
 import model.observer.Subject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +52,7 @@ public class BestelFacade implements Subject {
 
     @Override
     public void notifyObservers(BestellingsEvents bestellingsEvents) throws Exception {
-        if (events!=null || events.size() == 0){
+        if (events!=null || events.size() != 0){
             for (Observer o : events.get(bestellingsEvents)) {
                 o.update();
             }
@@ -118,13 +123,8 @@ public class BestelFacade implements Subject {
             }
         }
     }
-    public Map<String,ArrayList<String>> getBestelLijnen(){
-        HashMap<String,ArrayList<String>> map;
-        map=new HashMap<>();
-        for (Bestellijn b:bestelling.getBestelLijnen()){
-            map.put(b.getBroodjeString(),b.getBelegString());
-        }
-        return map;
+    public ArrayList<Bestellijn> getBestelLijnen(){
+        return bestelling.getBestelLijnen();
 
 
     }
@@ -206,16 +206,18 @@ public class BestelFacade implements Subject {
         wachtrij.put(bestelling.getVolgnr(),bestelling);
         try {
             notifyObservers(BestellingsEvents.ZET_IN_WACHTRIJ);
+            notifyObservers(BestellingsEvents.ZET_IN_WACHTRIJ);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public ArrayList<Integer> volgnummers(){
-        return wachtrij.keySet().toArray();
+        ArrayList<Integer> integers=new ArrayList<>();
         for (Integer i:wachtrij.keySet()) {
-
+            integers.add(i);
         }
+        return integers;
     }
     public int getAantalBestellingen(){
         return wachtrij.size();
@@ -255,7 +257,7 @@ public class BestelFacade implements Subject {
     }
 
     public ArrayList<String> getBelegWachtrij(int volgnr, String broodje) {
-        ArrayList<String> result = null;
+        ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++) {
             for (int j = 0; j < wachtrij.get(volgnr).getBestellijnen().get(i).beleg.size(); j++) {
                 if (wachtrij.get(volgnr).getBestellijnen().get(i).equals(broodje)) {
@@ -267,6 +269,36 @@ public class BestelFacade implements Subject {
     }
 
 
+    public void aanpassenVoorraad() {
+        String formaat="XLSBroodje";
+        try {
+            BroodjesDatabase broodjesDatabase1=new BroodjesDatabase("XLSBroodje");
+            for (String b:broodjesDatabase.getBroodjes().keySet()) {
+                broodjesDatabase.getBroodjes().get(b).setVerkocht((broodjesDatabase1.getVoorraadLijstBroodje().get(b)-broodjesDatabase.getVoorraadLijstBroodje().get(b)));}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String form="XLSBeleg";
+        try {
+            BelegDatabase belegDatabase1=new BelegDatabase("XLSBeleg");
+            for (String b:belegDatabase.getBelegSoort().keySet()) {
+                belegDatabase.getBelegSoort().get(b).setVerkocht((belegDatabase1.getVoorraadLijstBeleg().get(b)-belegDatabase.getVoorraadLijstBeleg().get(b)));}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            File file= new File("src/bestanden/broodjes.xls");
+            LoadSaveStrategyFactory.createLoadSaveStrategy(formaat).save(file,broodjesDatabase.getBroodjes());
+            File fileBeleg= new File("src/bestanden/beleg.txt");
+            LoadSaveStrategyFactory.createLoadSaveStrategy(form).save(fileBeleg,belegDatabase.getBelegSoort());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (BiffException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
