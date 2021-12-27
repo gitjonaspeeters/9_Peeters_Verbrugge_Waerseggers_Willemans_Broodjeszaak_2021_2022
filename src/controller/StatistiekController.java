@@ -9,6 +9,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import jxl.write.Number;
 import model.BestelFacade;
+import model.BestellingsEvents;
 import model.Broodje;
 import model.observer.Observer;
 import view.panels.SettingsPane;
@@ -24,12 +25,15 @@ public class StatistiekController implements Observer {
 
     public StatistiekController(BestelFacade facade) {
         this.facade = facade;
+        this.facade.schrijfInVoorEvent(BestellingsEvents.ZET_IN_WACHTRIJ,this);
 
     }
 
     @Override
     public void update() throws Exception {
-
+        view.removeNodeByRowColumnIndex();
+        view.updateBeleg();
+        view.updateBroodjes();
     }
     public void setView(Statistiekenpane view){
         this.view=view;

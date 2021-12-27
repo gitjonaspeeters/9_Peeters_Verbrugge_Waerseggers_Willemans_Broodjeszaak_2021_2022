@@ -46,7 +46,6 @@ public class BroodjesDatabase {
             e.printStackTrace();
         }
         for (Broodje b: broodjes.values()) {
-            //System.out.println(b.getName()+" "+b.getPrijs()+" "+b.getAantal()+" "+b.getVerkocht());
         }
         return broodjes;
     }

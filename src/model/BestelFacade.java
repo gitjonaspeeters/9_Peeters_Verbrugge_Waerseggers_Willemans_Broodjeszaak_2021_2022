@@ -71,6 +71,11 @@ public class BestelFacade implements Subject {
 
     public void betaal(){
         bestelling.betalen();
+        try {
+            notifyObservers(BestellingsEvents.BETAAL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int annuleer(){
@@ -267,7 +272,6 @@ public class BestelFacade implements Subject {
     public ArrayList<String> getWachtrijBroodje(int volgnr){
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++) {
-            //System.out.println(wachtrij.get(volgnr).getBestellijnen().get(i).getBroodje().getName());
             result.add(wachtrij.get(volgnr).getBestellijnen().get(i).getBroodje().getName());
         }
         return result;
