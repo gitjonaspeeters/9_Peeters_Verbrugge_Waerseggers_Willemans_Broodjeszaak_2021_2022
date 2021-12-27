@@ -34,14 +34,14 @@ public class Statistiekenpane extends GridPane {
         Label labelBeleg=new Label("BelegSoort: ");
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setCategories(FXCollections.<String>
-                observableArrayList(String.valueOf(controller.getBroodjes())));
+                observableArrayList("Broodje"));
         xAxis.setLabel("Broodje");
 
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Verkocht");
 
         //Creating the Bar chart
-        StackedBarChart<String, Number> stackedBarChart = new StackedBarChart<>(xAxis, yAxis);
+
 
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
         barChart.setTitle("Verkoop Statistieken");
@@ -49,18 +49,20 @@ public class Statistiekenpane extends GridPane {
         for (Object s:controller.getBroodjes()){
             XYChart.Series<String, Number> series1 = new XYChart.Series<>();
             series1.setName(s.toString());
-            series1.getData().add(new XYChart.Data<>(s.toString(), controller.getBroodjesVerkocht(s.toString())));
+
+            series1.getData().add(new XYChart.Data<>("Broodje", controller.getBroodjesVerkocht(s.toString())));
+            System.out.println(s.toString());
             barChart.getData().add(series1);
-            stackedBarChart.getData().add(series1);
         }
         //beleg chart
+
         CategoryAxis xAxis1 = new CategoryAxis();
-        xAxis.setCategories(FXCollections.<String>
-                observableArrayList(String.valueOf(controller.getBeleg())));
-        xAxis.setLabel("Beleg");
+        xAxis1.setCategories(FXCollections.<String>
+                observableArrayList("Beleg"));
+        xAxis1.setLabel("Beleg");
 
         NumberAxis yAxis1 = new NumberAxis();
-        yAxis.setLabel("Verkocht");
+        yAxis1.setLabel("Verkocht");
 
         //Creating the Bar chart
         BarChart<String, Number> barChart1 = new BarChart<>(xAxis1, yAxis1);
@@ -69,16 +71,16 @@ public class Statistiekenpane extends GridPane {
         for (Object s:controller.getBeleg()){
             XYChart.Series<String, Number> series1 = new XYChart.Series<>();
             series1.setName(s.toString());
-            series1.getData().add(new XYChart.Data<>(s.toString(), controller.getBelegVerkocht(s.toString())));
+            series1.getData().add(new XYChart.Data<>("Beleg", controller.getBelegVerkocht(s.toString())));
             barChart1.getData().add(series1);
         }
 
 
         //grid layout
         this.add(labelBroodjes,0,0);
-        this.add(barChart, 0,1 , 1, 2);
-        this.add(labelBeleg,0,3);
-        this.add(barChart1, 0, 4, 1, 2);
+        this.add(barChart, 0,1 , 1, 3);
+        this.add(labelBeleg,1,0);
+        this.add(barChart1, 1, 1, 1, 3);
         controller.setView(this);
 
     }
