@@ -41,13 +41,17 @@ public class KitchenView {
 
         p1.setPadding(new Insets(10));
         p2.getChildren().addAll(volgende, afgewerkt);
+        volgende.setOnAction(e -> setNieuweBestelling());
+        afgewerkt.setOnAction(e -> setAfegewerktbestelling());
+        volgende.setDisable(true);
+        afgewerkt.setDisable(true);
         p2.setPadding(new Insets(10));
         Paint paint = Paint.valueOf("Grey");
         p2.setBackground(new Background(new BackgroundFill(paint, null, new Insets(0))));
         p2.setBorder(new Border(new BorderStroke(Paint.valueOf("Black"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
         p3.setPadding(new Insets(10));
-        p3.getChildren().addAll(label);
-        p1.getChildren().addAll(p2, labelwachtrij, p3);
+
+        p1.getChildren().addAll(p2, labelwachtrij,labelbestelling, p3);
 
 
         Scene scene = new Scene(p1, 650, 200);
@@ -59,11 +63,38 @@ public class KitchenView {
         this.controller.setView(this);
     }
 
-    public void setNieuweBestelling() {
-        labelwachtrij.setText("Er zijn nu " + controller.getAantalBestellingen() + " bestellingen");
-        for (int i : controller.volgnummer()) {
-            label.setText("Volgnummer bestelling " + i + " - Aantal broodjes " + controller.getAantalBroodjesWachtrij(i));
-            }
+    public void setKnopEnCount(){
+        if(controller.getAantalBestellingen() == 0){
+            volgende.setDisable(true);
+        }else {
+            volgende.setDisable(false);
         }
+        labelwachtrij.setText("Er zijn nu " + controller.getAantalBestellingen() + " bestellingen");
     }
+
+    public void setNieuweBestelling() {
+        afgewerkt.setDisable(false);
+
+        if(controller.volgnummer().size()!= 0) {
+            labelbestelling.setText("Volgnummer bestelling " + controller.volgnummer().get(0) + " - Aantal broodjes " + controller.getAantalBroodjesWachtrij(controller.volgnummer().get(0)) + "\n" + controller.toStringWachtrij(controller.volgnummer().get(0)));
+        }else{
+            labelbestelling.setText("Er zijn geen bestellingen in wachtrij");
+        }
+        controller.verwijderBestellingInWachtrij(controller.volgnummer().get(0));
+    }
+
+
+
+    public void setAfegewerktbestelling() {
+        labelbestelling.setText("Bestelling afgewerkt");
+        if(controller.volgnummer().size() == 0){
+            volgende.setDisable(true);
+        }else{
+            volgende.setDisable(false);
+        }
+
+        afgewerkt.setDisable(true);
+    }
+}
+
 

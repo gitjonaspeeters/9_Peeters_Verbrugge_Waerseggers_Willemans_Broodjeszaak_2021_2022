@@ -1,19 +1,21 @@
 package model.database.LoadSaveStrategies;
 
 public enum LoadSaveStrategyEnum {
-    XLSBroodje("Excel", "model.database.LoadSaveStrategies.BroodjesExcelLoadSaveStrategy"),
-    TXTBroodje("Tekst", "model.database.LoadSaveStrategies.BroodjesTekstLoadSaveStrategy"),
-    XLSBeleg("Excel", "model.database.LoadSaveStrategies.BelegExcelLoadSaveStrategy"),
-    TXTBeleg("Tekst", "model.database.LoadSaveStrategies.BelegTekstLoadSaveStrategy");
+    XLSBroodje("XLS", "model.database.LoadSaveStrategies.BroodjesExcelLoadSaveStrategy"),
+    TXTBroodje("TXT", "model.database.LoadSaveStrategies.BroodjesTekstLoadSaveStrategy"),
+    XLSBeleg("XLS", "model.database.LoadSaveStrategies.BelegExcelLoadSaveStrategy"),
+    TXTBeleg("TXT", "model.database.LoadSaveStrategies.BelegTekstLoadSaveStrategy");
 
     private final String name;
     private final String propertyName;
 
 
 
+
     LoadSaveStrategyEnum(String name, String propertyName) {
         this.name = name;
         this.propertyName = propertyName;
+
 
     }
     public String getName() {
@@ -23,4 +25,6 @@ public enum LoadSaveStrategyEnum {
     public  String getPropertyName() {
         return propertyName;
     }
+
+
 }

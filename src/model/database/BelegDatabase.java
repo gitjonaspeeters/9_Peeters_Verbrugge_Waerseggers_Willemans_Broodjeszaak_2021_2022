@@ -24,7 +24,9 @@ public class BelegDatabase {
     }
 
     private void load() throws Exception {
+        System.out.println(strategy);
         for (BelegSoort belegs :strategy.load().values()) {
+
             this.belegSoort.put(belegs.getName(), belegs);
         }
     }

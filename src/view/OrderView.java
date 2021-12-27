@@ -13,12 +13,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import jxl.read.biff.BiffException;
 import model.Bestellijn;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,7 +88,8 @@ public class OrderView {
 		this.korting.getItems().add("Goedkoopste broodje gratis");
 		this.korting.getItems().add("10% korting");
 		this.korting.getItems().add("Geen korting");
-		this.korting.setValue("Geen korting");
+		System.out.println(controller.getStandaardKorting());
+		this.korting.setValue(controller.getStandaardKorting());
 		this.korting.show();
 
 		nieuwebestelling.setOnAction(e -> setStateBestelling());
@@ -152,7 +155,15 @@ public class OrderView {
 
 		betalen.setAlignment(Pos.CENTER_RIGHT);
 		betalen.setOnAction(e -> setBetalen());
-		naarkeuken.setOnAction(e -> zendNaarKeuken());
+		naarkeuken.setOnAction(e -> {
+			try {
+				zendNaarKeuken();
+			} catch (BiffException ex) {
+				ex.printStackTrace();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
 		p6.getChildren().addAll(afsluiten,betalen1,betalen,naarkeuken);
 		p6.setPadding(new Insets(10));
 
@@ -257,7 +268,7 @@ public class OrderView {
 	public void verwijderAll(){
 		while (table.getItems().size()>0)verwijderBestellijn();
 	}
-	public void zendNaarKeuken(){
+	public void zendNaarKeuken() throws BiffException, IOException {
 		controller.setInwachrij();
 		controller.aanpassenVoorraad();
 		afsluiten.setDisable(true);

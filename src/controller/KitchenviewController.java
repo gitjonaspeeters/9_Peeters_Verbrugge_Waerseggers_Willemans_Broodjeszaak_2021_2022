@@ -15,12 +15,11 @@ public class KitchenviewController implements Observer {
     public KitchenviewController(BestelFacade facade) {
         this.facade = facade;
         this.facade.schrijfInVoorEvent(BestellingsEvents.ZET_IN_WACHTRIJ,this);
+        this.facade.schrijfInVoorEvent(BestellingsEvents.VERWIJDER_UIT_WACHTRIJ,this);
     }
     @Override
     public void update() throws Exception {
-        if (view != null) {
-            view.setNieuweBestelling();
-        }
+            view.setKnopEnCount();
     }
 
     public void setView(KitchenView view){
@@ -50,5 +49,11 @@ public class KitchenviewController implements Observer {
     }
     public ArrayList<String> getBelegWachtrij(int volgnr, String broodje) {
         return  facade.getBelegWachtrij(volgnr, broodje);
+    }
+    public String toStringWachtrij(int volgnr) {
+        return facade.toStringWachtrij(volgnr);
+    }
+    public void verwijderBestellingInWachtrij(int volgnr){
+        facade.verwijderBestellingInWachtrij(volgnr);
     }
 }

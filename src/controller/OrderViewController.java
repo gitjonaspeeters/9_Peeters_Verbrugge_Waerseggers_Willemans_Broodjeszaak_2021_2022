@@ -1,13 +1,19 @@
 package controller;
 
+import jxl.read.biff.BiffException;
 import model.BestelFacade;
 import model.Bestellijn;
 import model.BestellingsEvents;
+import model.database.LoadSaveStrategies.LoadSaveStrategyEnum;
+import model.database.Settings;
+import model.korting.KortingEnum;
 import model.observer.Observer;
 import view.OrderView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class OrderViewController implements Observer {
@@ -85,7 +91,11 @@ public class OrderViewController implements Observer {
         facade.setInWachtrij();
     }
 
-    public void aanpassenVoorraad() {
-        facade.aanpassenVoorraad();
+    public void aanpassenVoorraad() throws BiffException, IOException {
+        facade.aanpassenVoorraad(Settings.getInstance().getProperty("formaat"));
+    }
+
+    public String getStandaardKorting() throws BiffException, IOException {
+        return Settings.getInstance().getProperty("korting");
     }
 }

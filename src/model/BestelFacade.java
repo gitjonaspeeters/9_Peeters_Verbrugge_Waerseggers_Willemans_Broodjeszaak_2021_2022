@@ -6,17 +6,16 @@ import jxl.write.WriteException;
 import model.bestelStates.BestellingState;
 import model.database.BelegDatabase;
 import model.database.BroodjesDatabase;
+import model.database.LoadSaveStrategies.LoadSaveStrategyEnum;
 import model.database.LoadSaveStrategies.LoadSaveStrategyFactory;
+import model.database.Settings;
 import model.korting.KortingFactory;
 import model.observer.Observer;
 import model.observer.Subject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class BestelFacade implements Subject {
     Bestelling bestelling;
@@ -26,8 +25,9 @@ public class BestelFacade implements Subject {
     HashMap<Integer, Bestelling>  wachtrij = new HashMap<>();
 
     public BestelFacade() throws Exception {
-        this.broodjesDatabase = new BroodjesDatabase("XLSBroodje");
-        this.belegDatabase = new BelegDatabase("XLSBeleg");
+        this.broodjesDatabase = new BroodjesDatabase(LoadSaveStrategyEnum.valueOf(Settings.getInstance().getProperty("formaat").toUpperCase(Locale.ROOT) +  "Broodje").name() );
+
+        this.belegDatabase = new BelegDatabase(LoadSaveStrategyEnum.valueOf(Settings.getInstance().getProperty("formaat").toUpperCase(Locale.ROOT)+ "Beleg").name());
     }
     public void schrijfInVoorEvent(BestellingsEvents e,Observer o){
         if (events.containsKey(e)){
@@ -59,6 +59,15 @@ public class BestelFacade implements Subject {
         }
 
     }
+
+    public BroodjesDatabase getBroodjesDatabase() {
+        return broodjesDatabase;
+    }
+
+    public BelegDatabase getBelegDatabase() {
+        return belegDatabase;
+    }
+
     public void betaal(){
         bestelling.betalen();
     }
@@ -223,28 +232,34 @@ public class BestelFacade implements Subject {
         return wachtrij.size();
     }
     public int getAantalBroodjesWachtrij(int volgnr){
+
         return wachtrij.get(volgnr).getBestellijnen().size();
     }
 
-    public int getWachtrijAantalvanBroodje(int volgnr, Bestellijn bestellijn){
-        int result = 0;
-        for(int i =0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++){
-
-            if(wachtrij.get(volgnr).getBestelLijnen().equals(bestellijn)){
-                result++;
-                }
-            }
-        return result;
+    public void verwijderBestellingInWachtrij(int volgnr){
+        wachtrij.remove(volgnr);
+        try {
+            notifyObservers(BestellingsEvents.VERWIJDER_UIT_WACHTRIJ);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public int getWachtrijAantalvanBeleg(int volgnr, String beleg){
-        int result = 0;
-        for(int i =0; i < wachtrij.get(volgnr).getBestellijnen().size(); i++){
-            for (int j =0; j < wachtrij.get(volgnr).getBestellijnen().get(i).beleg.size(); j++){
-                if(wachtrij.get(volgnr).getBestellijnen().get(i).beleg.get(i).equals(beleg)){
-                    result++;
+    public ArrayList<Bestellijn> getSameBestellijnen(int volgnr){
+            ArrayList<Bestellijn> newList = new ArrayList<Bestellijn>();
+            for (Bestellijn element : wachtrij.get(volgnr).getBestellijnen()) {
+                if (!newList.contains(element)) {
+                    newList.add(element);
                 }
             }
+
+            return newList;
+    }
+
+    public String toStringWachtrij(int volgnr) {
+        String result= "";
+        for(Bestellijn b : getSameBestellijnen(volgnr)){
+            result += "" + Collections.frequency(wachtrij.get(volgnr).getBestellijnen(), b) + "x " + b.toString() + "\n";
         }
         return result;
     }

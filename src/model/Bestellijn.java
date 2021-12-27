@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Bestellijn {
     Broodje broodje;
@@ -12,6 +10,25 @@ public class Bestellijn {
         this.broodje = broodje;
         this.beleg = beleg;
     }
+
+    @Override
+    public String toString() {
+        return broodje + ": " + getSameBeleg();
+    }
+
+    public String getSameBeleg(){
+        String result= "";
+        Set<BelegSoort> allebeleg = new HashSet();
+        if (beleg != null) {
+
+            allebeleg.addAll(beleg);
+            for (BelegSoort x : allebeleg) {
+                result += "" + Collections.frequency(beleg, x) + "x "+x.getName() + ", ";
+            }
+        }
+        return result;
+    }
+
 
     public Bestellijn(Broodje broodje) {
         this.broodje = broodje;
@@ -53,6 +70,18 @@ public class Bestellijn {
         return bel;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bestellijn)) return false;
+        Bestellijn that = (Bestellijn) o;
+        return Objects.equals(getBroodje(), that.getBroodje()) && Objects.equals(getBeleg(), that.getBeleg());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBroodje(), getBeleg());
+    }
 
     public void removeBeleg(String beleg){
         this.beleg.remove(beleg);

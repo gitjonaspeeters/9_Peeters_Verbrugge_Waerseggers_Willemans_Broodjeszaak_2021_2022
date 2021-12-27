@@ -3,7 +3,7 @@ package model.korting;
 public enum KortingEnum {
     GOEDKOOPSTEGRATIS("Goedkoopste broodje gratis", "model.korting.GoedkoopsteGratis"),
     GEEN_KORTING("Geen korting", "model.korting.GeenKorting"),
-    PERCENT_VAN_HEEL_DE_BESTELLING("10% korting op heel de besteling", "model.korting.KortingOpHeelBesteling");
+    PERCENT_VAN_HEEL_DE_BESTELLING("10% korting", "model.korting.KortingOpHeelBesteling");
 
 
     private final String name;

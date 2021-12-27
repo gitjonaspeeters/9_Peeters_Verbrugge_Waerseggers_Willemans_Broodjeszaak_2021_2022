@@ -1,7 +1,7 @@
-feta,0.5,10,0
-hesptest,0.45,5,0
-kaas,0.4,5,0
-komkommer,0.3,10,0
-olijven,0.25,10,0
-sla,0.2,10,0
-tomaat excel,0.35,10,0
+feta,0.5,226,-216
+hesptest,0.45,0,5
+kaas,0.4,0,5
+komkommer,0.3,97,-87
+olijven,0.25,320,-310
+sla,0.2,927,-917
+tomaat excel,0.35,729,-719
